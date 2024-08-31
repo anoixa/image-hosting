@@ -1,5 +1,8 @@
 package moe.imtop1.imagehosting.common.entity.base;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.time.LocalDateTime;
 
 /**
@@ -7,11 +10,12 @@ import java.time.LocalDateTime;
  */
 public abstract class BaseEntity {
 
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+    @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
     private Boolean isDelete;
 
-    // Getters and Setters
     public LocalDateTime getCreateTime() {
         return createTime;
     }
