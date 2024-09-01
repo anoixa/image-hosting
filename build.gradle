@@ -23,6 +23,14 @@ repositories {
     mavenCentral()
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'moe.imtop1.imagehosting.Application'
+        )
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
@@ -33,11 +41,12 @@ dependencies {
     implementation group: 'io.minio', name: 'minio', version: '8.5.12'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.3.3'
 
-    implementation group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.5.7'
+    implementation group: 'com.baomidou', name: 'mybatis-plus-spring-boot3-starter', version: '3.5.7'
     implementation group: 'com.github.yulichang', name: 'mybatis-plus-join-boot-starter', version: '1.4.13'
 
     implementation group: 'cn.dev33', name: 'sa-token-spring-boot3-starter', version: '1.39.0'
     implementation group: 'cn.dev33', name: 'sa-token-redis-jackson', version: '1.39.0'
+    implementation group: 'cn.dev33', name: 'sa-token-jwt', version: '1.39.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
