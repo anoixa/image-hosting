@@ -19,3 +19,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: moe.imtop1.imagehosting.common.entity
+
+
+sa-token:
+  jwt-secret-key: 3fc0449993ee6dc5e66ccd9658d3c33a

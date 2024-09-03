@@ -3,12 +3,17 @@ package moe.imtop1.imagehosting.common.entity.base;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @author anoixa
  */
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;

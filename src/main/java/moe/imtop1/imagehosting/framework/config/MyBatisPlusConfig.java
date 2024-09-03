@@ -31,8 +31,8 @@ public class MyBatisPlusConfig {
         return interceptor;
     }
 
-    @Bean
-    public IKeyGenerator keyGenerator() {
-        return new PostgreKeyGenerator();
-    }
+//    @Bean
+//    public IKeyGenerator keyGenerator() {
+//        return new PostgreKeyGenerator();
+//    }
 }
