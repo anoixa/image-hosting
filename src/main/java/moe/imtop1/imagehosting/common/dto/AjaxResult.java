@@ -1,5 +1,6 @@
 package moe.imtop1.imagehosting.common.dto;
 
+import moe.imtop1.imagehosting.common.enums.ResultCodeEnum;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serial;
@@ -13,9 +14,12 @@ public class AjaxResult<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private int code;
+    private Integer code;
     private String msg;
     private T data;
+
+    public AjaxResult() {
+    }
 
     public int getCode() {
         return code;
@@ -31,6 +35,30 @@ public class AjaxResult<T> implements Serializable {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public static <T> AjaxResult<T> build(T body, Integer code, String message) {
+        AjaxResult<T> result = new AjaxResult<>();
+        result.setData(body);
+        result.setCode(code);
+        result.setMsg(message);
+        return result;
+    }
+
+    public static <T> AjaxResult<T> build(Integer code, String message) {
+        AjaxResult<T> result = new AjaxResult<>();
+        result.setCode(code);
+        result.setMsg(message);
+        return result;
+    }
+
+    // 通过枚举构造Result对象
+    public static <T> AjaxResult build(T body , ResultCodeEnum resultCodeEnum) {
+        return build(body , resultCodeEnum.getCode() , resultCodeEnum.getMessage()) ;
+    }
+
+    public static <T> AjaxResult build(ResultCodeEnum resultCodeEnum) {
+        return build(resultCodeEnum.getCode() , resultCodeEnum.getMessage()) ;
     }
 
     public T getData() {
