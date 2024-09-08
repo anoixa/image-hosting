@@ -2,6 +2,7 @@ package moe.imtop1.imagehosting.common.entity.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public abstract class BaseEntity implements Serializable {
     private LocalDateTime createTime;
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
+    @TableLogic
     private Boolean isDelete;
 
     public LocalDateTime getCreateTime() {

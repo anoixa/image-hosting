@@ -70,7 +70,7 @@ public class AjaxResult<T> implements Serializable {
     }
 
     public static <T> AjaxResult<T> success() {
-        return success("200");
+        return success("操作成功");
     }
 
     public static <T> AjaxResult<T> success(T data) {

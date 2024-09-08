@@ -19,6 +19,11 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: moe.imtop1.imagehosting.common.entity
+  global-config:
+    db-config:
+      logic-delete-field: is_delete
+      logic-delete-value: true
+      logic-not-delete-value: false
 
 
 sa-token:

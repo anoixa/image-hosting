@@ -48,6 +48,9 @@ public class LoginServiceImpl implements ILoginService {
 
     @Override
     public void logout() {
+        if (!StpUtil.isLogin()) {
+            throw new SystemException(ResultCodeEnum.LOGIN_AUTH);
+        }
         StpUtil.logout();
     }
 }
