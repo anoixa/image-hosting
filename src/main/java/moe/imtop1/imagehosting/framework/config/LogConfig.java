@@ -3,7 +3,6 @@ package moe.imtop1.imagehosting.framework.config;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.utils.JsonUtil;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
