@@ -17,6 +17,9 @@ public class LoginDTO implements Serializable {
     private String userName;
     @NotBlank(message = "密码不能为空")
     private String password;
+    @NotBlank(message = "验证码不能为空")
+    private String captcha ;
+    private String codeKey ;
 
     public LoginDTO() {
     }
@@ -24,6 +27,13 @@ public class LoginDTO implements Serializable {
     public LoginDTO(String userName, String password) {
         this.userName = userName;
         this.password = password;
+    }
+
+    public LoginDTO(String userName, String password, String captcha, String codeKey) {
+        this.userName = userName;
+        this.password = password;
+        this.captcha = captcha;
+        this.codeKey = codeKey;
     }
 
     public String getUserName() {
@@ -40,5 +50,21 @@ public class LoginDTO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
+    }
+
+    public String getCodeKey() {
+        return codeKey;
+    }
+
+    public void setCodeKey(String codeKey) {
+        this.codeKey = codeKey;
     }
 }
