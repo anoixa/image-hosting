@@ -49,6 +49,7 @@ public class LoginServiceImpl implements ILoginService {
         redisCache.deleteObject(loginDTO.getCodeKey());
 
         StpUtil.login(userInfo.getUserId(), loginDTO.getRemembered());
+        StpUtil.getSession().set("username", userInfo.getUserName());
         LoginVO loginVO = new LoginVO();
         loginVO.setCode(ResultCodeEnum.SUCCESS.getCode());
         loginVO.setToken(StpUtil.getTokenValue());
