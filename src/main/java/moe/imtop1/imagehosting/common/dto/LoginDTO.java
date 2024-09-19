@@ -20,6 +20,7 @@ public class LoginDTO implements Serializable {
     @NotBlank(message = "验证码不能为空")
     private String captcha ;
     private String codeKey ;
+    private Boolean isRemembered = false;
 
     public LoginDTO() {
     }
@@ -29,11 +30,12 @@ public class LoginDTO implements Serializable {
         this.password = password;
     }
 
-    public LoginDTO(String userName, String password, String captcha, String codeKey) {
+    public LoginDTO(String userName, String password, String captcha, String codeKey, Boolean isRemembered) {
         this.userName = userName;
         this.password = password;
         this.captcha = captcha;
         this.codeKey = codeKey;
+        this.isRemembered = isRemembered;
     }
 
     public String getUserName() {
@@ -66,5 +68,13 @@ public class LoginDTO implements Serializable {
 
     public void setCodeKey(String codeKey) {
         this.codeKey = codeKey;
+    }
+
+    public Boolean getRemembered() {
+        return isRemembered;
+    }
+
+    public void setRemembered(Boolean remembered) {
+        isRemembered = remembered;
     }
 }

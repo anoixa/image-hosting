@@ -42,7 +42,7 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     implementation group: 'io.minio', name: 'minio', version: '8.5.12'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.3.3'
-    implementation group: 'org.redisson', name: 'redisson-spring-boot-starter', version: '3.36.0'
+    //implementation group: 'org.redisson', name: 'redisson-spring-boot-starter', version: '3.36.0'
 
     implementation group: 'com.baomidou', name: 'mybatis-plus-spring-boot3-starter', version: '3.5.7'
     implementation group: 'com.github.yulichang', name: 'mybatis-plus-join-boot-starter', version: '1.4.13'

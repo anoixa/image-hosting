@@ -6,14 +6,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import moe.imtop1.imagehosting.common.dto.LoginDTO;
 import moe.imtop1.imagehosting.common.entity.UserInfo;
 import moe.imtop1.imagehosting.common.enums.ResultCodeEnum;
+import moe.imtop1.imagehosting.framework.utils.RedisCache;
 import moe.imtop1.imagehosting.common.vo.LoginVO;
 import moe.imtop1.imagehosting.framework.exception.SystemException;
 import moe.imtop1.imagehosting.project.mapper.UserInfoMapper;
 import moe.imtop1.imagehosting.project.service.ILoginService;
-import org.redisson.api.RBucket;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 @Service
@@ -21,10 +21,17 @@ public class LoginServiceImpl implements ILoginService {
     @Autowired
     private UserInfoMapper userInfoMapper;
     @Autowired
-    private RedissonClient redissonClient;
+    private RedisCache redisCache;
 
     @Override
     public LoginVO login(LoginDTO loginDTO) {
+        // 校验验证码
+        Object cacheObject = redisCache.getCacheObject(loginDTO.getCodeKey());
+        if (ObjectUtils.isEmpty(cacheObject) ||
+                !loginDTO.getCaptcha().equalsIgnoreCase(cacheObject.toString())) {
+            throw new SystemException(ResultCodeEnum.VALIDATECODE_ERROR);
+        }
+
         LambdaQueryWrapper<UserInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserInfo::getUserName, loginDTO.getUserName());
 
@@ -34,26 +41,19 @@ public class LoginServiceImpl implements ILoginService {
             throw new SystemException(ResultCodeEnum.LOGIN_ERROR);
         }
 
-        RBucket<String> bucket = redissonClient.getBucket(loginDTO.getCodeKey());
-        String redisCode = bucket.get();
-        if (!StringUtils.hasLength(redisCode) || !loginDTO.getCaptcha().equals(redisCode.toLowerCase())) {
-            throw new SystemException(ResultCodeEnum.VALIDATECODE_ERROR);
-        }
-
-        boolean isPasswordValid = BCrypt.checkpw(loginDTO.getPassword(), userInfo.getPassword());
-
-        if (isPasswordValid) {
-            bucket.delete();
-
-            StpUtil.login(userInfo.getUserId());
-
-            LoginVO loginVO = new LoginVO();
-            loginVO.setToken(StpUtil.getTokenValue());
-
-            return loginVO;
-        } else {
+        // 校验密码
+        if (!BCrypt.checkpw(loginDTO.getPassword(), userInfo.getPassword())) {
             throw new SystemException(ResultCodeEnum.LOGIN_ERROR);
         }
+
+        redisCache.deleteObject(loginDTO.getCodeKey());
+
+        StpUtil.login(userInfo.getUserId(), loginDTO.getRemembered());
+        LoginVO loginVO = new LoginVO();
+        loginVO.setCode(ResultCodeEnum.SUCCESS.getCode());
+        loginVO.setToken(StpUtil.getTokenValue());
+
+        return loginVO;
     }
 
     @Override
