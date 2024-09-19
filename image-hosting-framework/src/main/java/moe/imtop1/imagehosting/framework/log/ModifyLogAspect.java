@@ -26,7 +26,7 @@ import java.util.List;
 @Slf4j
 @Component
 @Aspect
-public class LogConfig {
+public class ModifyLogAspect {
     @Pointcut("execution(public * moe.imtop1.imagehosting.project.controller.*.*(..))")
     public void privilege() {
     }
@@ -67,7 +67,10 @@ public class LogConfig {
         }
         // 方法的返回结果
         Object result = null;
-        String userName = (String) StpUtil.getSession().get("username");
+        String userName = null;
+        if (StpUtil.isLogin()) {
+            userName = (String) StpUtil.getSession().get("username");
+        }
         if(userName==null || userName.isEmpty()){
             userName = "system";
         }
