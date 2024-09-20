@@ -1,1 +1,5 @@
 rootProject.name = 'image-hosting'
+include 'image-hosting-common'
+include 'image-hosting-framework'
+include 'image-hosting-project'
+
