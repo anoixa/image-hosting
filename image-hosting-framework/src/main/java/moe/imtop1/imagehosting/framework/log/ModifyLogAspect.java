@@ -74,15 +74,22 @@ public class ModifyLogAspect {
         if(userName==null || userName.isEmpty()){
             userName = "system";
         }
-        // 调用原来的方法
-        result = proceed(joinPoint,methodName,uri,params,userName);
+
+        result = proceed(joinPoint, methodName, uri, params, userName);
         return result;
     }
 
-    private Object proceed(ProceedingJoinPoint joinPoint,String methodName,String uri,String params,String userName) throws Throwable {
-        log.info("[开始]方法名:{} ---用户:{} ---地址:{}  ---入参:{}",methodName, userName, uri,params);
-        Object result = joinPoint.proceed();
-        log.info("[结束]方法名:{} ---用户:{} ---地址:{}  ---出参:{}", methodName, userName, uri, result.toString());
+    public Object proceed(ProceedingJoinPoint joinPoint, String methodName, String uri, String params, String userName) throws Throwable {
+        Object result = null;
+        log.info("[开始]方法名:{} ---用户:{} ---地址:{}  ---入参:{}", methodName, userName, uri, params);
+        try {
+            result = joinPoint.proceed();
+        } catch (Exception e) {
+            log.error("[异常]方法名:{} ---用户:{} ---地址:{} ---错误信息:{}", methodName, userName, uri, e.getMessage(), e);
+            throw e;
+        } finally {
+            log.info("[结束]方法名:{} ---用户:{} ---地址:{}  ---出参:{}", methodName, userName, uri, result != null ? result.toString() : "null");
+        }
         return result;
     }
 

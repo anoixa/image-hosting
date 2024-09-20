@@ -1,5 +1,7 @@
 package moe.imtop1.imagehosting.framework.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.dto.AjaxResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,16 +17,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public AjaxResult error(Exception e){
+    public AjaxResult error(Exception e, HttpServletResponse response){
         log.error(e.getMessage());
-        return AjaxResult.error(500,"未知错误") ;
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        return AjaxResult.error(500, e.getMessage() != null ? e.getMessage() : "未知错误") ;
     }
 
     //自定义异常处理
     @ExceptionHandler(SystemException.class)
     @ResponseBody
-    public AjaxResult error(SystemException e) {
+    public AjaxResult error(SystemException e, HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         return AjaxResult.build(e.getResultCodeEnum());
+    }
+
+    @ExceptionHandler(NotLoginException.class)
+    @ResponseBody
+    public AjaxResult handleNotLoginException(NotLoginException e, HttpServletResponse response) {
+        log.error("未登录异常: {}", e.getMessage(), e);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        return AjaxResult.error(401, "未能读取到有效 token");
     }
 
 }

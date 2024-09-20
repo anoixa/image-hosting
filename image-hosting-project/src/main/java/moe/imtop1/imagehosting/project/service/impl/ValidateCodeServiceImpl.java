@@ -29,7 +29,6 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
 
         //Object loginId = StpUtil.getLoginId();
         String key = UUID.randomUUID().toString().replaceAll("-", "");
-
         redisCache.setCacheObject(key, codeValue,5, TimeUnit.MINUTES);
         log.info("redis code: {}", codeValue);
 

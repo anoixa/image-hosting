@@ -22,6 +22,11 @@ public class AjaxResult<T> implements Serializable {
     public AjaxResult() {
     }
 
+    public AjaxResult(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     public int getCode() {
         return code;
     }
@@ -99,7 +104,7 @@ public class AjaxResult<T> implements Serializable {
     }
 
     public static <T> AjaxResult<T> error(int code, String msg) {
-        return restJson(code, msg, null);
+        return restJson(code, msg);
     }
 
     public static <T> AjaxResult<T> restJson(int code, String msg, T data) {
@@ -109,4 +114,12 @@ public class AjaxResult<T> implements Serializable {
         apiJson.setMsg(msg);
         return apiJson;
     }
+
+    public static <T> AjaxResult<T> restJson(int code, String msg) {
+        AjaxResult<T> apiJson = new AjaxResult<>();
+        apiJson.setCode(code);
+        apiJson.setMsg(msg);
+        return apiJson;
+    }
+
 }
