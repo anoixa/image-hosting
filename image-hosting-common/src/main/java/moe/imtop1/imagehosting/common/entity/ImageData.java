@@ -12,7 +12,7 @@ import moe.imtop1.imagehosting.common.entity.base.BaseEntity;
 @TableName("image_data")
 public class ImageData extends BaseEntity {
 
-    @TableId(type = IdType.INPUT)
+    @TableId(type = IdType.ASSIGN_ID)
     private String imageId;
 
     private String imageType;

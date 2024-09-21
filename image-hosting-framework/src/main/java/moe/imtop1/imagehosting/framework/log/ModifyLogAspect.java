@@ -58,7 +58,7 @@ public class ModifyLogAspect {
         try {
             List<Object> requestParams = getHttpReqArgs(joinPoint);
             if (requestParams.size() == 1) {
-                params = JsonUtil.toJSONString(requestParams.getFirst());
+                params = JsonUtil.toJSONString(requestParams.get(0));
             } else if (requestParams.size() > 1) {
                 params = JsonUtil.toJSONString(requestParams);
             }

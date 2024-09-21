@@ -11,7 +11,7 @@ import moe.imtop1.imagehosting.common.entity.base.BaseEntity;
 @TableName("config")
 public class Config extends BaseEntity {
 
-    @TableId(type = IdType.INPUT)
+    @TableId(type = IdType.ASSIGN_ID)
     private String configId;
 
     private String userId;
