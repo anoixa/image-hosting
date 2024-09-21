@@ -3,12 +3,13 @@ package moe.imtop1.imagehosting.common.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import moe.imtop1.imagehosting.common.entity.base.BaseEntity;
 
 /**角色表
  * @author shuomc
  */
 @TableName("roles")
-public class Roles {
+public class Roles extends BaseEntity {
     @TableId(type = IdType.ASSIGN_ID)
     private String rolesId;
 
