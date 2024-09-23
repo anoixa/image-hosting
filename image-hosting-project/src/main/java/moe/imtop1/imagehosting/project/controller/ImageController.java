@@ -1,6 +1,5 @@
 package moe.imtop1.imagehosting.project.controller;
 
-import moe.imtop1.imagehosting.common.dto.AjaxResult;
 import moe.imtop1.imagehosting.project.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
