@@ -60,6 +60,10 @@ subprojects {
 
         implementation group: 'cn.hutool', name: 'hutool-captcha', version: '5.8.32'
 
+        //image
+        implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-core', version: '3.11.0'
+        implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-webp', version: '3.11.0'
+
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }

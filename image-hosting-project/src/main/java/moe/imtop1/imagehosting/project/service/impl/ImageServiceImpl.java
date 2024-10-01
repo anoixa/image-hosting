@@ -28,11 +28,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author anoixa
+ */
 @Service
 @Slf4j
 public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implements ImageService {
@@ -44,21 +49,16 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
     private GlobalSettingsMapper globalSettingsMapper;
 
     @Override
-    public void updateImage(MultipartFile[] multipartFile, String strategyId) throws IOException {
+    public void updateImage(MultipartFile[] multipartFiles, String strategyId) throws IOException {
         // 查询原图保护和webp转换功能开关
         List<Config> globalSettingsConfig = globalSettingsMapper.selectList(null);
-        String imageProtectionSetting = globalSettingsConfig.stream()
-                .filter(n -> Constant.ORIGINAL_IMAGE_PROTECTION.equals(n.getConfigKey()))
-                .map(Config::getConfigValue)
-                .findFirst()
-                .orElse(null);
         String webpConversionSetting = globalSettingsConfig.stream()
                 .filter(n -> Constant.ORIGINAL_WEBP_CONVERSION.equals(n.getConfigKey()))
                 .map(Config::getConfigValue)
                 .findFirst()
-                .orElse(null);
+                .orElse("0");
 
-        if (StringUtils.isNull((strategyId))) {
+        if (StringUtils.isNull(strategyId)) {
             throw new SystemException(ErrorMsg.INVALID_STRATEGIES_TYPE);
         }
 
@@ -74,32 +74,73 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                 throw new IOException("Failed to create directory: " + uploadDir);
             }
 
-            for (MultipartFile file : multipartFile) {
-                BufferedImage image = ImageIO.read(file.getInputStream());
-
-                saveToLocal(file, uploadDir);
+            List<ImageData> list = new ArrayList<>();
+            for (MultipartFile file : multipartFiles) {
+                BufferedImage image = readImage(file);
+                String safeFileName = FileUtil.sanitizeFileName(file.getOriginalFilename());
                 int width = image.getWidth();
                 int height = image.getHeight();
 
+                //TODO 关系入库
+                boolean isWebp = "1".equals(webpConversionSetting);
+                if (isWebp) {
+
+                }
+
+                saveImageAsync(image, uploadDir, safeFileName, isWebp);
             }
         }
     }
 
     /**
-     * 储存到本地路径
-     * @param multipartFile 文件
+     * 从 MultipartFile 中读取图像
+     * @param file 上传的文件
+     * @return BufferedImage 对象
+     */
+    private BufferedImage readImage(MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            throw new IOException("File is empty: " + file.getOriginalFilename());
+        }
+
+        try (InputStream inputStream = file.getInputStream()) {
+            BufferedImage image = ImageIO.read(inputStream);
+            if (image == null) {
+                throw new IOException("Failed to decode image: " + file.getOriginalFilename());
+            }
+            return image;
+        }
+    }
+
+    /**
+     * 异步保存图像
+     * @param image 原图
+     * @param uploadDir 保存路径
+     * @param originalFileName 原文件名
+     * @param isWebP 是否保存为 WebP 格式
      */
     @Async(value = "saveExecutor")
-    protected void saveToLocal(MultipartFile multipartFile, String uploadDir) {
-        Path targetFilePath = Paths.get(uploadDir, multipartFile.getOriginalFilename());
-        File targetFile = targetFilePath.toFile();
+    protected void saveImageAsync(BufferedImage image, String uploadDir, String originalFileName, boolean isWebP) {
+        try {
+            if (originalFileName == null) {
+                log.warn("Invalid file name");
+                return;
+            }
 
-        try (FileOutputStream fos = new FileOutputStream(targetFile)) {
-            fos.write(multipartFile.getBytes());
-            log.info("文件上传成功: {}", targetFile.getAbsolutePath());
+            if (isWebP) {
+                // 转换为 WebP 格式并保存
+                String webpFileName = FileUtil.getFileNameWithoutExtension(originalFileName) + ".webp";
+                File webpFile = new File(uploadDir, webpFileName);
+                ImageIO.write(image, "webp", webpFile);
+                log.info("Image converted to WebP successfully: {}", webpFile.getAbsolutePath());
+            } else {
+                // 保存原图
+                String originalFileExt = FileUtil.getFileExtension(originalFileName);
+                File originalFile = new File(uploadDir, originalFileName);
+                ImageIO.write(image, originalFileExt, originalFile);
+                log.info("Original image saved successfully: {}", originalFile.getAbsolutePath());
+            }
         } catch (IOException e) {
-            log.error("文件上传失败: {}", e.getMessage());
-            throw new RuntimeException("文件上传失败", e);
+            log.error("Error saving image {}: {}", originalFileName, e.getMessage(), e);
         }
     }
 }

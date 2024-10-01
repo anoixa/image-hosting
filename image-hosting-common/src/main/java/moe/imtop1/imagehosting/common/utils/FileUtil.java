@@ -17,4 +17,29 @@ public class FileUtil {
         return "";
     }
 
+    /**
+     * 获取文件名（不带扩展名）
+     * @param fileName 文件名
+     * @return 文件名（不带扩展名）
+     */
+    public static String getFileNameWithoutExtension(String fileName) {
+        int lastDotIndex = fileName.lastIndexOf('.');
+        if (lastDotIndex == -1) {
+            return fileName;
+        }
+        return fileName.substring(0, lastDotIndex);
+    }
+
+    /**
+     * 清理文件名以防止路径遍历攻击
+     * @param fileName 用户提供的文件名
+     * @return 安全的文件名
+     */
+    public static String sanitizeFileName(String fileName) {
+        if (fileName == null) {
+            return "default_" + System.currentTimeMillis();
+        }
+        String cleanedFileName = fileName.replaceAll("[^a-zA-Z0-9._-]", "_");
+        return cleanedFileName.length() > 255 ? cleanedFileName.substring(0, 255) : cleanedFileName;
+    }
 }
