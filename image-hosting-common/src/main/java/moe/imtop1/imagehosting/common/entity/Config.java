@@ -59,4 +59,14 @@ public class Config extends BaseEntity {
     public void setConfigValue(String configValue) {
         this.configValue = configValue;
     }
+
+    @Override
+    public String toString() {
+        return "Config{" +
+                "configId='" + configId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", configKey='" + configKey + '\'' +
+                ", configValue='" + configValue + '\'' +
+                '}';
+    }
 }
