@@ -25,15 +25,15 @@ public class LoginController {
     }
 
     @DeleteMapping("/logout")
-    public AjaxResult<String> logout() {
+    public AjaxResult logout() {
         loginService.logout();
         return AjaxResult.success();
     }
 
     @GetMapping(value = "/getValidateCode")
-    public AjaxResult<ValidateCodeVo> getValidateCode() {
+    public AjaxResult getValidateCode() {
         ValidateCodeVo validateCodeVo = validateCodeService.getValidateCode();
 
-        return AjaxResult.build(validateCodeVo, ResultCodeEnum.SUCCESS);
+        return AjaxResult.success(validateCodeVo);
     }
 }
