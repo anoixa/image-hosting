@@ -8,7 +8,6 @@ import moe.imtop1.imagehosting.common.constant.ErrorMsg;
 import moe.imtop1.imagehosting.common.entity.Config;
 import moe.imtop1.imagehosting.common.entity.ImageData;
 import moe.imtop1.imagehosting.common.entity.Strategies;
-import moe.imtop1.imagehosting.common.enums.ResultCodeEnum;
 import moe.imtop1.imagehosting.common.enums.StrategiesEnum;
 import moe.imtop1.imagehosting.common.utils.FileUtil;
 import moe.imtop1.imagehosting.common.utils.StringUtils;
@@ -20,20 +19,15 @@ import moe.imtop1.imagehosting.project.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author anoixa
@@ -57,6 +51,11 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                 .map(Config::getConfigValue)
                 .findFirst()
                 .orElse("0");
+        String imageProtectionSetting = globalSettingsConfig.stream()
+                .filter(n -> Constant.ORIGINAL_IMAGE_PROTECTION.equals(n.getConfigKey()))
+                .map(Config::getConfigValue)
+                .findFirst()
+                .orElse("1");
 
         if (StringUtils.isNull(strategyId)) {
             throw new SystemException(ErrorMsg.INVALID_STRATEGIES_TYPE);
@@ -81,14 +80,29 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                 int width = image.getWidth();
                 int height = image.getHeight();
 
+                ImageData imageData = new ImageData();
+                imageData.setWidth(width);
+                imageData.setHeight(height);
+                imageData.setFileOriginalName(file.getOriginalFilename());
+                if ("1".equals(imageProtectionSetting)) {
+                    imageData.setKey(FileUtil.generateRandomString(8));
+                }
+                imageData.setFileSize((int) file.getSize());
+                imageData.setStrategyId(strategyId);
+
                 //TODO 关系入库
                 boolean isWebp = "1".equals(webpConversionSetting);
                 if (isWebp) {
-
+                    imageData.setFileExtension("webp");
+                } else {
+                    imageData.setFileExtension(FileUtil.getFileExtension(file.getOriginalFilename()));
                 }
 
                 saveImageAsync(image, uploadDir, safeFileName, isWebp);
+                list.add(imageData);
             }
+
+            imageMapper.insert(list);
         }
     }
 

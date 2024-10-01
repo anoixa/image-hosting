@@ -18,27 +18,38 @@ public class ImageData extends BaseEntity {
     private String imageType;
     private String imageUrl;
     private String userId;
-    private String sourceType;
+    private String strategyId;
     private String filePath;
     private String fileName;
+    private String fileOriginalName;
+    private String fileExtension;
     private Integer fileSize;
     private String description;
     private Boolean isPublic;
 
+    private Integer width;
+    private Integer height;
+    private String key;
+
     public ImageData() {
     }
 
-    public ImageData(String imageId, String imageType, String imageUrl, String userId, String sourceType, String filePath, String fileName, Integer fileSize, String description, Boolean isPublic) {
+    public ImageData(String imageId, String imageType, String imageUrl, String userId, String strategyId, String filePath, String fileName, String fileOriginalName, String fileExtension, Integer fileSize, String description, Boolean isPublic, Integer width, Integer height, String key) {
         this.imageId = imageId;
         this.imageType = imageType;
         this.imageUrl = imageUrl;
         this.userId = userId;
-        this.sourceType = sourceType;
+        this.strategyId = strategyId;
         this.filePath = filePath;
         this.fileName = fileName;
+        this.fileOriginalName = fileOriginalName;
+        this.fileExtension = fileExtension;
         this.fileSize = fileSize;
         this.description = description;
         this.isPublic = isPublic;
+        this.width = width;
+        this.height = height;
+        this.key = key;
     }
 
     public String getImageId() {
@@ -73,12 +84,12 @@ public class ImageData extends BaseEntity {
         this.userId = userId;
     }
 
-    public String getSourceType() {
-        return sourceType;
+    public String getStrategyId() {
+        return strategyId;
     }
 
-    public void setSourceType(String sourceType) {
-        this.sourceType = sourceType;
+    public void setStrategyId(String strategyId) {
+        this.strategyId = strategyId;
     }
 
     public String getFilePath() {
@@ -95,6 +106,22 @@ public class ImageData extends BaseEntity {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getFileOriginalName() {
+        return fileOriginalName;
+    }
+
+    public void setFileOriginalName(String fileOriginalName) {
+        this.fileOriginalName = fileOriginalName;
+    }
+
+    public String getFileExtension() {
+        return fileExtension;
+    }
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
     }
 
     public Integer getFileSize() {
@@ -119,5 +146,29 @@ public class ImageData extends BaseEntity {
 
     public void setPublic(Boolean aPublic) {
         isPublic = aPublic;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
