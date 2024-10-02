@@ -46,7 +46,7 @@ subprojects {
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '3.3.3'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.3.3'
 
-        runtimeOnly 'org.postgresql:postgresql'
+        implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.4'
         implementation group: 'io.minio', name: 'minio', version: '8.5.12'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.3.3'
         //implementation group: 'org.redisson', name: 'redisson-spring-boot-starter', version: '3.36.0'

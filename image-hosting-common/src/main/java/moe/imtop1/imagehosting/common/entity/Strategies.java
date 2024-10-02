@@ -10,11 +10,12 @@ import java.util.Map;
 /**
  * @author anoixa
  */
-@TableName("Strategies")
+@TableName("strategies")
 public class Strategies extends BaseEntity {
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
     private String userId;
+    //FIXME 映射问题
     private Map<String, Object> config;
     private String type;
 

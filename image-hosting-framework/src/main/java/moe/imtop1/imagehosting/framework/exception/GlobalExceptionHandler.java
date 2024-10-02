@@ -24,7 +24,6 @@ public class GlobalExceptionHandler {
         return AjaxResult.error(500, e.getMessage() != null ? e.getMessage() : "未知错误") ;
     }
 
-
     //自定义异常处理
     @ExceptionHandler(SystemException.class)
     @ResponseBody

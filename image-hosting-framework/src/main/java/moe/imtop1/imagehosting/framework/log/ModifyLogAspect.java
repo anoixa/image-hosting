@@ -79,7 +79,7 @@ public class ModifyLogAspect {
         return result;
     }
 
-    public Object proceed(ProceedingJoinPoint joinPoint, String methodName, String uri, String params, String userName) throws Throwable {
+    private Object proceed(ProceedingJoinPoint joinPoint, String methodName, String uri, String params, String userName) throws Throwable {
         Object result = null;
         log.info("[开始]方法名:{} ---用户:{} ---地址:{}  ---入参:{}", methodName, userName, uri, params);
         try {

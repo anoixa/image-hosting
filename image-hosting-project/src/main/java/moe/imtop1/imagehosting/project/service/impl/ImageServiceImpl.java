@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author anoixa
@@ -67,7 +68,8 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         String type = strategies.getType();
 
         if (StrategiesEnum.LOCAL.getCode().equals(type)) {
-            String uploadDir = (String) strategies.getConfig().get("path");
+            Map<String, Object> config = strategies.getConfig();
+            String uploadDir = (String) config.get("path");
             File targetDir = new File(uploadDir);
             if (!targetDir.exists() && !targetDir.mkdirs()) {
                 throw new IOException("Failed to create directory: " + uploadDir);

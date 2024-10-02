@@ -69,7 +69,6 @@ public class JsonUtil {
         return t;
     }
 
-
     /**=================================以下是将对象转为JSON=====================================*/
     public static String toJSONString(Object object) {
         String jsonString = null;
