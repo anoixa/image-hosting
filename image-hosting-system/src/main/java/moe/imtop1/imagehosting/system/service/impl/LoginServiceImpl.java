@@ -14,11 +14,13 @@ import moe.imtop1.imagehosting.system.domain.vo.LoginVO;
 import moe.imtop1.imagehosting.system.mapper.UserInfoMapper;
 import moe.imtop1.imagehosting.system.service.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 @RequiredArgsConstructor
 @Service
+//@Primary
 public class LoginServiceImpl implements ILoginService {
     private final UserInfoMapper userInfoMapper;
     private final RedisCache redisCache;
