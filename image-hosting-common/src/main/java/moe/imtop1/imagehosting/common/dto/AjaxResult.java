@@ -13,7 +13,7 @@ import java.util.HashMap;
  * 操作消息提醒
  * @author anoixa
  */
-public class AjaxResult extends HashMap<String, Object> {
+public class AjaxResult extends HashMap<String, Object> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

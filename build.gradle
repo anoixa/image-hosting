@@ -31,6 +31,10 @@ allprojects {
     }
 }
 
+dependencyManagement {
+
+}
+
 
 subprojects {
     // 配置所有子项目共享的依赖和配置
