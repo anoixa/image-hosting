@@ -1,6 +1,7 @@
 package moe.imtop1.imagehosting.common.utils;
 
 import cn.hutool.core.lang.UUID;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -11,8 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 /**
  * @author anoixa
  */
+@UtilityClass
 public class TraceUtil {
-
     /**
      * 当traceId为空时，显示的traceId。随意。
      */

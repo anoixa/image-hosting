@@ -19,6 +19,7 @@ import moe.imtop1.imagehosting.system.domain.Config;
 import moe.imtop1.imagehosting.system.mapper.GlobalSettingsMapper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -42,6 +43,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
     private final GlobalSettingsMapper globalSettingsMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateImage(MultipartFile[] multipartFiles, String strategyId) throws IOException {
         // 查询原图保护和webp转换功能开关
         List<Config> globalSettingsConfig = globalSettingsMapper.selectList(null);
@@ -89,6 +91,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                 }
                 imageData.setFileSize((int) file.getSize());
                 imageData.setStrategyId(strategyId);
+                imageData.setImageType(FileUtil.detectImageType(file));
 
                 //TODO 关系入库
                 boolean isWebp = "1".equals(webpConversionSetting);

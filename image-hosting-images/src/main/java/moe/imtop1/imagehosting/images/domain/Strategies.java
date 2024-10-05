@@ -16,6 +16,7 @@ public class Strategies extends BaseEntity {
     private String id;
     private String userId;
     //FIXME 映射问题
+
     private Map<String, Object> config;
     private String type;
 

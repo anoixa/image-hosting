@@ -2,6 +2,7 @@ package moe.imtop1.imagehosting.starter;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,6 +15,7 @@ import static java.util.TimeZone.getTimeZone;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"moe.imtop1.imagehosting"})
+@MapperScan(basePackages = {"moe.imtop1.imagehosting.images.mapper", "moe.imtop1.imagehosting.system.mapper"})
 @EnableAspectJAutoProxy
 @Slf4j
 public class Application {
