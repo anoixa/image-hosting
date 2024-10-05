@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group = 'moe.imtop1'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'cn.dev33:sa-token-spring-boot3-starter'
+    implementation 'cn.dev33:sa-token-jwt'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+test {
+    useJUnitPlatform()
+}
