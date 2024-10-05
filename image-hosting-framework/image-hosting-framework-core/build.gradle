@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group = 'moe.imtop1'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'com.twelvemonkeys.imageio:imageio-core'
+    implementation 'com.twelvemonkeys.imageio:imageio-webp'
+
+    implementation group: 'cn.hutool', name: 'hutool-captcha', version: '5.8.32'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation project(':image-hosting-common')
+}
+
+test {
+    useJUnitPlatform()
+}

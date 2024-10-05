@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group = 'moe.imtop1'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation project(':image-hosting-common')
+    implementation project(':image-hosting-framework:image-hosting-framework-redis')
+    implementation project(':image-hosting-framework:image-hosting-framework-security')
+    implementation project(':image-hosting-framework:image-hosting-framework-datasource')
+    implementation project(':image-hosting-framework:image-hosting-framework-core')
+}
+
+test {
+    useJUnitPlatform()
+}

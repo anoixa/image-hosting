@@ -8,6 +8,8 @@ group = 'moe.imtop1'
 version = '0.0.1-SNAPSHOT'
 
 java {
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
@@ -29,6 +31,10 @@ allprojects {
     }
 }
 
+dependencyManagement {
+
+}
+
 
 subprojects {
     // 配置所有子项目共享的依赖和配置
@@ -44,7 +50,7 @@ subprojects {
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '3.3.3'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.3.3'
 
-        runtimeOnly 'org.postgresql:postgresql'
+        implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.4'
         implementation group: 'io.minio', name: 'minio', version: '8.5.12'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.3.3'
         //implementation group: 'org.redisson', name: 'redisson-spring-boot-starter', version: '3.36.0'
@@ -57,6 +63,10 @@ subprojects {
         implementation group: 'cn.dev33', name: 'sa-token-jwt', version: '1.39.0'
 
         implementation group: 'cn.hutool', name: 'hutool-captcha', version: '5.8.32'
+
+        //image
+        implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-core', version: '3.11.0'
+        implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-webp', version: '3.11.0'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group = 'moe.imtop1'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.postgresql:postgresql'
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter'
+    implementation 'com.github.yulichang:mybatis-plus-join-boot-starter'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+test {
+    useJUnitPlatform()
+}
