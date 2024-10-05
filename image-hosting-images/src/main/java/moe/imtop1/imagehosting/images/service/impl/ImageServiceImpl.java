@@ -2,6 +2,7 @@ package moe.imtop1.imagehosting.images.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.constant.Constant;
 import moe.imtop1.imagehosting.common.constant.ErrorMsg;
@@ -16,7 +17,6 @@ import moe.imtop1.imagehosting.images.mapper.StrategiesMapper;
 import moe.imtop1.imagehosting.images.service.ImageService;
 import moe.imtop1.imagehosting.system.domain.Config;
 import moe.imtop1.imagehosting.system.mapper.GlobalSettingsMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,26 +35,24 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implements ImageService {
-    @Autowired
-    private ImageMapper imageMapper;
-    @Autowired
-    private StrategiesMapper strategiesMapper;
-    @Autowired
-    private GlobalSettingsMapper globalSettingsMapper;
+    private final ImageMapper imageMapper;
+    private final StrategiesMapper strategiesMapper;
+    private final GlobalSettingsMapper globalSettingsMapper;
 
     @Override
     public void updateImage(MultipartFile[] multipartFiles, String strategyId) throws IOException {
         // 查询原图保护和webp转换功能开关
         List<Config> globalSettingsConfig = globalSettingsMapper.selectList(null);
         String webpConversionSetting = globalSettingsConfig.stream()
-                .filter(n -> Constant.ORIGINAL_WEBP_CONVERSION.equals(n.getConfigKey()))
-                .map(Config::getConfigValue)
+                .map(Config::getConfigKey)
+                .filter(Constant.ORIGINAL_WEBP_CONVERSION::equals)
                 .findFirst()
                 .orElse("0");
         String imageProtectionSetting = globalSettingsConfig.stream()
-                .filter(n -> Constant.ORIGINAL_IMAGE_PROTECTION.equals(n.getConfigKey()))
                 .map(Config::getConfigValue)
+                .filter(Constant.ORIGINAL_IMAGE_PROTECTION::equals)
                 .findFirst()
                 .orElse("1");
 

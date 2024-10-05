@@ -1,4 +1,4 @@
-package moe.imtop1.imagehosting.images.domain;
+package moe.imtop1.imagehosting.system.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

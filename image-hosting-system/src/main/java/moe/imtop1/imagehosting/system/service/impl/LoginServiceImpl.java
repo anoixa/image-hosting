@@ -20,7 +20,7 @@ import org.springframework.util.ObjectUtils;
 
 @RequiredArgsConstructor
 @Service
-//@Primary
+@Primary
 public class LoginServiceImpl implements ILoginService {
     private final UserInfoMapper userInfoMapper;
     private final RedisCache redisCache;

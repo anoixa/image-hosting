@@ -13,7 +13,7 @@ import static java.time.ZoneId.of;
 import static java.util.TimeZone.getTimeZone;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"moe.imtop1.imagehosting.framework"})
+@ComponentScan(basePackages = {"moe.imtop1.imagehosting"})
 @EnableAspectJAutoProxy
 @Slf4j
 public class Application {

@@ -2,6 +2,7 @@ package moe.imtop1.imagehosting.system.service.impl;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.framework.utils.RedisCache;
 import moe.imtop1.imagehosting.system.domain.vo.ValidateCodeVo;
@@ -19,9 +20,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 @Primary
+@RequiredArgsConstructor
 public class ValidateCodeServiceImpl implements IValidateCodeService {
-    @Autowired
-    private RedisCache redisCache;
+    private final RedisCache redisCache;
 
     @Override
     public ValidateCodeVo getValidateCode() {
