@@ -2,10 +2,12 @@ package moe.imtop1.imagehosting.images.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.constant.Constant;
 import moe.imtop1.imagehosting.common.constant.ErrorMsg;
+import moe.imtop1.imagehosting.common.enums.BooleanEnum;
 import moe.imtop1.imagehosting.framework.exception.SystemException;
 import moe.imtop1.imagehosting.images.domain.ImageData;
 import moe.imtop1.imagehosting.images.domain.Strategies;
@@ -45,8 +47,9 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateImage(MultipartFile[] multipartFiles, String strategyId) throws IOException {
-        // 查询原图保护和webp转换功能开关
+        // 查询系统全局设置
         List<Config> globalSettingsConfig = globalSettingsMapper.selectList(null);
+        // 原图保护和webp转换功能开关
         String webpConversionSetting = globalSettingsConfig.stream()
                 .map(Config::getConfigKey)
                 .filter(Constant.ORIGINAL_WEBP_CONVERSION::equals)
@@ -57,11 +60,18 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                 .filter(Constant.ORIGINAL_IMAGE_PROTECTION::equals)
                 .findFirst()
                 .orElse("1");
+        // 全局url
+        String urlSetting = globalSettingsConfig.stream()
+                .map(Config::getConfigValue)
+                .filter(Constant.ORIGINAL_WEBSITE_URL::equals)
+                .findFirst()
+                .orElse("1");
 
         if (StringUtils.isNull(strategyId)) {
             throw new SystemException(ErrorMsg.INVALID_STRATEGIES_TYPE);
         }
 
+        // 查询储存策略
         Strategies strategies = strategiesMapper.selectOne(
                 new LambdaQueryWrapper<Strategies>().eq(Strategies::getId, strategyId)
         );
@@ -79,23 +89,33 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
             for (MultipartFile file : multipartFiles) {
                 BufferedImage image = readImage(file);
                 String safeFileName = FileUtil.sanitizeFileName(file.getOriginalFilename());
+                String endFileName = null;
                 int width = image.getWidth();
                 int height = image.getHeight();
 
+                // TODO 入库文件名和url（未完成）
                 ImageData imageData = new ImageData();
                 imageData.setWidth(width);
                 imageData.setHeight(height);
                 imageData.setFileOriginalName(file.getOriginalFilename());
-                if ("1".equals(imageProtectionSetting)) {
+                if (BooleanEnum.TRUE.getValue().equals(imageProtectionSetting)) {
                     imageData.setKey(FileUtil.generateRandomString(8));
                 }
+                imageData.setKey(FileUtil.generateRandomString(8));
                 imageData.setFileSize((int) file.getSize());
                 imageData.setStrategyId(strategyId);
                 imageData.setImageType(FileUtil.detectImageType(file));
+                imageData.setImageUrl(urlSetting + safeFileName);
+                if (BooleanEnum.TRUE.getValue().equals(imageProtectionSetting)) {
+                    String key = FileUtil.generateRandomString(8);
+                    imageData.setKey(key);
+                    imageData.setImageUrl(urlSetting + key + ".webp");
+                } else {
+                    imageData.setImageUrl(urlSetting + safeFileName);
+                }
 
-                //TODO 关系入库
-                boolean isWebp = "1".equals(webpConversionSetting);
-                if (isWebp) {
+                boolean isWebp = BooleanEnum.TRUE.getValue().equals(webpConversionSetting);
+                if (BooleanEnum.TRUE.getValue().equals(webpConversionSetting)) {
                     imageData.setFileExtension("webp");
                 } else {
                     imageData.setFileExtension(FileUtil.getFileExtension(file.getOriginalFilename()));
