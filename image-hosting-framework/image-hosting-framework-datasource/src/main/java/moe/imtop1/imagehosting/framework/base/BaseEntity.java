@@ -1,4 +1,4 @@
-package moe.imtop1.imagehosting.common.entity.base;
+package moe.imtop1.imagehosting.framework.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

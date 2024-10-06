@@ -3,7 +3,7 @@ package moe.imtop1.imagehosting.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import moe.imtop1.imagehosting.common.entity.base.BaseEntity;
+import moe.imtop1.imagehosting.framework.base.BaseEntity;
 
 /**
  * @author anoixa

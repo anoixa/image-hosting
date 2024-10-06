@@ -1,6 +1,6 @@
 package moe.imtop1.imagehosting.framework.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import moe.imtop1.imagehosting.common.utils.JsonUtil;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
@@ -23,12 +23,11 @@ import java.util.Map;
 @SuppressWarnings(value = { "unchecked" })
 public class JsonMapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Map<String, Object> parameter, JdbcType jdbcType) throws SQLException {
         try {
-            ps.setObject(i, objectMapper.writeValueAsString(parameter));
+            String jsonString = JsonUtil.toJSONString(parameter);
+            ps.setObject(i, jsonString);
         } catch (Exception e) {
             throw new SQLException("Error converting map to JSON", e);
         }
@@ -38,7 +37,7 @@ public class JsonMapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
     public Map<String, Object> getNullableResult(ResultSet rs, String columnName) throws SQLException {
         try {
             String json = rs.getString(columnName);
-            return json == null ? null : objectMapper.readValue(json, Map.class);
+            return json == null ? null : JsonUtil.parseObject(json, Map.class);
         } catch (Exception e) {
             throw new SQLException("Error converting JSON to map", e);
         }
@@ -48,7 +47,7 @@ public class JsonMapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
     public Map<String, Object> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         try {
             String json = rs.getString(columnIndex);
-            return json == null ? null : objectMapper.readValue(json, Map.class);
+            return json == null ? null : JsonUtil.parseObject(json, Map.class);
         } catch (Exception e) {
             throw new SQLException("Error converting JSON to map", e);
         }
@@ -58,7 +57,7 @@ public class JsonMapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
     public Map<String, Object> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         try {
             String json = cs.getString(columnIndex);
-            return json == null ? null : objectMapper.readValue(json, Map.class);
+            return json == null ? null : JsonUtil.parseObject(json, Map.class);
         } catch (Exception e) {
             throw new SQLException("Error converting JSON to map", e);
         }
