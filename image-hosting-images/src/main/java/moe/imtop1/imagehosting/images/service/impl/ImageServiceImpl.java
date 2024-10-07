@@ -2,7 +2,6 @@ package moe.imtop1.imagehosting.images.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.constant.Constant;
@@ -13,7 +12,7 @@ import moe.imtop1.imagehosting.images.domain.ImageData;
 import moe.imtop1.imagehosting.images.domain.Strategies;
 import moe.imtop1.imagehosting.common.enums.StrategiesEnum;
 import moe.imtop1.imagehosting.common.utils.FileUtil;
-import moe.imtop1.imagehosting.common.utils.StringUtils;
+import moe.imtop1.imagehosting.common.utils.StringUtil;
 import moe.imtop1.imagehosting.images.mapper.ImageMapper;
 import moe.imtop1.imagehosting.images.mapper.StrategiesMapper;
 import moe.imtop1.imagehosting.images.service.ImageService;
@@ -67,7 +66,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                 .findFirst()
                 .orElse("1");
 
-        if (StringUtils.isNull(strategyId)) {
+        if (StringUtil.isNull(strategyId)) {
             throw new SystemException(ErrorMsg.INVALID_STRATEGIES_TYPE);
         }
 

@@ -4,7 +4,7 @@ import cn.dev33.satoken.exception.NotLoginException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.dto.AjaxResult;
-import moe.imtop1.imagehosting.common.utils.StringUtils;
+import moe.imtop1.imagehosting.common.utils.StringUtil;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public AjaxResult error(SystemException e, HttpServletResponse response) {
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        if (StringUtils.isNull(e.getCode())) {
+        if (StringUtil.isNull(e.getCode())) {
             return AjaxResult.error(e.getMessage());
         }
         return AjaxResult.error(e.getCode(), e.getMessage());

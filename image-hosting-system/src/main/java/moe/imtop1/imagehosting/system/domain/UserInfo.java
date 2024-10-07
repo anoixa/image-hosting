@@ -1,16 +1,18 @@
 package moe.imtop1.imagehosting.system.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import moe.imtop1.imagehosting.framework.base.BaseEntity;
+import moe.imtop1.imagehosting.framework.handler.EncryptTypeHandler;
 
 
 /**
  * 用户表
  * @author anoixa
  */
-@TableName("user_info")
+@TableName(value = "user_info", autoResultMap = true)
 public class UserInfo extends BaseEntity {
 
     @TableId(type = IdType.ASSIGN_ID)
@@ -18,6 +20,7 @@ public class UserInfo extends BaseEntity {
 
     private String userName;
     private String password;
+    @TableField(typeHandler = EncryptTypeHandler.class)
     private String userEmail;
     private String userRole;
 
@@ -70,5 +73,16 @@ public class UserInfo extends BaseEntity {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userRole='" + userRole + '\'' +
+                '}';
     }
 }

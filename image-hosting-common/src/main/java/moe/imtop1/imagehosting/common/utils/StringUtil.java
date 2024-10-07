@@ -1,5 +1,6 @@
 package moe.imtop1.imagehosting.common.utils;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.experimental.UtilityClass;
 
 import java.util.*;
@@ -10,7 +11,7 @@ import java.util.*;
  * @author anoixa
  */
 @UtilityClass
-public class StringUtils extends org.apache.commons.lang3.StringUtils
+public class StringUtil extends StrUtil
 {
     /** 空字符串 */
     private static final String NULL_STR = "";
@@ -245,17 +246,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
      */
     public static final List<String> str2List(String str, String sep, boolean filterBlank, boolean trim) {
         List<String> list = new ArrayList<String>();
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtil.isEmpty(str)) {
             return list;
         }
 
         // 过滤空白字符串
-        if (filterBlank && StringUtils.isBlank(str)) {
+        if (filterBlank && StringUtil.isBlank(str)) {
             return list;
         }
         String[] split = str.split(sep);
         for (String string : split) {
-            if (filterBlank && StringUtils.isBlank(string)) {
+            if (filterBlank && StringUtil.isBlank(string)) {
                 continue;
             }
             if (trim) {
