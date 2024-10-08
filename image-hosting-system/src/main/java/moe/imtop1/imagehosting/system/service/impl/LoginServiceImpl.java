@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import moe.imtop1.imagehosting.common.enums.ResultCodeEnum;
 import moe.imtop1.imagehosting.framework.domain.LoginUser;
 import moe.imtop1.imagehosting.framework.exception.SystemException;
+import moe.imtop1.imagehosting.framework.utils.EncryptUtil;
 import moe.imtop1.imagehosting.framework.utils.RedisCache;
 import moe.imtop1.imagehosting.framework.utils.SecurityUtil;
 import moe.imtop1.imagehosting.system.domain.UserInfo;
@@ -50,7 +51,7 @@ public class LoginServiceImpl implements ILoginService {
         }
 
         // 校验密码
-        if (!BCrypt.checkpw(loginDTO.getPassword(), userInfo.getPassword())) {
+        if (!EncryptUtil.verifyArgon2idHash(loginDTO.getPassword(), userInfo.getPassword())) {
             throw new SystemException(ResultCodeEnum.LOGIN_ERROR);
         }
 

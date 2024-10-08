@@ -20,9 +20,9 @@ public class AppTest {
     public void insertNewUser() {
         UserInfo userInfo = new UserInfo();
 
-        userInfo.setPassword("123456");
-        userInfo.setUserName("test");
-        userInfo.setUserEmail("test@test.com");
+        userInfo.setPassword(EncryptUtil.hashWithArgon2id("123456"));
+        userInfo.setUserName("anoixa");
+        userInfo.setUserEmail("anoixa@imtop1.moe");
 
         userInfoMapper.insert(userInfo);
     }

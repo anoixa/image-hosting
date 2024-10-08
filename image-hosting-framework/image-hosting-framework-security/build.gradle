@@ -12,6 +12,8 @@ repositories {
 dependencies {
     implementation 'cn.dev33:sa-token-spring-boot3-starter'
     implementation 'cn.dev33:sa-token-jwt'
+    implementation 'org.bouncycastle:bcprov-jdk18on'
+
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
