@@ -6,6 +6,10 @@ import cn.dev33.satoken.stp.StpUtil;
 import lombok.experimental.UtilityClass;
 import moe.imtop1.imagehosting.framework.domain.LoginUser;
 
+/**
+ * sa-token工具类
+ * @author anoixa
+ */
 @UtilityClass
 public class SecurityUtil {
     public static final String LOGIN_USER_KEY = "loginUser";

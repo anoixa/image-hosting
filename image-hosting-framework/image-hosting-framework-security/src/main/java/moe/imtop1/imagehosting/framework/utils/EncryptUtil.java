@@ -100,12 +100,14 @@ public class EncryptUtil {
 
         generator.generateBytes(password.getBytes(StandardCharsets.UTF_8), hash, 0, hash.length);
 
-        return String.format("$argon2id$v=19$m=%d,t=%d,p=%d$%s$%s",
+        return String.format(
+                "$argon2id$v=19$m=%d,t=%d,p=%d$%s$%s",
                 MEMORY,
                 ITERATIONS,
                 PARALLELISM,
                 Base64.getEncoder().encodeToString(salt),
-                Base64.getEncoder().encodeToString(hash));
+                Base64.getEncoder().encodeToString(hash)
+        );
     }
 
     /**

@@ -1,6 +1,5 @@
 package moe.imtop1.imagehosting.system.service.impl;
 
-import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
@@ -30,7 +29,6 @@ import org.springframework.util.ObjectUtils;
 public class LoginServiceImpl implements ILoginService {
     private final UserInfoMapper userInfoMapper;
     private final RedisCache redisCache;
-
 
     @Override
     public LoginVO login(LoginDTO loginDTO) {

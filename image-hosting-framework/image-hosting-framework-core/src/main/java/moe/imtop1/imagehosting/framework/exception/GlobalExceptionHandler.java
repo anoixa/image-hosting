@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     public AjaxResult error(Exception e, HttpServletResponse response){
         log.error(e.getMessage());
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        return AjaxResult.error(500, e.getMessage() != null ? e.getMessage() : "未知错误") ;
+        return AjaxResult.error(500, "服务器内部错误") ;
     }
 
     //自定义异常处理

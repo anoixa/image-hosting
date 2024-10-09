@@ -20,7 +20,7 @@ public class AppTest {
     public void insertNewUser() {
         UserInfo userInfo = new UserInfo();
 
-        userInfo.setPassword(EncryptUtil.hashWithArgon2id("123456"));
+        userInfo.setPassword(EncryptUtil.hashWithArgon2id("root"));
         userInfo.setUserName("anoixa");
         userInfo.setUserEmail("anoixa@imtop1.moe");
 
@@ -39,7 +39,7 @@ public class AppTest {
 
     @Test
     public void testEncryptDecrypt() {
-        String originalText = "anoixa@imtop1.moe";
+        String originalText = "http://localhost:8080";
         System.out.println(EncryptUtil.encrypt(originalText));
 
         // 加密
@@ -52,5 +52,18 @@ public class AppTest {
 
         // 检查解密结果是否与原始文本相同
         assertEquals(originalText, decryptedText);
+    }
+
+    @Test
+    public void testArgon2id() {
+        String originalText = "root";
+        String hash = "$argon2id$v=19$m=65540,t=3,p=4$zay4P5662LPdp+UlJ20+Vw==$jcFv+nauddxEMR5Gx5UVY7nhJ8pKVaSaBjDSdx5ri84=";
+
+        // 加密
+        String encryptedText = EncryptUtil.hashWithArgon2id(originalText);
+        System.out.println("Encrypted hash: " + encryptedText);
+
+
+        assertEquals(hash, encryptedText);
     }
 }

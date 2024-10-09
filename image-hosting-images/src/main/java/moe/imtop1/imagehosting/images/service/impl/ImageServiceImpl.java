@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.constant.Constant;
 import moe.imtop1.imagehosting.common.constant.ErrorMsg;
 import moe.imtop1.imagehosting.common.enums.BooleanEnum;
+import moe.imtop1.imagehosting.framework.domain.LoginUser;
 import moe.imtop1.imagehosting.framework.exception.SystemException;
+import moe.imtop1.imagehosting.framework.utils.SecurityUtil;
 import moe.imtop1.imagehosting.images.domain.ImageData;
 import moe.imtop1.imagehosting.images.domain.Strategies;
 import moe.imtop1.imagehosting.common.enums.StrategiesEnum;
@@ -46,6 +48,8 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateImage(MultipartFile[] multipartFiles, String strategyId) throws IOException {
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+
         // 查询系统全局设置
         List<Config> globalSettingsConfig = globalSettingsMapper.selectList(null);
         // 原图保护和webp转换功能开关
@@ -94,6 +98,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
 
                 // TODO 入库文件名和url（未完成）
                 ImageData imageData = new ImageData();
+                imageData.setUserId(loginUser.getUserId());
                 imageData.setWidth(width);
                 imageData.setHeight(height);
                 imageData.setFileOriginalName(file.getOriginalFilename());
@@ -104,15 +109,11 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                 imageData.setFileSize((int) file.getSize());
                 imageData.setStrategyId(strategyId);
                 imageData.setImageType(FileUtil.detectImageType(file));
-                imageData.setImageUrl(urlSetting + safeFileName);
+                //imageData.setImageUrl(urlSetting + safeFileName);
                 if (BooleanEnum.TRUE.getValue().equals(imageProtectionSetting)) {
                     String key = FileUtil.generateRandomString(8);
                     imageData.setKey(key);
-                    imageData.setImageUrl(urlSetting + key + ".webp");
-                } else {
-                    imageData.setImageUrl(urlSetting + safeFileName);
                 }
-
                 boolean isWebp = BooleanEnum.TRUE.getValue().equals(webpConversionSetting);
                 if (BooleanEnum.TRUE.getValue().equals(webpConversionSetting)) {
                     imageData.setFileExtension("webp");
