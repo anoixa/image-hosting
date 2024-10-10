@@ -48,13 +48,17 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateImage(MultipartFile[] multipartFiles, String strategyId) throws IOException {
+        if (multipartFiles == null || multipartFiles.length == 0) {
+            throw new SystemException("上传图片不能为空");
+        }
+
         LoginUser loginUser = SecurityUtil.getLoginUser();
 
         // 查询系统全局设置
         List<Config> globalSettingsConfig = globalSettingsMapper.selectList(null);
         // 原图保护和webp转换功能开关
         String webpConversionSetting = globalSettingsConfig.stream()
-                .map(Config::getConfigKey)
+                .map(Config::getConfigValue)
                 .filter(Constant.ORIGINAL_WEBP_CONVERSION::equals)
                 .findFirst()
                 .orElse("0");
@@ -106,7 +110,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                     imageData.setKey(FileUtil.generateRandomString(8));
                 }
                 imageData.setKey(FileUtil.generateRandomString(8));
-                imageData.setFileSize((int) file.getSize());
+                imageData.setFileSize(file.getSize());
                 imageData.setStrategyId(strategyId);
                 imageData.setImageType(FileUtil.detectImageType(file));
                 //imageData.setImageUrl(urlSetting + safeFileName);

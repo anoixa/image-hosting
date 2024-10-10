@@ -18,8 +18,8 @@ public class ImageController {
     private ImageService imageService;
 
     @PostMapping("/update")
-    public AjaxResult uploadFile(@RequestParam("file") MultipartFile[] multipartFile,
-                                 @RequestParam("strategyId") String strategyId) throws IOException {
+    public AjaxResult uploadFile(@RequestParam(value = "file") MultipartFile[] multipartFile,
+                                 @RequestParam(value = "strategyId",required = false) String strategyId) throws IOException {
         imageService.updateImage(multipartFile, strategyId);
 
         return AjaxResult.success();

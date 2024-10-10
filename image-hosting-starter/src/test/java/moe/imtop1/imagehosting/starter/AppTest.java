@@ -1,7 +1,9 @@
 package moe.imtop1.imagehosting.starter;
 
 import moe.imtop1.imagehosting.framework.utils.EncryptUtil;
+import moe.imtop1.imagehosting.system.domain.Config;
 import moe.imtop1.imagehosting.system.domain.UserInfo;
+import moe.imtop1.imagehosting.system.mapper.GlobalSettingsMapper;
 import moe.imtop1.imagehosting.system.mapper.UserInfoMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AppTest {
     @Autowired
     private UserInfoMapper userInfoMapper;
+    @Autowired
+    private GlobalSettingsMapper globalSettingsMapper;
 
     @Test
     public void insertNewUser() {
@@ -65,5 +69,14 @@ public class AppTest {
 
 
         assertEquals(hash, encryptedText);
+    }
+
+    @Test
+    public void testConfig() {
+        List<Config> configs = globalSettingsMapper.selectList(null);
+
+        for (Config config : configs) {
+            System.out.println(config.toString());
+        }
     }
 }

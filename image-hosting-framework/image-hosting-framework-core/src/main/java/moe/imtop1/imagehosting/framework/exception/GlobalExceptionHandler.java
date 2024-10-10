@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
     public AjaxResult handleNotLoginException(NotLoginException e, HttpServletResponse response) {
         log.error("未登录异常: {}", e.getMessage(), e);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        return AjaxResult.error(401, "未能读取到有效 token");
+        return AjaxResult.error(401, "用户未登录");
     }
 
 }

@@ -23,7 +23,7 @@ public class ImageData extends BaseEntity {
     private String fileName;
     private String fileOriginalName;
     private String fileExtension;
-    private Integer fileSize;
+    private Long fileSize;
     private String description;
     private Boolean isPublic;
 
@@ -34,7 +34,7 @@ public class ImageData extends BaseEntity {
     public ImageData() {
     }
 
-    public ImageData(String imageId, String imageType, String imageUrl, String userId, String strategyId, String filePath, String fileName, String fileOriginalName, String fileExtension, Integer fileSize, String description, Boolean isPublic, Integer width, Integer height, String key) {
+    public ImageData(String imageId, String imageType, String imageUrl, String userId, String strategyId, String filePath, String fileName, String fileOriginalName, String fileExtension, Long fileSize, String description, Boolean isPublic, Integer width, Integer height, String key) {
         this.imageId = imageId;
         this.imageType = imageType;
         this.imageUrl = imageUrl;
@@ -124,11 +124,11 @@ public class ImageData extends BaseEntity {
         this.fileExtension = fileExtension;
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Integer fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 
