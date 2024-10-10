@@ -1,16 +1,20 @@
 package moe.imtop1.imagehosting.common.utils;
 
+import cn.hutool.core.util.StrUtil;
+import lombok.experimental.UtilityClass;
+
 import java.util.*;
 
 /**
  * 字符串工具类
- * 
  *
+ * @author anoixa
  */
-public class StringUtils extends org.apache.commons.lang3.StringUtils
+@UtilityClass
+public class StringUtil extends StrUtil
 {
     /** 空字符串 */
-    private static final String NULLSTR = "";
+    private static final String NULL_STR = "";
 
     /** 下划线 */
     private static final char SEPARATOR = '_';
@@ -100,7 +104,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
      */
     public static boolean isEmpty(String str)
     {
-        return isNull(str) || NULLSTR.equals(str.trim());
+        return isNull(str) || NULL_STR.equals(str.trim());
     }
 
     /**
@@ -164,7 +168,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
      */
     public static String substring(final String str, int start) {
         if (str == null) {
-            return NULLSTR;
+            return NULL_STR;
         }
 
         if (start < 0) {
@@ -175,7 +179,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
             start = 0;
         }
         if (start > str.length()) {
-            return NULLSTR;
+            return NULL_STR;
         }
 
         return str.substring(start);
@@ -191,7 +195,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
      */
     public static String substring(final String str, int start, int end) {
         if (str == null) {
-            return NULLSTR;
+            return NULL_STR;
         }
 
         if (end < 0) {
@@ -206,7 +210,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
         }
 
         if (start > end) {
-            return NULLSTR;
+            return NULL_STR;
         }
 
         if (start < 0) {
@@ -242,17 +246,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
      */
     public static final List<String> str2List(String str, String sep, boolean filterBlank, boolean trim) {
         List<String> list = new ArrayList<String>();
-        if (StringUtils.isEmpty(str)) {
+        if (StringUtil.isEmpty(str)) {
             return list;
         }
 
         // 过滤空白字符串
-        if (filterBlank && StringUtils.isBlank(str)) {
+        if (filterBlank && StringUtil.isBlank(str)) {
             return list;
         }
         String[] split = str.split(sep);
         for (String string : split) {
-            if (filterBlank && StringUtils.isBlank(string)) {
+            if (filterBlank && StringUtil.isBlank(string)) {
                 continue;
             }
             if (trim) {

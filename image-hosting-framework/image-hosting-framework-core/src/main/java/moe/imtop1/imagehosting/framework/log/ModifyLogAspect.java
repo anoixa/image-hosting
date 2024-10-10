@@ -1,11 +1,11 @@
 package moe.imtop1.imagehosting.framework.log;
 
-import cn.dev33.satoken.stp.StpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.utils.JsonUtil;
 import moe.imtop1.imagehosting.common.utils.TraceUtil;
+import moe.imtop1.imagehosting.framework.utils.SecurityUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -68,10 +68,10 @@ public class ModifyLogAspect {
         // 方法的返回结果
         Object result = null;
         String userName = null;
-        if (StpUtil.isLogin()) {
-            userName = (String) StpUtil.getSession().get("username");
+        if (SecurityUtil.isLogin()) {
+            userName = SecurityUtil.getLoginUser().getUserName();
         }
-        if(userName==null || userName.isEmpty()){
+        if (userName==null || userName.isEmpty()){
             userName = "system";
         }
 

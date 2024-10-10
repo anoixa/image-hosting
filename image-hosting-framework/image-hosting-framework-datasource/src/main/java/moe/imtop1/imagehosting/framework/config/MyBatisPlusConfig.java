@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
  * @author anoixa
  */
 @Configuration
-@MapperScan(basePackages = {"moe.imtop1.imagehosting"})
 public class MyBatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {

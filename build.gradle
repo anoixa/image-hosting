@@ -61,7 +61,7 @@ subprojects {
         implementation group: 'cn.dev33', name: 'sa-token-spring-boot3-starter', version: '1.39.0'
         implementation group: 'cn.dev33', name: 'sa-token-redis-jackson', version: '1.39.0'
         implementation group: 'cn.dev33', name: 'sa-token-jwt', version: '1.39.0'
-
+        implementation group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.78.1'
         implementation group: 'cn.hutool', name: 'hutool-captcha', version: '5.8.32'
 
         //image

@@ -19,6 +19,7 @@ dependencies {
     implementation project(':image-hosting-framework:image-hosting-framework-security')
     implementation project(':image-hosting-framework:image-hosting-framework-datasource')
     implementation project(':image-hosting-images')
+    implementation project(':image-hosting-system')
 }
 
 test {

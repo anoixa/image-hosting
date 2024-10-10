@@ -1,14 +1,16 @@
 package moe.imtop1.imagehosting.system.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import moe.imtop1.imagehosting.common.entity.base.BaseEntity;
+import moe.imtop1.imagehosting.framework.base.BaseEntity;
+import moe.imtop1.imagehosting.framework.handler.EncryptTypeHandler;
 
 /**
  * @author anoixa
  */
-@TableName("config")
+@TableName(value = "config", autoResultMap = true)
 public class Config extends BaseEntity {
 
     @TableId(type = IdType.ASSIGN_ID)
@@ -16,6 +18,8 @@ public class Config extends BaseEntity {
 
     private String userId;
     private String configKey;
+
+    @TableField(typeHandler = EncryptTypeHandler.class)
     private String configValue;
 
     public Config() {

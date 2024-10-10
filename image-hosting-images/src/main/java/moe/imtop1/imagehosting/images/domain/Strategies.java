@@ -1,9 +1,11 @@
 package moe.imtop1.imagehosting.images.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import moe.imtop1.imagehosting.common.entity.base.BaseEntity;
+import moe.imtop1.imagehosting.framework.base.BaseEntity;
+import moe.imtop1.imagehosting.framework.handler.EncryptTypeHandler;
 
 import java.util.Map;
 
@@ -15,7 +17,6 @@ public class Strategies extends BaseEntity {
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
     private String userId;
-    //FIXME 映射问题
     private Map<String, Object> config;
     private String type;
 

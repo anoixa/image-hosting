@@ -16,6 +16,9 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    implementation project(':image-hosting-common')
+    implementation project(':image-hosting-framework:image-hosting-framework-security')
 }
 
 test {

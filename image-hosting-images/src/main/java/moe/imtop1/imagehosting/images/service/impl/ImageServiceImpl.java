@@ -6,12 +6,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.constant.Constant;
 import moe.imtop1.imagehosting.common.constant.ErrorMsg;
+import moe.imtop1.imagehosting.common.enums.BooleanEnum;
+import moe.imtop1.imagehosting.framework.domain.LoginUser;
 import moe.imtop1.imagehosting.framework.exception.SystemException;
+import moe.imtop1.imagehosting.framework.utils.SecurityUtil;
 import moe.imtop1.imagehosting.images.domain.ImageData;
 import moe.imtop1.imagehosting.images.domain.Strategies;
 import moe.imtop1.imagehosting.common.enums.StrategiesEnum;
 import moe.imtop1.imagehosting.common.utils.FileUtil;
-import moe.imtop1.imagehosting.common.utils.StringUtils;
+import moe.imtop1.imagehosting.common.utils.StringUtil;
 import moe.imtop1.imagehosting.images.mapper.ImageMapper;
 import moe.imtop1.imagehosting.images.mapper.StrategiesMapper;
 import moe.imtop1.imagehosting.images.service.ImageService;
@@ -19,6 +22,7 @@ import moe.imtop1.imagehosting.system.domain.Config;
 import moe.imtop1.imagehosting.system.mapper.GlobalSettingsMapper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -42,11 +46,19 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
     private final GlobalSettingsMapper globalSettingsMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateImage(MultipartFile[] multipartFiles, String strategyId) throws IOException {
-        // 查询原图保护和webp转换功能开关
+        if (multipartFiles == null || multipartFiles.length == 0) {
+            throw new SystemException("上传图片不能为空");
+        }
+
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+
+        // 查询系统全局设置
         List<Config> globalSettingsConfig = globalSettingsMapper.selectList(null);
+        // 原图保护和webp转换功能开关
         String webpConversionSetting = globalSettingsConfig.stream()
-                .map(Config::getConfigKey)
+                .map(Config::getConfigValue)
                 .filter(Constant.ORIGINAL_WEBP_CONVERSION::equals)
                 .findFirst()
                 .orElse("0");
@@ -55,11 +67,18 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                 .filter(Constant.ORIGINAL_IMAGE_PROTECTION::equals)
                 .findFirst()
                 .orElse("1");
+        // 全局url
+        String urlSetting = globalSettingsConfig.stream()
+                .map(Config::getConfigValue)
+                .filter(Constant.ORIGINAL_WEBSITE_URL::equals)
+                .findFirst()
+                .orElse("1");
 
-        if (StringUtils.isNull(strategyId)) {
+        if (StringUtil.isNull(strategyId)) {
             throw new SystemException(ErrorMsg.INVALID_STRATEGIES_TYPE);
         }
 
+        // 查询储存策略
         Strategies strategies = strategiesMapper.selectOne(
                 new LambdaQueryWrapper<Strategies>().eq(Strategies::getId, strategyId)
         );
@@ -77,22 +96,30 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
             for (MultipartFile file : multipartFiles) {
                 BufferedImage image = readImage(file);
                 String safeFileName = FileUtil.sanitizeFileName(file.getOriginalFilename());
+                String endFileName = null;
                 int width = image.getWidth();
                 int height = image.getHeight();
 
+                // TODO 入库文件名和url（未完成）
                 ImageData imageData = new ImageData();
+                imageData.setUserId(loginUser.getUserId());
                 imageData.setWidth(width);
                 imageData.setHeight(height);
                 imageData.setFileOriginalName(file.getOriginalFilename());
-                if ("1".equals(imageProtectionSetting)) {
+                if (BooleanEnum.TRUE.getValue().equals(imageProtectionSetting)) {
                     imageData.setKey(FileUtil.generateRandomString(8));
                 }
-                imageData.setFileSize((int) file.getSize());
+                imageData.setKey(FileUtil.generateRandomString(8));
+                imageData.setFileSize(file.getSize());
                 imageData.setStrategyId(strategyId);
-
-                //TODO 关系入库
-                boolean isWebp = "1".equals(webpConversionSetting);
-                if (isWebp) {
+                imageData.setImageType(FileUtil.detectImageType(file));
+                //imageData.setImageUrl(urlSetting + safeFileName);
+                if (BooleanEnum.TRUE.getValue().equals(imageProtectionSetting)) {
+                    String key = FileUtil.generateRandomString(8);
+                    imageData.setKey(key);
+                }
+                boolean isWebp = BooleanEnum.TRUE.getValue().equals(webpConversionSetting);
+                if (BooleanEnum.TRUE.getValue().equals(webpConversionSetting)) {
                     imageData.setFileExtension("webp");
                 } else {
                     imageData.setFileExtension(FileUtil.getFileExtension(file.getOriginalFilename()));

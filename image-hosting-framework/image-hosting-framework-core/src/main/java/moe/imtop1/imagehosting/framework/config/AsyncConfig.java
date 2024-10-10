@@ -20,8 +20,9 @@ public class AsyncConfig {
         executor.setCorePoolSize(4);
         executor.setMaxPoolSize(10);
         executor.setQueueCapacity(100);
-        executor.setThreadNamePrefix("downloadAsync-");
+        executor.setThreadNamePrefix("saveAsync-");
         executor.initialize();
+
         return executor;
     }
 }

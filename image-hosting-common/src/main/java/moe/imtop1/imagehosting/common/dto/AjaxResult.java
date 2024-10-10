@@ -1,7 +1,6 @@
 package moe.imtop1.imagehosting.common.dto;
 
-import moe.imtop1.imagehosting.common.enums.ResultCodeEnum;
-import moe.imtop1.imagehosting.common.utils.StringUtils;
+import moe.imtop1.imagehosting.common.utils.StringUtil;
 import org.springframework.http.HttpStatus;
 
 
@@ -56,7 +55,7 @@ public class AjaxResult extends HashMap<String, Object> implements Serializable 
     public AjaxResult(int code, String msg, Object data) {
         super.put(CODE_TAG, code);
         super.put(MSG_TAG, msg);
-        if (StringUtils.isNotNull(data)) {
+        if (StringUtil.isNotNull(data)) {
             super.put(DATA_TAG, data);
         }
     }
