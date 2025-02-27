@@ -12,6 +12,17 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 20MB
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: vsjun8@qq.com
+    password: wonwyytuummihhdg
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 
 mybatis-plus:
