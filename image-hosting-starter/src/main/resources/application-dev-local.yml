@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev,dev-local
   datasource:
     url: jdbc:postgresql://localhost:5432/image
     username: postgres
@@ -22,9 +24,11 @@ spring:
     port: 587
     username: vsjun8@qq.com
     password: wonwyytuummihhdg
+    default-encoding: UTF-8
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+        debug: true
