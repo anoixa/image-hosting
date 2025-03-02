@@ -9,5 +9,11 @@ import org.springframework.scheduling.annotation.Async;
 
 public interface IEmailService {
     @Async
-    void sendCaptchaHtmlMailMessage(EmailCaptchaDTO emailCaptchaDTO);
+    void sendHtmlCaptcha(EmailCaptchaDTO emailCaptchaDTO);
+
+    @Async
+    void sendTextMailMessage(String from, String to, String subject, String text);
+
+    @Async
+    void sendHtmlMailMessage(String from, String to, String subject, String text);
 }

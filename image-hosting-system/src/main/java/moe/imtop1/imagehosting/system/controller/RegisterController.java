@@ -44,7 +44,7 @@ public class RegisterController {
         logger.info("验证码生成成功：{}", userEmail);
 
         logger.info("开始发送验证码：{}", userEmail);
-        emailService.sendCaptchaHtmlMailMessage(emailCaptchaDTO);
+        emailService.sendHtmlCaptcha(emailCaptchaDTO);
         logger.info("验证码发送成功：{}", userEmail);
 
         EmailCaptchaVO emailCaptchaVO = new EmailCaptchaVO(emailCaptchaDTO.getEmail(), emailCaptchaDTO.getCodeKey());

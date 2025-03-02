@@ -24,7 +24,7 @@
     </tr>
     <tr style="text-align: center; padding: 20px;">
         <td style="margin: 20px auto 0; padding: 20px; background-color: #f9f9f9; display: inline-block; text-align: center;">
-            <h2 style="font-size: 30px; font-weight: bolder; margin: 0; background: linear-gradient(to right, #000000, #000000); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{{code}}</h2>
+            <h2 style="font-size: 30px; font-weight: bolder; margin: 0; background: linear-gradient(to right, #000000, #000000); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${code}</h2>
         </td>
     </tr>
     <tr>
