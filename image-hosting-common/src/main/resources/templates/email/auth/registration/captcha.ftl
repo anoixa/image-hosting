@@ -31,7 +31,7 @@
         <td style="text-align: left;">
         <p style="margin: 20px 0 10px;">验证码5分钟内有效，请勿泄露给他人。</p>
         <p style="margin-top: 60px; font-size: 14px">诚挚祝福,</p>
-        <p style="font-size: 14px;margin-bottom: 10px">image-hosting</p>
+        <p style="font-size: 14px;margin-bottom: 10px">image-hosting团队</p>
         </td>
     </tr>
     <!-- 底部 -->

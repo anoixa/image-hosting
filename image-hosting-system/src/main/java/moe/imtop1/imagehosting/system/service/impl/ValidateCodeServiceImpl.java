@@ -65,6 +65,8 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
     @Override
     public boolean validateEmailCaptcha(String codeKey, String userInputCodeValue) {
         String cachedCode = redisCache.getCacheObject(codeKey);
+        log.debug("cachedCode: " + cachedCode);
+        log.debug("userInputCodeValue: " + userInputCodeValue);
         return cachedCode != null && cachedCode.equals(userInputCodeValue);
     }
 }

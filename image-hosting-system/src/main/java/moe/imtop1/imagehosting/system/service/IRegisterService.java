@@ -7,7 +7,7 @@ import moe.imtop1.imagehosting.system.domain.vo.ValidateCodeVo;
 import org.springframework.validation.annotation.Validated;
 
 public interface IRegisterService {
-    boolean register(RegisterDTO registerDTO);
+    AjaxResult register(RegisterDTO registerDTO);
 
     boolean validateTable(RegisterDTO registerDTO);
 

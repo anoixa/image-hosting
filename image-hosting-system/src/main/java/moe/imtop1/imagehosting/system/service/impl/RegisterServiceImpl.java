@@ -1,10 +1,11 @@
 package moe.imtop1.imagehosting.system.service.impl;
 
-import cn.dev33.satoken.secure.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.dto.AjaxResult;
 import moe.imtop1.imagehosting.common.enums.ResultCodeEnum;
 import moe.imtop1.imagehosting.framework.exception.SystemException;
+import moe.imtop1.imagehosting.framework.utils.RedisCache;
 import moe.imtop1.imagehosting.system.domain.UserInfo;
 import moe.imtop1.imagehosting.system.domain.dto.RegisterDTO;
 import moe.imtop1.imagehosting.system.mapper.UserInfoMapper;
@@ -16,27 +17,43 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.UUID;
 
+import static moe.imtop1.imagehosting.framework.utils.EncryptUtil.hashWithArgon2id;
+
 /**用户注册
  * @author shuomc
  */
 @Service
-public class RegisterServiceImpl implements IRegisterService {
+@Slf4j
+public class RegisterServiceImpl extends ValidateCodeServiceImpl implements IRegisterService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
     private static final String USER_ROLE = "user";
 
+    public RegisterServiceImpl(RedisCache redisCache) {
+        super(redisCache);
+    }
+
     // 注册逻辑
     @Override
     @Transactional
-    public boolean register(@Validated RegisterDTO registerDTO) {
+    public AjaxResult register(@Validated RegisterDTO registerDTO) {
+
+        if(!validateTable(registerDTO)) {
+            return AjaxResult.error("表单错误");
+        }
+        else if(!validateEmailCaptcha(registerDTO.getCodeKey(), registerDTO.getCaptcha())){
+            return AjaxResult.error("验证码错误");
+        }
+
+
         // 创建新的用户信息
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(UUID.randomUUID().toString()); // 使用UUID生成唯一ID
         userInfo.setUserName(registerDTO.getUserName());
 
-        // 使用BCrypt加密密码
-        String encodedPassword = BCrypt.hashpw(registerDTO.getPassword(), BCrypt.gensalt(12));
+        // 使用Argon2id
+        String encodedPassword = hashWithArgon2id(registerDTO.getPassword());
         userInfo.setPassword(encodedPassword);
 
         userInfo.setUserEmail(registerDTO.getUserEmail());
@@ -46,7 +63,7 @@ public class RegisterServiceImpl implements IRegisterService {
         userInfoMapper.insert(userInfo);
 
         AjaxResult.success();
-        return true;
+        return AjaxResult.success("注册成功");
     }
 
     // 验证表单数据
@@ -67,10 +84,11 @@ public class RegisterServiceImpl implements IRegisterService {
         }
 
         // 检查密码格式
-        if (!registerDTO.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+        if (!registerDTO.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$")) {
             AjaxResult.error("密码必须包含至少一个数字、一个大写字母和一个小写字母，并且长度至少为8个字符");
             throw new SystemException(ResultCodeEnum.PASSWORD_FORMAT_INVALID);
-        };
+        }
+
         return true;
     }
 
@@ -78,7 +96,7 @@ public class RegisterServiceImpl implements IRegisterService {
     @Override
     public UserInfo findByUserName(RegisterDTO registerDTO) {
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userName", registerDTO.getUserName());
+        queryWrapper.eq("user_info.user_name", registerDTO.getUserName());
         return userInfoMapper.selectOne(queryWrapper);
     }
 
@@ -86,7 +104,8 @@ public class RegisterServiceImpl implements IRegisterService {
     @Override
     public UserInfo findByUserEmail(RegisterDTO registerDTO) {
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userEmail", registerDTO.getUserEmail());
+
+        queryWrapper.eq("user_info.user_email", registerDTO.getUserEmail());
         return userInfoMapper.selectOne(queryWrapper);
     }
 }

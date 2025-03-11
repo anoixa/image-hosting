@@ -1,7 +1,9 @@
 package moe.imtop1.imagehosting.system.controller;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.dto.AjaxResult;
+import moe.imtop1.imagehosting.framework.exception.SystemException;
 import moe.imtop1.imagehosting.system.domain.dto.EmailCaptchaDTO;
 import moe.imtop1.imagehosting.system.domain.dto.RegisterDTO;
 import moe.imtop1.imagehosting.system.domain.vo.EmailCaptchaVO;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/register")
 @Validated
+@Slf4j
 public class RegisterController {
 
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
@@ -31,8 +34,13 @@ public class RegisterController {
     private IValidateCodeService validateCodeService;
     @PostMapping("/validateTable")
     public AjaxResult validateTable(@Valid @RequestBody RegisterDTO registerDTO) {
-        logger.info("开始验证用户表单: {}", registerDTO.getUserName());
-        registerService.validateTable(registerDTO);
+        try {
+            logger.info("开始验证用户表单: {}", registerDTO.getUserName());
+            registerService.validateTable(registerDTO);
+        } catch (SystemException e) {
+            logger.error("用户表单验证失败: {}",e.getMessage());
+            return AjaxResult.error(e.getMessage());
+        }
         logger.info("用户表单验证成功: {}", registerDTO.getUserName());
         return AjaxResult.success("用户表单验证成功");
     }
@@ -63,8 +71,6 @@ public class RegisterController {
     @PostMapping("/register")
     public AjaxResult register(@Valid @RequestBody RegisterDTO registerDTO) {
         logger.info("开始注册用户: {}", registerDTO.getUserName());
-        registerService.register(registerDTO);
-        logger.info("用户注册成功: {}", registerDTO.getUserName());
-        return AjaxResult.success("注册成功");
+        return registerService.register(registerDTO);
     }
 }
