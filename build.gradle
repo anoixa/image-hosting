@@ -50,6 +50,7 @@ subprojects {
         //implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '3.3.3'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '3.3.3'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.3.3'
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker', version: '3.3.3'
 
         implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.4'
         implementation group: 'io.minio', name: 'minio', version: '8.5.12'

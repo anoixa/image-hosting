@@ -7,6 +7,10 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * 注册DTO
+ * @author shuomc
+ */
 @Data
 public class RegisterDTO implements Serializable {
     @Serial
