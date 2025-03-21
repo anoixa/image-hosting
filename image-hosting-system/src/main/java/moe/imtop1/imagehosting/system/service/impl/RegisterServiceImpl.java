@@ -39,12 +39,12 @@ public class RegisterServiceImpl extends ValidateCodeServiceImpl implements IReg
     @Transactional
     public AjaxResult register(@Validated RegisterDTO registerDTO) {
 
-        if(!validateTable(registerDTO)) {
-            return AjaxResult.error("表单错误");
-        }
-        else if(!validateEmailCaptcha(registerDTO.getCodeKey(), registerDTO.getCaptcha())){
-            return AjaxResult.error("验证码错误");
-        }
+//        if(!validateTable(registerDTO)) {
+//            return AjaxResult.error("表单错误");
+//        }
+//        else if(!validateEmailCaptcha(registerDTO.getCodeKey(), registerDTO.getCaptcha())){
+//            return AjaxResult.error("验证码错误");
+//        }
 
 
         // 创建新的用户信息

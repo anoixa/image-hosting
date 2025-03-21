@@ -38,3 +38,4 @@ out/
 
 # 忽略本地配置文件
 E:\image-hosting\image-hosting-starter\src\main\resources\application-dev-local.yml
+E:\image-hosting\image-hosting-starter\src\main\resources\application-shuomc.yml

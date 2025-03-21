@@ -33,3 +33,1364 @@
 2025-03-21 18:45:51,411 [http-nio-8080-exec-9] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:getValidateCode ---用户:system ---地址:/auth/getValidateCode  ---入参:null
 2025-03-21 18:45:51,416 [http-nio-8080-exec-9] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:39 - redis code: lqGR
 2025-03-21 18:45:51,417 [http-nio-8080-exec-9] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:getValidateCode ---用户:system ---地址:/auth/getValidateCode  ---出参:{msg=操作成功, code=200, data=ValidateCodeVo(codeKey=697d89f1b7c444f8bc68c43e5d22ffa6, codeValue=data:image/png;base64,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)}
+2025-03-21 18:59:22,701 [http-nio-8080-exec-1] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:getValidateCode ---用户:system ---地址:/auth/getValidateCode  ---入参:null
+2025-03-21 18:59:22,709 [http-nio-8080-exec-1] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:39 - redis code: DGrJ
+2025-03-21 18:59:22,711 [http-nio-8080-exec-1] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:getValidateCode ---用户:system ---地址:/auth/getValidateCode  ---出参:{msg=操作成功, code=200, data=ValidateCodeVo(codeKey=5c3ec59000b14d53b081cc8fb8e65ef5, codeValue=data:image/png;base64,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)}
+2025-03-21 19:34:57,391 [background-preinit] INFO  [org.hibernate.validator.internal.util.Version] Version.java:21 - HV000001: Hibernate Validator 8.0.1.Final
+2025-03-21 19:34:57,462 [main] INFO  [moe.imtop1.imagehosting.starter.Application] StartupInfoLogger.java:50 - Starting Application using Java 21.0.4 with PID 49084 (E:\image-hosting\image-hosting-starter\build\classes\java\main started by 11646 in E:\image-hosting)
+2025-03-21 19:34:57,463 [main] INFO  [moe.imtop1.imagehosting.starter.Application] SpringApplication.java:660 - The following 1 profile is active: "dev-local"
+2025-03-21 19:34:58,743 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:295 - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-03-21 19:34:58,751 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:143 - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-03-21 19:34:58,794 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:211 - Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2025-03-21 19:35:00,170 [main] INFO  [o.s.boot.web.embedded.tomcat.TomcatWebServer] TomcatWebServer.java:111 - Tomcat initialized with port 8080 (http)
+2025-03-21 19:35:00,185 [main] INFO  [org.apache.coyote.http11.Http11NioProtocol] DirectJDKLog.java:173 - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-21 19:35:00,192 [main] INFO  [org.apache.catalina.core.StandardService] DirectJDKLog.java:173 - Starting service [Tomcat]
+2025-03-21 19:35:00,193 [main] INFO  [org.apache.catalina.core.StandardEngine] DirectJDKLog.java:173 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2025-03-21 19:35:00,277 [main] INFO  [o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]] DirectJDKLog.java:173 - Initializing Spring embedded WebApplicationContext
+2025-03-21 19:35:00,278 [main] INFO  [o.s.b.w.s.c.ServletWebServerApplicationContext] ServletWebServerApplicationContext.java:296 - Root WebApplicationContext: initialization completed in 2746 ms
+2025-03-21 19:35:00,997 [main] INFO  [c.g.y.a.MybatisPlusJoinAutoConfiguration] MybatisPlusJoinAutoConfiguration.java:139 - mybatis plus join properties config complete
+2025-03-21 19:35:01,023 [main] WARN  [o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext] AbstractApplicationContext.java:633 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'imageController': Unsatisfied dependency expressed through field 'imageService': Error creating bean with name 'imageServiceImpl' defined in file [E:\image-hosting\image-hosting-images\build\classes\java\main\moe\imtop1\imagehosting\images\service\impl\ImageServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'imageMapper' defined in file [E:\image-hosting\image-hosting-images\build\classes\java\main\moe\imtop1\imagehosting\images\mapper\ImageMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory': Error creating bean with name 'sqlSessionFactory' defined in class path resource [com/baomidou/mybatisplus/autoconfigure/MybatisPlusAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2025-03-21 19:35:01,043 [main] INFO  [org.apache.catalina.core.StandardService] DirectJDKLog.java:173 - Stopping service [Tomcat]
+2025-03-21 19:35:01,060 [main] INFO  [o.s.b.a.logging.ConditionEvaluationReportLogger] ConditionEvaluationReportLogger.java:82 - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-21 19:35:01,088 [main] ERROR [o.s.b.diagnostics.LoggingFailureAnalysisReporter] LoggingFailureAnalysisReporter.java:40 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (the profiles dev-local are currently active).
+
+2025-03-21 19:38:30,556 [background-preinit] INFO  [org.hibernate.validator.internal.util.Version] Version.java:21 - HV000001: Hibernate Validator 8.0.1.Final
+2025-03-21 19:38:30,633 [main] INFO  [moe.imtop1.imagehosting.starter.Application] StartupInfoLogger.java:50 - Starting Application using Java 21.0.4 with PID 52532 (E:\image-hosting\image-hosting-starter\build\classes\java\main started by 11646 in E:\image-hosting)
+2025-03-21 19:38:30,634 [main] INFO  [moe.imtop1.imagehosting.starter.Application] SpringApplication.java:660 - The following 1 profile is active: "dev-local"
+2025-03-21 19:38:31,896 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:295 - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-03-21 19:38:31,901 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:143 - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-03-21 19:38:31,943 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:211 - Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2025-03-21 19:38:33,314 [main] INFO  [o.s.boot.web.embedded.tomcat.TomcatWebServer] TomcatWebServer.java:111 - Tomcat initialized with port 8080 (http)
+2025-03-21 19:38:33,331 [main] INFO  [org.apache.coyote.http11.Http11NioProtocol] DirectJDKLog.java:173 - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-21 19:38:33,338 [main] INFO  [org.apache.catalina.core.StandardService] DirectJDKLog.java:173 - Starting service [Tomcat]
+2025-03-21 19:38:33,339 [main] INFO  [org.apache.catalina.core.StandardEngine] DirectJDKLog.java:173 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2025-03-21 19:38:33,422 [main] INFO  [o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]] DirectJDKLog.java:173 - Initializing Spring embedded WebApplicationContext
+2025-03-21 19:38:33,422 [main] INFO  [o.s.b.w.s.c.ServletWebServerApplicationContext] ServletWebServerApplicationContext.java:296 - Root WebApplicationContext: initialization completed in 2698 ms
+2025-03-21 19:38:34,207 [main] INFO  [c.g.y.a.MybatisPlusJoinAutoConfiguration] MybatisPlusJoinAutoConfiguration.java:139 - mybatis plus join properties config complete
+2025-03-21 19:38:34,238 [main] WARN  [o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext] AbstractApplicationContext.java:633 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'imageController': Unsatisfied dependency expressed through field 'imageService': Error creating bean with name 'imageServiceImpl' defined in file [E:\image-hosting\image-hosting-images\build\classes\java\main\moe\imtop1\imagehosting\images\service\impl\ImageServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'imageMapper' defined in file [E:\image-hosting\image-hosting-images\build\classes\java\main\moe\imtop1\imagehosting\images\mapper\ImageMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory': Error creating bean with name 'sqlSessionFactory' defined in class path resource [com/baomidou/mybatisplus/autoconfigure/MybatisPlusAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2025-03-21 19:38:34,257 [main] INFO  [org.apache.catalina.core.StandardService] DirectJDKLog.java:173 - Stopping service [Tomcat]
+2025-03-21 19:38:34,273 [main] INFO  [o.s.b.a.logging.ConditionEvaluationReportLogger] ConditionEvaluationReportLogger.java:82 - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-21 19:38:34,303 [main] ERROR [o.s.b.diagnostics.LoggingFailureAnalysisReporter] LoggingFailureAnalysisReporter.java:40 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (the profiles dev-local are currently active).
+
+2025-03-21 19:41:54,948 [background-preinit] INFO  [org.hibernate.validator.internal.util.Version] Version.java:21 - HV000001: Hibernate Validator 8.0.1.Final
+2025-03-21 19:41:55,025 [main] INFO  [moe.imtop1.imagehosting.starter.Application] StartupInfoLogger.java:50 - Starting Application using Java 21.0.4 with PID 48108 (E:\image-hosting\image-hosting-starter\build\classes\java\main started by 11646 in E:\image-hosting)
+2025-03-21 19:41:55,026 [main] INFO  [moe.imtop1.imagehosting.starter.Application] SpringApplication.java:660 - The following 1 profile is active: "dev-shuomc"
+2025-03-21 19:41:56,305 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:295 - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-03-21 19:41:56,310 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:143 - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-03-21 19:41:56,375 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:211 - Finished Spring Data repository scanning in 21 ms. Found 0 Redis repository interfaces.
+2025-03-21 19:41:57,761 [main] INFO  [o.s.boot.web.embedded.tomcat.TomcatWebServer] TomcatWebServer.java:111 - Tomcat initialized with port 8080 (http)
+2025-03-21 19:41:57,777 [main] INFO  [org.apache.coyote.http11.Http11NioProtocol] DirectJDKLog.java:173 - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-21 19:41:57,784 [main] INFO  [org.apache.catalina.core.StandardService] DirectJDKLog.java:173 - Starting service [Tomcat]
+2025-03-21 19:41:57,784 [main] INFO  [org.apache.catalina.core.StandardEngine] DirectJDKLog.java:173 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2025-03-21 19:41:57,868 [main] INFO  [o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]] DirectJDKLog.java:173 - Initializing Spring embedded WebApplicationContext
+2025-03-21 19:41:57,868 [main] INFO  [o.s.b.w.s.c.ServletWebServerApplicationContext] ServletWebServerApplicationContext.java:296 - Root WebApplicationContext: initialization completed in 2773 ms
+2025-03-21 19:41:58,660 [main] INFO  [c.g.y.a.MybatisPlusJoinAutoConfiguration] MybatisPlusJoinAutoConfiguration.java:139 - mybatis plus join properties config complete
+2025-03-21 19:41:58,693 [main] WARN  [o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext] AbstractApplicationContext.java:633 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'imageController': Unsatisfied dependency expressed through field 'imageService': Error creating bean with name 'imageServiceImpl' defined in file [E:\image-hosting\image-hosting-images\build\classes\java\main\moe\imtop1\imagehosting\images\service\impl\ImageServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'imageMapper' defined in file [E:\image-hosting\image-hosting-images\build\classes\java\main\moe\imtop1\imagehosting\images\mapper\ImageMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory': Error creating bean with name 'sqlSessionFactory' defined in class path resource [com/baomidou/mybatisplus/autoconfigure/MybatisPlusAutoConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2025-03-21 19:41:58,718 [main] INFO  [org.apache.catalina.core.StandardService] DirectJDKLog.java:173 - Stopping service [Tomcat]
+2025-03-21 19:41:58,737 [main] INFO  [o.s.b.a.logging.ConditionEvaluationReportLogger] ConditionEvaluationReportLogger.java:82 - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-21 19:41:58,774 [main] ERROR [o.s.b.diagnostics.LoggingFailureAnalysisReporter] LoggingFailureAnalysisReporter.java:40 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (the profiles dev-shuomc are currently active).
+
+2025-03-21 19:43:36,612 [background-preinit] INFO  [org.hibernate.validator.internal.util.Version] Version.java:21 - HV000001: Hibernate Validator 8.0.1.Final
+2025-03-21 19:43:36,689 [main] INFO  [moe.imtop1.imagehosting.starter.Application] StartupInfoLogger.java:50 - Starting Application using Java 21.0.4 with PID 55280 (E:\image-hosting\image-hosting-starter\build\classes\java\main started by 11646 in E:\image-hosting)
+2025-03-21 19:43:36,690 [main] INFO  [moe.imtop1.imagehosting.starter.Application] SpringApplication.java:660 - The following 1 profile is active: "shuomc"
+2025-03-21 19:43:37,854 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:295 - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-03-21 19:43:37,859 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:143 - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-03-21 19:43:37,897 [main] INFO  [o.s.d.r.config.RepositoryConfigurationDelegate] RepositoryConfigurationDelegate.java:211 - Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2025-03-21 19:43:39,198 [main] INFO  [o.s.boot.web.embedded.tomcat.TomcatWebServer] TomcatWebServer.java:111 - Tomcat initialized with port 8080 (http)
+2025-03-21 19:43:39,215 [main] INFO  [org.apache.coyote.http11.Http11NioProtocol] DirectJDKLog.java:173 - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-21 19:43:39,222 [main] INFO  [org.apache.catalina.core.StandardService] DirectJDKLog.java:173 - Starting service [Tomcat]
+2025-03-21 19:43:39,222 [main] INFO  [org.apache.catalina.core.StandardEngine] DirectJDKLog.java:173 - Starting Servlet engine: [Apache Tomcat/10.1.28]
+2025-03-21 19:43:39,315 [main] INFO  [o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]] DirectJDKLog.java:173 - Initializing Spring embedded WebApplicationContext
+2025-03-21 19:43:39,315 [main] INFO  [o.s.b.w.s.c.ServletWebServerApplicationContext] ServletWebServerApplicationContext.java:296 - Root WebApplicationContext: initialization completed in 2550 ms
+2025-03-21 19:43:39,990 [main] INFO  [c.g.y.a.MybatisPlusJoinAutoConfiguration] MybatisPlusJoinAutoConfiguration.java:139 - mybatis plus join properties config complete
+2025-03-21 19:43:40,129 [main] INFO  [c.g.y.a.MybatisPlusJoinAutoConfiguration] MybatisPlusJoinAutoConfiguration.java:139 - mybatis plus join SqlInjector init
+2025-03-21 19:43:41,942 [main] INFO  [org.apache.coyote.http11.Http11NioProtocol] DirectJDKLog.java:173 - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-21 19:43:41,972 [main] INFO  [o.s.boot.web.embedded.tomcat.TomcatWebServer] TomcatWebServer.java:243 - Tomcat started on port 8080 (http) with context path '/'
+2025-03-21 19:43:41,982 [main] INFO  [moe.imtop1.imagehosting.starter.Application] StartupInfoLogger.java:56 - Started Application in 6.176 seconds (process running for 7.326)
+2025-03-21 19:44:30,139 [http-nio-8080-exec-2] INFO  [o.a.c.core.ContainerBase.[Tomcat].[localhost].[/]] DirectJDKLog.java:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-21 19:44:30,139 [http-nio-8080-exec-2] INFO  [org.springframework.web.servlet.DispatcherServlet] FrameworkServlet.java:532 - Initializing Servlet 'dispatcherServlet'
+2025-03-21 19:44:30,140 [http-nio-8080-exec-2] INFO  [org.springframework.web.servlet.DispatcherServlet] FrameworkServlet.java:554 - Completed initialization in 1 ms
+2025-03-21 19:44:30,331 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:getValidateCode ---用户:system ---地址:/auth/getValidateCode  ---入参:null
+2025-03-21 19:44:31,182 [http-nio-8080-exec-2] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:39 - redis code: uaDt
+2025-03-21 19:44:31,183 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:getValidateCode ---用户:system ---地址:/auth/getValidateCode  ---出参:{msg=操作成功, code=200, data=ValidateCodeVo(codeKey=2d7ebfd5e8aa41e39d04c8985b645fe2, codeValue=data:image/png;base64,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)}
+2025-03-21 21:21:09,490 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 21:21:26,269 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 21:21:28,269 [http-nio-8080-exec-3] ERROR [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:88 - [异常]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode ---错误信息:Error in execution
+org.springframework.data.redis.RedisSystemException: Error in execution
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:52)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:50)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:41)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:40)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:310)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1022)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$3(LettuceConnection.java:447)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:673)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$DefaultSingleInvocationSpec.get(LettuceInvoker.java:589)
+	at org.springframework.data.redis.connection.lettuce.LettuceStringCommands.setEx(LettuceStringCommands.java:134)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.setEx(DefaultedRedisConnection.java:340)
+	at org.springframework.data.redis.core.DefaultValueOperations$8.potentiallyUsePsetEx(DefaultValueOperations.java:265)
+	at org.springframework.data.redis.core.DefaultValueOperations$8.doInRedis(DefaultValueOperations.java:258)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:396)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:363)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultValueOperations.set(DefaultValueOperations.java:253)
+	at moe.imtop1.imagehosting.framework.utils.RedisCache.setCacheObject(RedisCache.java:57)
+	at moe.imtop1.imagehosting.system.service.impl.ValidateCodeServiceImpl.generateEmailCaptcha(ValidateCodeServiceImpl.java:54)
+	at moe.imtop1.imagehosting.system.controller.RegisterController.sendVerificationCode(RegisterController.java:51)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.proceed(ModifyLogAspect.java:86)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.modifyLog(ModifyLogAspect.java:78)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.controller.RegisterController$$SpringCGLIB$$0.sendVerificationCode(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.lettuce.core.RedisCommandExecutionException: MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error.
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:147)
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:116)
+	at io.lettuce.core.protocol.AsyncCommand.completeResult(AsyncCommand.java:120)
+	at io.lettuce.core.protocol.AsyncCommand.complete(AsyncCommand.java:111)
+	at io.lettuce.core.protocol.CommandHandler.complete(CommandHandler.java:745)
+	at io.lettuce.core.protocol.CommandHandler.decode(CommandHandler.java:680)
+	at io.lettuce.core.protocol.CommandHandler.channelRead(CommandHandler.java:597)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1407)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:440)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:994)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 common frames omitted
+2025-03-21 21:21:29,226 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:null
+2025-03-21 21:21:29,621 [http-nio-8080-exec-3] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Error in execution
+2025-03-21 21:22:09,701 [http-nio-8080-exec-7] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 21:22:09,702 [http-nio-8080-exec-7] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 21:22:09,728 [http-nio-8080-exec-7] ERROR [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:88 - [异常]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode ---错误信息:Error in execution
+org.springframework.data.redis.RedisSystemException: Error in execution
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:52)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:50)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:41)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:40)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:310)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1022)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$3(LettuceConnection.java:447)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:673)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$DefaultSingleInvocationSpec.get(LettuceInvoker.java:589)
+	at org.springframework.data.redis.connection.lettuce.LettuceStringCommands.setEx(LettuceStringCommands.java:134)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.setEx(DefaultedRedisConnection.java:340)
+	at org.springframework.data.redis.core.DefaultValueOperations$8.potentiallyUsePsetEx(DefaultValueOperations.java:265)
+	at org.springframework.data.redis.core.DefaultValueOperations$8.doInRedis(DefaultValueOperations.java:258)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:396)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:363)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultValueOperations.set(DefaultValueOperations.java:253)
+	at moe.imtop1.imagehosting.framework.utils.RedisCache.setCacheObject(RedisCache.java:57)
+	at moe.imtop1.imagehosting.system.service.impl.ValidateCodeServiceImpl.generateEmailCaptcha(ValidateCodeServiceImpl.java:54)
+	at moe.imtop1.imagehosting.system.controller.RegisterController.sendVerificationCode(RegisterController.java:51)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.proceed(ModifyLogAspect.java:86)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.modifyLog(ModifyLogAspect.java:78)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.controller.RegisterController$$SpringCGLIB$$0.sendVerificationCode(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.lettuce.core.RedisCommandExecutionException: MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error.
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:147)
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:116)
+	at io.lettuce.core.protocol.AsyncCommand.completeResult(AsyncCommand.java:120)
+	at io.lettuce.core.protocol.AsyncCommand.complete(AsyncCommand.java:111)
+	at io.lettuce.core.protocol.CommandHandler.complete(CommandHandler.java:745)
+	at io.lettuce.core.protocol.CommandHandler.decode(CommandHandler.java:680)
+	at io.lettuce.core.protocol.CommandHandler.channelRead(CommandHandler.java:597)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1407)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:440)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:994)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 common frames omitted
+2025-03-21 21:22:09,765 [http-nio-8080-exec-7] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:null
+2025-03-21 21:22:09,814 [http-nio-8080-exec-7] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Error in execution
+2025-03-21 21:22:41,067 [lettuce-nioEventLoop-4-1] INFO  [io.lettuce.core.protocol.CommandHandler] AbstractInternalLogger.java:217 - null Unexpected exception during request: java.net.SocketException: Connection reset
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:994)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-03-21 21:22:44,069 [lettuce-eventExecutorLoop-1-1] INFO  [io.lettuce.core.protocol.ConnectionWatchdog] AbstractInternalLogger.java:171 - Reconnecting, last destination was localhost/127.0.0.1:6379
+2025-03-21 21:22:45,369 [lettuce-nioEventLoop-4-2] WARN  [io.lettuce.core.protocol.ConnectionWatchdog] AbstractInternalLogger.java:151 - Cannot reconnect to [localhost/<unresolved>:6379]: Connection refused: getsockopt: localhost/127.0.0.1:6379
+2025-03-21 21:22:49,254 [lettuce-nioEventLoop-4-4] INFO  [io.lettuce.core.protocol.ReconnectionHandler] ReconnectionHandler.java:174 - Reconnected to localhost/<unresolved>:6379
+2025-03-21 21:22:52,771 [http-nio-8080-exec-8] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 21:22:52,772 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 21:22:52,773 [http-nio-8080-exec-8] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:55 - redis code: 326842
+2025-03-21 21:22:52,804 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:52 - 验证码生成成功：1164659757@qq.com
+2025-03-21 21:22:52,805 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:54 - 开始发送验证码：1164659757@qq.com
+2025-03-21 21:22:53,779 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:56 - 验证码发送成功：1164659757@qq.com
+2025-03-21 21:22:53,941 [http-nio-8080-exec-8] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:{msg=操作成功, code=200, data=EmailCaptchaVO(email=1164659757@qq.com, codeKey=e7b5b15df5a94da6b4bdee23a044a5ab)}
+2025-03-21 21:23:17,038 [saveAsync-1] INFO  [m.i.i.system.service.impl.EmailServiceImpl] EmailServiceImpl.java:129 - HTML 邮件已发送到: 1164659757@qq.com
+2025-03-21 21:26:26,085 [http-nio-8080-exec-2] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Required request parameter 'userEmail' for method parameter type String is not present
+2025-03-21 21:31:08,310 [http-nio-8080-exec-4] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Required request parameter 'userEmail' for method parameter type String is not present
+2025-03-21 21:32:51,311 [http-nio-8080-exec-6] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Required request parameter 'userEmail' for method parameter type String is not present
+2025-03-21 21:33:31,592 [http-nio-8080-exec-5] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Required request parameter 'userEmail' for method parameter type String is not present
+2025-03-21 21:37:36,560 [http-nio-8080-exec-10] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Request method 'GET' is not supported
+2025-03-21 21:37:58,668 [http-nio-8080-exec-2] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Required request parameter 'userEmail' for method parameter type String is not present
+2025-03-21 21:38:59,161 [http-nio-8080-exec-4] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Request method 'GET' is not supported
+2025-03-21 21:39:23,018 [http-nio-8080-exec-6] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Request method 'GET' is not supported
+2025-03-21 21:39:55,547 [http-nio-8080-exec-5] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Request method 'GET' is not supported
+2025-03-21 21:40:21,354 [http-nio-8080-exec-10] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Request method 'GET' is not supported
+2025-03-21 21:40:53,943 [http-nio-8080-exec-2] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Required request parameter 'userEmail' for method parameter type String is not present
+2025-03-21 21:42:20,809 [http-nio-8080-exec-4] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Required request parameter 'userEmail' for method parameter type String is not present
+2025-03-21 21:46:20,508 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 21:46:20,518 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 21:46:20,536 [http-nio-8080-exec-3] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:55 - redis code: 176538
+2025-03-21 21:46:20,537 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:52 - 验证码生成成功：1164659757@qq.com
+2025-03-21 21:46:20,537 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:54 - 开始发送验证码：1164659757@qq.com
+2025-03-21 21:46:20,540 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:56 - 验证码发送成功：1164659757@qq.com
+2025-03-21 21:46:20,541 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:{msg=操作成功, code=200, data=EmailCaptchaVO(email=1164659757@qq.com, codeKey=1598aff8505f4d10a5258be1e5d78792)}
+2025-03-21 21:46:31,268 [saveAsync-2] INFO  [m.i.i.system.service.impl.EmailServiceImpl] EmailServiceImpl.java:129 - HTML 邮件已发送到: 1164659757@qq.com
+2025-03-21 22:06:36,138 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---入参:{"userName":"shuomc","password":"Test&123456","userEmail":"11646597@qq.com","captcha":"123","codeKey":null}
+2025-03-21 22:06:36,180 [http-nio-8080-exec-5] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:38 - 开始验证用户表单: shuomc
+2025-03-21 22:06:38,149 [http-nio-8080-exec-5] INFO  [com.zaxxer.hikari.HikariDataSource] HikariDataSource.java:109 - HikariPool-1 - Starting...
+2025-03-21 22:06:39,849 [http-nio-8080-exec-5] INFO  [com.zaxxer.hikari.pool.HikariPool] HikariPool.java:554 - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@14884214
+2025-03-21 22:06:39,856 [http-nio-8080-exec-5] INFO  [com.zaxxer.hikari.HikariDataSource] HikariDataSource.java:122 - HikariPool-1 - Start completed.
+2025-03-21 22:06:41,575 [http-nio-8080-exec-5] ERROR [m.i.i.system.controller.RegisterController] RegisterController.java:41 - 用户表单验证失败: 用户名已存在
+2025-03-21 22:06:41,576 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---出参:{msg=用户名已存在, code=500}
+2025-03-21 22:14:56,717 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 22:14:56,718 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 22:14:56,720 [http-nio-8080-exec-10] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:55 - redis code: 555692
+2025-03-21 22:14:56,720 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:52 - 验证码生成成功：1164659757@qq.com
+2025-03-21 22:14:56,720 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:54 - 开始发送验证码：1164659757@qq.com
+2025-03-21 22:14:56,721 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:56 - 验证码发送成功：1164659757@qq.com
+2025-03-21 22:14:56,721 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:{msg=操作成功, code=200, data=EmailCaptchaVO(email=1164659757@qq.com, codeKey=5951066520a742b2ba036a2de12d9127)}
+2025-03-21 22:15:07,185 [saveAsync-3] INFO  [m.i.i.system.service.impl.EmailServiceImpl] EmailServiceImpl.java:129 - HTML 邮件已发送到: 1164659757@qq.com
+2025-03-21 22:21:31,269 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 22:21:31,306 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 22:21:31,308 [http-nio-8080-exec-3] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:55 - redis code: 173285
+2025-03-21 22:21:31,308 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:52 - 验证码生成成功：1164659757@qq.com
+2025-03-21 22:21:31,309 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:54 - 开始发送验证码：1164659757@qq.com
+2025-03-21 22:21:31,309 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:56 - 验证码发送成功：1164659757@qq.com
+2025-03-21 22:21:31,309 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:{msg=操作成功, code=200, data=EmailCaptchaVO(email=1164659757@qq.com, codeKey=b475bd6614904e429c8d2d18a789a14f)}
+2025-03-21 22:21:41,892 [saveAsync-4] INFO  [m.i.i.system.service.impl.EmailServiceImpl] EmailServiceImpl.java:129 - HTML 邮件已发送到: 1164659757@qq.com
+2025-03-21 22:28:02,332 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 22:28:02,333 [http-nio-8080-exec-5] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 22:28:02,473 [http-nio-8080-exec-5] ERROR [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:88 - [异常]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode ---错误信息:Error in execution
+org.springframework.data.redis.RedisSystemException: Error in execution
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:52)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:50)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:41)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:40)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:310)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1022)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$3(LettuceConnection.java:447)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:673)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$DefaultSingleInvocationSpec.get(LettuceInvoker.java:589)
+	at org.springframework.data.redis.connection.lettuce.LettuceStringCommands.setEx(LettuceStringCommands.java:134)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.setEx(DefaultedRedisConnection.java:340)
+	at org.springframework.data.redis.core.DefaultValueOperations$8.potentiallyUsePsetEx(DefaultValueOperations.java:265)
+	at org.springframework.data.redis.core.DefaultValueOperations$8.doInRedis(DefaultValueOperations.java:258)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:396)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:363)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultValueOperations.set(DefaultValueOperations.java:253)
+	at moe.imtop1.imagehosting.framework.utils.RedisCache.setCacheObject(RedisCache.java:57)
+	at moe.imtop1.imagehosting.system.service.impl.ValidateCodeServiceImpl.generateEmailCaptcha(ValidateCodeServiceImpl.java:54)
+	at moe.imtop1.imagehosting.system.controller.RegisterController.sendVerificationCode(RegisterController.java:51)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.proceed(ModifyLogAspect.java:86)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.modifyLog(ModifyLogAspect.java:78)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.controller.RegisterController$$SpringCGLIB$$0.sendVerificationCode(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: io.lettuce.core.RedisCommandExecutionException: MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error.
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:147)
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:116)
+	at io.lettuce.core.protocol.AsyncCommand.completeResult(AsyncCommand.java:120)
+	at io.lettuce.core.protocol.AsyncCommand.complete(AsyncCommand.java:111)
+	at io.lettuce.core.protocol.CommandHandler.complete(CommandHandler.java:745)
+	at io.lettuce.core.protocol.CommandHandler.decode(CommandHandler.java:680)
+	at io.lettuce.core.protocol.CommandHandler.channelRead(CommandHandler.java:597)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1407)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:440)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:918)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:994)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 common frames omitted
+2025-03-21 22:28:02,630 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:null
+2025-03-21 22:28:02,631 [http-nio-8080-exec-5] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - Error in execution
+2025-03-21 22:28:12,319 [lettuce-nioEventLoop-4-4] INFO  [io.lettuce.core.protocol.CommandHandler] AbstractInternalLogger.java:217 - null Unexpected exception during request: java.net.SocketException: Connection reset
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:994)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-03-21 22:28:13,042 [lettuce-eventExecutorLoop-1-6] INFO  [io.lettuce.core.protocol.ConnectionWatchdog] AbstractInternalLogger.java:171 - Reconnecting, last destination was localhost/127.0.0.1:6379
+2025-03-21 22:28:13,607 [lettuce-nioEventLoop-4-5] WARN  [io.lettuce.core.protocol.ConnectionWatchdog] AbstractInternalLogger.java:151 - Cannot reconnect to [localhost/<unresolved>:6379]: Connection refused: getsockopt: localhost/127.0.0.1:6379
+2025-03-21 22:28:18,721 [lettuce-eventExecutorLoop-1-1] INFO  [io.lettuce.core.protocol.ConnectionWatchdog] AbstractInternalLogger.java:171 - Reconnecting, last destination was localhost/<unresolved>:6379
+2025-03-21 22:28:18,822 [lettuce-nioEventLoop-4-8] INFO  [io.lettuce.core.protocol.ReconnectionHandler] ReconnectionHandler.java:174 - Reconnected to localhost/<unresolved>:6379
+2025-03-21 22:28:25,227 [http-nio-8080-exec-8] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 22:28:25,227 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 22:28:25,242 [http-nio-8080-exec-8] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:55 - redis code: 965526
+2025-03-21 22:28:25,242 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:52 - 验证码生成成功：1164659757@qq.com
+2025-03-21 22:28:25,242 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:54 - 开始发送验证码：1164659757@qq.com
+2025-03-21 22:28:25,242 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:56 - 验证码发送成功：1164659757@qq.com
+2025-03-21 22:28:25,243 [http-nio-8080-exec-8] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:{msg=操作成功, code=200, data=EmailCaptchaVO(email=1164659757@qq.com, codeKey=2eea82feb044440db33fb1f52f1799c8)}
+2025-03-21 22:28:35,807 [saveAsync-1] INFO  [m.i.i.system.service.impl.EmailServiceImpl] EmailServiceImpl.java:129 - HTML 邮件已发送到: 1164659757@qq.com
+2025-03-21 22:28:41,165 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["2eea82feb044440db33fb1f52f1799c8","965526"]
+2025-03-21 22:28:41,165 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:28:41,547 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：true
+2025-03-21 22:28:41,548 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=true}
+2025-03-21 22:30:23,298 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 22:30:23,299 [http-nio-8080-exec-2] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 22:30:23,354 [http-nio-8080-exec-2] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:55 - redis code: 760239
+2025-03-21 22:30:23,354 [http-nio-8080-exec-2] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:52 - 验证码生成成功：1164659757@qq.com
+2025-03-21 22:30:23,354 [http-nio-8080-exec-2] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:54 - 开始发送验证码：1164659757@qq.com
+2025-03-21 22:30:23,355 [http-nio-8080-exec-2] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:56 - 验证码发送成功：1164659757@qq.com
+2025-03-21 22:30:23,355 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:{msg=操作成功, code=200, data=EmailCaptchaVO(email=1164659757@qq.com, codeKey=aeb6b18c3e08413c903236855c462963)}
+2025-03-21 22:30:33,920 [saveAsync-2] INFO  [m.i.i.system.service.impl.EmailServiceImpl] EmailServiceImpl.java:129 - HTML 邮件已发送到: 1164659757@qq.com
+2025-03-21 22:30:46,122 [http-nio-8080-exec-1] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["aeb6b18c3e08413c903236855c462963","760239"]
+2025-03-21 22:30:46,123 [http-nio-8080-exec-1] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:30:46,124 [http-nio-8080-exec-1] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：true
+2025-03-21 22:30:46,124 [http-nio-8080-exec-1] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=true}
+2025-03-21 22:30:50,262 [http-nio-8080-exec-4] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["aeb6b18c3e08413c903236855c462963","760239"]
+2025-03-21 22:30:50,262 [http-nio-8080-exec-4] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:30:50,264 [http-nio-8080-exec-4] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：true
+2025-03-21 22:30:50,264 [http-nio-8080-exec-4] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=true}
+2025-03-21 22:30:53,695 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["aeb6b18c3e08413c903236855c462963","760239"]
+2025-03-21 22:30:53,696 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:30:53,697 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：true
+2025-03-21 22:30:53,697 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=true}
+2025-03-21 22:31:41,124 [http-nio-8080-exec-6] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["","760239"]
+2025-03-21 22:31:41,125 [http-nio-8080-exec-6] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:31:41,143 [http-nio-8080-exec-6] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：false
+2025-03-21 22:31:41,143 [http-nio-8080-exec-6] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=false}
+2025-03-21 22:32:50,955 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["","760239"]
+2025-03-21 22:32:50,956 [http-nio-8080-exec-5] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:32:50,959 [http-nio-8080-exec-5] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：false
+2025-03-21 22:32:50,959 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=false}
+2025-03-21 22:32:51,035 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---入参:{"userName":"vue-test","password":"1164659757","userEmail":"1164659757@qq.com","captcha":"760239","codeKey":null}
+2025-03-21 22:32:51,072 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:register ---用户:system ---地址:/register/register  ---入参:{"userName":"vue-test","password":"1164659757","userEmail":"1164659757@qq.com","captcha":"760239","codeKey":null}
+2025-03-21 22:32:51,094 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:38 - 开始验证用户表单: vue-test
+2025-03-21 22:32:51,162 [http-nio-8080-exec-2] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:73 - 开始注册用户: vue-test
+2025-03-21 22:32:51,264 [http-nio-8080-exec-10] ERROR [m.i.i.system.controller.RegisterController] RegisterController.java:41 - 用户表单验证失败: 密码格式不正确
+2025-03-21 22:32:51,264 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---出参:{msg=密码格式不正确, code=500}
+2025-03-21 22:32:53,860 [http-nio-8080-exec-2] ERROR [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:88 - [异常]方法名:register ---用户:system ---地址:/register/register ---错误信息:密码格式不正确
+moe.imtop1.imagehosting.framework.exception.SystemException: 密码格式不正确
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl.validateTable(RegisterServiceImpl.java:89)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl.register(RegisterServiceImpl.java:42)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl$$SpringCGLIB$$0.register(<generated>)
+	at moe.imtop1.imagehosting.system.controller.RegisterController.register(RegisterController.java:74)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.proceed(ModifyLogAspect.java:86)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.modifyLog(ModifyLogAspect.java:78)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.controller.RegisterController$$SpringCGLIB$$0.register(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-03-21 22:32:53,861 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:register ---用户:system ---地址:/register/register  ---出参:null
+2025-03-21 22:35:35,578 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 22:35:35,579 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 22:35:35,581 [http-nio-8080-exec-3] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:55 - redis code: 337306
+2025-03-21 22:35:35,582 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:52 - 验证码生成成功：1164659757@qq.com
+2025-03-21 22:35:35,582 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:54 - 开始发送验证码：1164659757@qq.com
+2025-03-21 22:35:35,582 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:56 - 验证码发送成功：1164659757@qq.com
+2025-03-21 22:35:35,582 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:{msg=操作成功, code=200, data=EmailCaptchaVO(email=1164659757@qq.com, codeKey=751f2d5faf6d46a7988949268d8aff4d)}
+2025-03-21 22:35:46,090 [saveAsync-3] INFO  [m.i.i.system.service.impl.EmailServiceImpl] EmailServiceImpl.java:129 - HTML 邮件已发送到: 1164659757@qq.com
+2025-03-21 22:35:54,228 [http-nio-8080-exec-6] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["751f2d5faf6d46a7988949268d8aff4d","337306"]
+2025-03-21 22:35:54,229 [http-nio-8080-exec-6] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:35:54,231 [http-nio-8080-exec-6] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：true
+2025-03-21 22:35:54,231 [http-nio-8080-exec-6] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=true}
+2025-03-21 22:35:54,239 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---入参:{"userName":"vue-test","password":"1234567890","userEmail":"1164659757@qq.com","captcha":"337306","codeKey":null}
+2025-03-21 22:35:54,240 [http-nio-8080-exec-5] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:38 - 开始验证用户表单: vue-test
+2025-03-21 22:35:54,247 [http-nio-8080-exec-5] ERROR [m.i.i.system.controller.RegisterController] RegisterController.java:41 - 用户表单验证失败: 密码格式不正确
+2025-03-21 22:35:54,247 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---出参:{msg=密码格式不正确, code=500}
+2025-03-21 22:35:54,560 [http-nio-8080-exec-9] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:register ---用户:system ---地址:/register/register  ---入参:{"userName":"vue-test","password":"1234567890","userEmail":"1164659757@qq.com","captcha":"337306","codeKey":null}
+2025-03-21 22:35:54,603 [http-nio-8080-exec-9] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:73 - 开始注册用户: vue-test
+2025-03-21 22:35:54,610 [http-nio-8080-exec-9] ERROR [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:88 - [异常]方法名:register ---用户:system ---地址:/register/register ---错误信息:密码格式不正确
+moe.imtop1.imagehosting.framework.exception.SystemException: 密码格式不正确
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl.validateTable(RegisterServiceImpl.java:89)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl.register(RegisterServiceImpl.java:42)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl$$SpringCGLIB$$0.register(<generated>)
+	at moe.imtop1.imagehosting.system.controller.RegisterController.register(RegisterController.java:74)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.proceed(ModifyLogAspect.java:86)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.modifyLog(ModifyLogAspect.java:78)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.controller.RegisterController$$SpringCGLIB$$0.register(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-03-21 22:35:54,611 [http-nio-8080-exec-9] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:register ---用户:system ---地址:/register/register  ---出参:null
+2025-03-21 22:36:06,616 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["751f2d5faf6d46a7988949268d8aff4d","337306"]
+2025-03-21 22:36:06,617 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:36:06,618 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：true
+2025-03-21 22:36:06,621 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=true}
+2025-03-21 22:36:06,627 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---入参:{"userName":"vue-test","password":"Sb&123456789","userEmail":"1164659757@qq.com","captcha":"337306","codeKey":null}
+2025-03-21 22:36:06,628 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:38 - 开始验证用户表单: vue-test
+2025-03-21 22:36:06,628 [http-nio-8080-exec-4] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:register ---用户:system ---地址:/register/register  ---入参:{"userName":"vue-test","password":"Sb&123456789","userEmail":"1164659757@qq.com","captcha":"337306","codeKey":null}
+2025-03-21 22:36:06,629 [http-nio-8080-exec-4] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:73 - 开始注册用户: vue-test
+2025-03-21 22:36:06,637 [http-nio-8080-exec-4] ERROR [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:88 - [异常]方法名:register ---用户:system ---地址:/register/register ---错误信息:non null key required
+java.lang.IllegalArgumentException: non null key required
+	at org.springframework.util.Assert.notNull(Assert.java:172)
+	at org.springframework.data.redis.core.AbstractOperations.rawKey(AbstractOperations.java:107)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:61)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:396)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:363)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:50)
+	at moe.imtop1.imagehosting.framework.utils.RedisCache.getCacheObject(RedisCache.java:70)
+	at moe.imtop1.imagehosting.system.service.impl.ValidateCodeServiceImpl.validateEmailCaptcha(ValidateCodeServiceImpl.java:67)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl.register(RegisterServiceImpl.java:45)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl$$SpringCGLIB$$0.register(<generated>)
+	at moe.imtop1.imagehosting.system.controller.RegisterController.register(RegisterController.java:74)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.proceed(ModifyLogAspect.java:86)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.modifyLog(ModifyLogAspect.java:78)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.controller.RegisterController$$SpringCGLIB$$0.register(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-03-21 22:36:06,639 [http-nio-8080-exec-4] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:register ---用户:system ---地址:/register/register  ---出参:null
+2025-03-21 22:36:06,639 [http-nio-8080-exec-4] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - non null key required
+2025-03-21 22:36:06,645 [http-nio-8080-exec-10] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:44 - 用户表单验证成功: vue-test
+2025-03-21 22:36:06,645 [http-nio-8080-exec-10] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---出参:{msg=用户表单验证成功, code=200}
+2025-03-21 22:38:31,471 [http-nio-8080-exec-6] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["751f2d5faf6d46a7988949268d8aff4d","337306"]
+2025-03-21 22:38:32,582 [http-nio-8080-exec-6] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:38:32,584 [http-nio-8080-exec-6] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：true
+2025-03-21 22:38:32,584 [http-nio-8080-exec-6] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=true}
+2025-03-21 22:38:32,642 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---入参:{"userName":"vue-test","password":"Sb&123456789","userEmail":"1164659757@qq.com","captcha":"337306","codeKey":null}
+2025-03-21 22:38:32,643 [http-nio-8080-exec-2] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:38 - 开始验证用户表单: vue-test
+2025-03-21 22:38:32,906 [http-nio-8080-exec-2] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:44 - 用户表单验证成功: vue-test
+2025-03-21 22:38:32,906 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---出参:{msg=用户表单验证成功, code=200}
+2025-03-21 22:38:33,195 [http-nio-8080-exec-1] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:register ---用户:system ---地址:/register/register  ---入参:{"userName":"vue-test","password":"Sb&123456789","userEmail":"1164659757@qq.com","captcha":"337306","codeKey":null}
+2025-03-21 22:38:33,196 [http-nio-8080-exec-1] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:73 - 开始注册用户: vue-test
+2025-03-21 22:38:33,201 [http-nio-8080-exec-1] ERROR [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:88 - [异常]方法名:register ---用户:system ---地址:/register/register ---错误信息:non null key required
+java.lang.IllegalArgumentException: non null key required
+	at org.springframework.util.Assert.notNull(Assert.java:172)
+	at org.springframework.data.redis.core.AbstractOperations.rawKey(AbstractOperations.java:107)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:61)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:396)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:363)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:50)
+	at moe.imtop1.imagehosting.framework.utils.RedisCache.getCacheObject(RedisCache.java:70)
+	at moe.imtop1.imagehosting.system.service.impl.ValidateCodeServiceImpl.validateEmailCaptcha(ValidateCodeServiceImpl.java:67)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl.register(RegisterServiceImpl.java:45)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl$$SpringCGLIB$$0.register(<generated>)
+	at moe.imtop1.imagehosting.system.controller.RegisterController.register(RegisterController.java:74)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.proceed(ModifyLogAspect.java:86)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.modifyLog(ModifyLogAspect.java:78)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.controller.RegisterController$$SpringCGLIB$$0.register(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-03-21 22:38:33,203 [http-nio-8080-exec-1] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:register ---用户:system ---地址:/register/register  ---出参:null
+2025-03-21 22:38:33,203 [http-nio-8080-exec-1] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - non null key required
+2025-03-21 22:40:39,509 [http-nio-8080-exec-7] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["751f2d5faf6d46a7988949268d8aff4d","337306"]
+2025-03-21 22:40:39,510 [http-nio-8080-exec-7] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:40:39,511 [http-nio-8080-exec-7] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：false
+2025-03-21 22:40:39,512 [http-nio-8080-exec-7] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=false}
+2025-03-21 22:41:48,053 [http-nio-8080-exec-8] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 22:41:48,054 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 22:41:48,056 [http-nio-8080-exec-8] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:55 - redis code: 820764
+2025-03-21 22:41:48,056 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:52 - 验证码生成成功：1164659757@qq.com
+2025-03-21 22:41:48,057 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:54 - 开始发送验证码：1164659757@qq.com
+2025-03-21 22:41:48,057 [http-nio-8080-exec-8] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:56 - 验证码发送成功：1164659757@qq.com
+2025-03-21 22:41:48,058 [http-nio-8080-exec-8] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:{msg=操作成功, code=200, data=EmailCaptchaVO(email=1164659757@qq.com, codeKey=57134bbf76734c458290fe3917a2e5af)}
+2025-03-21 22:41:58,610 [saveAsync-4] INFO  [m.i.i.system.service.impl.EmailServiceImpl] EmailServiceImpl.java:129 - HTML 邮件已发送到: 1164659757@qq.com
+2025-03-21 22:42:11,132 [http-nio-8080-exec-6] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["57134bbf76734c458290fe3917a2e5af","820764"]
+2025-03-21 22:42:11,133 [http-nio-8080-exec-6] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:42:11,135 [http-nio-8080-exec-6] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：true
+2025-03-21 22:42:11,136 [http-nio-8080-exec-6] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=true}
+2025-03-21 22:42:11,156 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:register ---用户:system ---地址:/register/register  ---入参:{"userName":"vue-test","password":"Abshf%984654","userEmail":"1164659757@qq.com","captcha":"820764","codeKey":null}
+2025-03-21 22:42:11,156 [http-nio-8080-exec-1] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---入参:{"userName":"vue-test","password":"Abshf%984654","userEmail":"1164659757@qq.com","captcha":"820764","codeKey":null}
+2025-03-21 22:42:11,157 [http-nio-8080-exec-3] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:73 - 开始注册用户: vue-test
+2025-03-21 22:42:11,158 [http-nio-8080-exec-1] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:38 - 开始验证用户表单: vue-test
+2025-03-21 22:42:11,164 [http-nio-8080-exec-3] ERROR [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:88 - [异常]方法名:register ---用户:system ---地址:/register/register ---错误信息:non null key required
+java.lang.IllegalArgumentException: non null key required
+	at org.springframework.util.Assert.notNull(Assert.java:172)
+	at org.springframework.data.redis.core.AbstractOperations.rawKey(AbstractOperations.java:107)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:61)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:396)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:363)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:50)
+	at moe.imtop1.imagehosting.framework.utils.RedisCache.getCacheObject(RedisCache.java:70)
+	at moe.imtop1.imagehosting.system.service.impl.ValidateCodeServiceImpl.validateEmailCaptcha(ValidateCodeServiceImpl.java:67)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl.register(RegisterServiceImpl.java:45)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl$$SpringCGLIB$$0.register(<generated>)
+	at moe.imtop1.imagehosting.system.controller.RegisterController.register(RegisterController.java:74)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.proceed(ModifyLogAspect.java:86)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.modifyLog(ModifyLogAspect.java:78)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.controller.RegisterController$$SpringCGLIB$$0.register(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-03-21 22:42:11,323 [http-nio-8080-exec-3] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:register ---用户:system ---地址:/register/register  ---出参:null
+2025-03-21 22:42:11,324 [http-nio-8080-exec-3] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - non null key required
+2025-03-21 22:42:11,326 [http-nio-8080-exec-1] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:44 - 用户表单验证成功: vue-test
+2025-03-21 22:42:11,327 [http-nio-8080-exec-1] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---出参:{msg=用户表单验证成功, code=200}
+2025-03-21 22:45:02,466 [http-nio-8080-exec-7] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---入参:"1164659757@qq.com"
+2025-03-21 22:45:02,466 [http-nio-8080-exec-7] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:50 - 开始生成验证码：1164659757@qq.com
+2025-03-21 22:45:02,467 [http-nio-8080-exec-7] INFO  [m.i.i.system.service.impl.ValidateCodeServiceImpl] ValidateCodeServiceImpl.java:55 - redis code: 490128
+2025-03-21 22:45:02,467 [http-nio-8080-exec-7] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:52 - 验证码生成成功：1164659757@qq.com
+2025-03-21 22:45:02,468 [http-nio-8080-exec-7] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:54 - 开始发送验证码：1164659757@qq.com
+2025-03-21 22:45:02,468 [http-nio-8080-exec-7] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:56 - 验证码发送成功：1164659757@qq.com
+2025-03-21 22:45:02,468 [http-nio-8080-exec-7] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:sendVerificationCode ---用户:system ---地址:/register/sendVerificationCode  ---出参:{msg=操作成功, code=200, data=EmailCaptchaVO(email=1164659757@qq.com, codeKey=58b4f01e7c8e43ee9a10bd5f326320f0)}
+2025-03-21 22:45:12,911 [saveAsync-1] INFO  [m.i.i.system.service.impl.EmailServiceImpl] EmailServiceImpl.java:129 - HTML 邮件已发送到: 1164659757@qq.com
+2025-03-21 22:45:15,128 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---入参:["58b4f01e7c8e43ee9a10bd5f326320f0","490128"]
+2025-03-21 22:45:15,129 [http-nio-8080-exec-5] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:65 - 开始验证验证码
+2025-03-21 22:45:15,131 [http-nio-8080-exec-5] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:67 - 验证码验证结果：true
+2025-03-21 22:45:15,133 [http-nio-8080-exec-5] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateVerificationCode ---用户:system ---地址:/register/validateVerificationCode  ---出参:{msg=操作成功, code=200, data=true}
+2025-03-21 22:45:15,140 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:register ---用户:system ---地址:/register/register  ---入参:{"userName":"vue-test","password":"Abshf%984654","userEmail":"1164659757@qq.com","captcha":"490128","codeKey":null}
+2025-03-21 22:45:15,140 [http-nio-8080-exec-9] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:84 - [开始]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---入参:{"userName":"vue-test","password":"Abshf%984654","userEmail":"1164659757@qq.com","captcha":"490128","codeKey":null}
+2025-03-21 22:45:15,141 [http-nio-8080-exec-2] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:73 - 开始注册用户: vue-test
+2025-03-21 22:45:15,141 [http-nio-8080-exec-9] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:38 - 开始验证用户表单: vue-test
+2025-03-21 22:45:15,149 [http-nio-8080-exec-2] ERROR [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:88 - [异常]方法名:register ---用户:system ---地址:/register/register ---错误信息:non null key required
+java.lang.IllegalArgumentException: non null key required
+	at org.springframework.util.Assert.notNull(Assert.java:172)
+	at org.springframework.data.redis.core.AbstractOperations.rawKey(AbstractOperations.java:107)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:61)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:396)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:363)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:97)
+	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:50)
+	at moe.imtop1.imagehosting.framework.utils.RedisCache.getCacheObject(RedisCache.java:70)
+	at moe.imtop1.imagehosting.system.service.impl.ValidateCodeServiceImpl.validateEmailCaptcha(ValidateCodeServiceImpl.java:67)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl.register(RegisterServiceImpl.java:45)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.service.impl.RegisterServiceImpl$$SpringCGLIB$$0.register(<generated>)
+	at moe.imtop1.imagehosting.system.controller.RegisterController.register(RegisterController.java:74)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.proceed(ModifyLogAspect.java:86)
+	at moe.imtop1.imagehosting.framework.log.ModifyLogAspect.modifyLog(ModifyLogAspect.java:78)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:637)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:627)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720)
+	at moe.imtop1.imagehosting.system.controller.RegisterController$$SpringCGLIB$$0.register(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet.doFilter(SaPathCheckFilterForJakartaServlet.java:55)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-03-21 22:45:15,150 [http-nio-8080-exec-2] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:register ---用户:system ---地址:/register/register  ---出参:null
+2025-03-21 22:45:15,150 [http-nio-8080-exec-2] ERROR [m.i.i.framework.exception.GlobalExceptionHandler] GlobalExceptionHandler.java:22 - non null key required
+2025-03-21 22:45:15,150 [http-nio-8080-exec-9] INFO  [m.i.i.system.controller.RegisterController] RegisterController.java:44 - 用户表单验证成功: vue-test
+2025-03-21 22:45:15,152 [http-nio-8080-exec-9] INFO  [m.i.imagehosting.framework.log.ModifyLogAspect] ModifyLogAspect.java:91 - [结束]方法名:validateTable ---用户:system ---地址:/register/validateTable  ---出参:{msg=用户表单验证成功, code=200}
+2025-03-21 22:46:14,361 [SpringApplicationShutdownHook] INFO  [com.zaxxer.hikari.HikariDataSource] HikariDataSource.java:349 - HikariPool-1 - Shutdown initiated...
+2025-03-21 22:46:14,364 [SpringApplicationShutdownHook] INFO  [com.zaxxer.hikari.HikariDataSource] HikariDataSource.java:351 - HikariPool-1 - Shutdown completed.
