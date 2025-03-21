@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center w-80 backdrop:blur-sm">
+  <div class="flex items-center justify-center w-96 backdrop:blur-sm">
     <div class="w-full max-w-md p-6 bg-white bg-opacity-20 rounded-xl shadow-xl">
       <!-- <el-form> -->
       <!-- <el-form-item class="mb-6">
@@ -28,10 +28,11 @@
           <el-input v-model="loginData.captcha" placeholder="请输入验证码" class="w-full" size="large"></el-input>
         </el-form-item> -->
 
-      <div class="mb-6 flex justify-between">
+      <div class="mb-6 flex justify-between ">
         <img :src="loginData.captchaImage" @click="getCaptcha()" alt="验证码"
-          class="cursor-pointer h-10 w-24 shadow-md shadow-indigo-500/40 border border-gray-300/40 rounded-md ml-2" />
-        <button class="flex-initial mr-1 h-10 w-24 text-indigo-700 hover:bg-indigo-400/90 hover:text-white duration-200 rounded-lg">忘记密码</button>
+          class="cursor-pointer h-10 w-24 shadow-md shadow-indigo-500/40 border border-gray-300/40 rounded-md ml-2 transition-all ease-in-out hover:-translate-y-1 duration-300" />
+        <button class="flex-initial mr-1 h-10 w-24 text-indigo-700 hover:bg-indigo-400/90 hover:text-white duration-300
+        rounded-lg hover:shadow-indigo-500/50 hover:shadow-md border border-indigo-400/80 transition-all ease-in-out hover:-translate-y-1">忘记密码</button>
       </div>
       <button class="rounded-xl w-full mb-6 mt-3 bg-indigo-500 shadow-md shadow-indigo-400/70 text-cyan-50 h-10 hover:bg-indigo-600
         transition-all ease-in-out hover:-translate-y-1 duration-300 font-semibold" @click="login()">登录
