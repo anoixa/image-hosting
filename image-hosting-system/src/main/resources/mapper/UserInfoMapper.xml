@@ -4,4 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="moe.imtop1.imagehosting.system.mapper.UserInfoMapper">
 
+    <update id="setPassword">
+        UPDATE user_info
+        SET password = #{newPassword}
+        WHERE email = #{userEmail}
+    </update>
 </mapper>
