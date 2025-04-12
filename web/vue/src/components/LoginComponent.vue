@@ -50,7 +50,7 @@ import { onMounted, reactive } from 'vue';
 import axios from 'axios';
 import { API_BASE_URL } from '@/config';
 import { ElMessage } from 'element-plus';
-import { login, validateLoginForm } from '@/api/auth/login';
+import { login } from '@/api/auth/login';
 // import 'element-plus/dist/index.css';
 
 // 路由
@@ -83,10 +83,6 @@ async function getGraghCaptcha() {
 
 // 处理登录
 async function handleLogin() {
-  // 验证表单
-  const isFormValid = await validateLoginForm(loginData);
-  if (!isFormValid) return;
-
   // 执行登录
   const isSuccess = await login(loginData);
   if (isSuccess) {
