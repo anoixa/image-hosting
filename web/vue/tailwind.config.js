@@ -1,8 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{js,jsx,ts,tsx,html,vue}'],
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
+      height: {
+        '500': '500px',
+      },
       colors: {
         // primary: '#1D4ED8',
         // secondary: '#FFFFFF',
