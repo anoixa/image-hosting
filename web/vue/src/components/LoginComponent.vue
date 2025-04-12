@@ -29,7 +29,7 @@
         </el-form-item> -->
 
       <div class="mb-6 flex justify-between ">
-        <img :src="loginData.captchaImage" @click="getCaptcha()" alt="验证码"
+        <img :src="loginData.captchaImage" @click="getGraghCaptcha()" alt="验证码"
           class="cursor-pointer h-10 w-24 shadow-md shadow-indigo-500/40 border border-gray-300/40 rounded-md ml-2 transition-all ease-in-out hover:-translate-y-1 duration-300" />
           <router-link to="/auth/find-password" class="min-w-24">
           <button class="flex-initial mr-1 h-10 w-24 text-indigo-700 hover:bg-indigo-400/90 hover:text-white duration-300
@@ -37,7 +37,7 @@
         </router-link>
       </div>
       <button class="rounded-xl w-full mb-6 mt-3 bg-indigo-500 shadow-md shadow-indigo-400/70 text-cyan-50 h-10 hover:bg-indigo-600
-        transition-all ease-in-out hover:-translate-y-1 duration-300 font-semibold" @click="login()">登录
+        transition-all ease-in-out hover:-translate-y-1 duration-300 font-semibold" @click="handleLogin()">登录
       </button>
       <!-- </el-form> -->
     </div>
@@ -50,6 +50,7 @@ import { onMounted, reactive } from 'vue';
 import axios from 'axios';
 import { API_BASE_URL } from '@/config';
 import { ElMessage } from 'element-plus';
+import { login, validateLoginForm } from '@/api/auth/login';
 // import 'element-plus/dist/index.css';
 
 // 路由
@@ -65,7 +66,7 @@ const loginData = reactive({
 });
 
 // 获取验证码
-async function getCaptcha() {
+async function getGraghCaptcha() {
   const apiUrl = `${API_BASE_URL}/auth/getValidateCode`;
   try {
     const response = await axios.get(apiUrl);
@@ -80,27 +81,21 @@ async function getCaptcha() {
   }
 }
 
-// 登录
-async function login() {
-  const apiUrl = `${API_BASE_URL}/auth/login`;
-  try {
-    const response = await axios.post(apiUrl, loginData);
-    if (response.data.code === 200) {
-      // 登录成功，跳转到首页
-      router.push("/");
-      ElMessage.success("登录成功");
-    } else {
-      // 登录失败，显示错误信息
-      ElMessage.error(response.data.msg);
-    }
-  } catch (error) {
-    console.error("登录失败:", error);
-    ElMessage.error("登录失败");
+// 处理登录
+async function handleLogin() {
+  // 验证表单
+  const isFormValid = await validateLoginForm(loginData);
+  if (!isFormValid) return;
+
+  // 执行登录
+  const isSuccess = await login(loginData);
+  if (isSuccess) {
+    router.push('/');
   }
 }
 
 onMounted(() => {
-  getCaptcha();
+  getGraghCaptcha();
 });
 </script>
 

@@ -32,45 +32,69 @@ public class RegisterController {
     private IEmailService emailService;
     @Autowired
     private IValidateCodeService validateCodeService;
+
     @PostMapping("/validateTable")
     public AjaxResult validateTable(@Valid @RequestBody RegisterDTO registerDTO) {
         try {
             logger.info("开始验证用户表单: {}", registerDTO.getUserName());
             registerService.validateTable(registerDTO);
+            logger.info("用户表单验证成功: {}", registerDTO.getUserName());
+            return AjaxResult.success("用户表单验证成功");
         } catch (SystemException e) {
-            logger.error("用户表单验证失败: {}",e.getMessage());
-            return AjaxResult.error(e.getMessage());
+            logger.error("用户表单验证失败: {}", e.getMessage());
+            return AjaxResult.error(e.getCode(), e.getMessage());
+        } catch (Exception e) {
+            logger.error("用户表单验证发生未知错误: {}", e.getMessage());
+            return AjaxResult.error(500, "系统错误，请稍后重试");
         }
-        logger.info("用户表单验证成功: {}", registerDTO.getUserName());
-        return AjaxResult.success("用户表单验证成功");
     }
 
     @PostMapping("/sendVerificationCode")
     public AjaxResult sendVerificationCode(@RequestParam String userEmail) {
-        logger.info("开始生成验证码：{}", userEmail);
-        EmailCaptchaDTO emailCaptchaDTO = validateCodeService.generateEmailCaptcha(userEmail);
-        logger.info("验证码生成成功：{}", userEmail);
+        try {
+            logger.info("开始生成验证码：{}", userEmail);
+            EmailCaptchaDTO emailCaptchaDTO = validateCodeService.generateEmailCaptcha(userEmail);
+            logger.info("验证码生成成功：{}", userEmail);
 
-        logger.info("开始发送验证码：{}", userEmail);
-        emailService.sendHtmlCaptcha(emailCaptchaDTO);
-        logger.info("验证码发送成功：{}", userEmail);
+            logger.info("开始发送验证码：{}", userEmail);
+            emailService.sendHtmlCaptcha(emailCaptchaDTO);
+            logger.info("验证码发送成功：{}", userEmail);
 
-        EmailCaptchaVO emailCaptchaVO = new EmailCaptchaVO(emailCaptchaDTO.getEmail(), emailCaptchaDTO.getCodeKey());
-
-        return AjaxResult.success(emailCaptchaVO);
+            EmailCaptchaVO emailCaptchaVO = new EmailCaptchaVO(emailCaptchaDTO.getEmail(), emailCaptchaDTO.getCodeKey());
+            return AjaxResult.success(emailCaptchaVO);
+        } catch (SystemException e) {
+            logger.error("验证码发送失败: {}", e.getMessage());
+            return AjaxResult.error(e.getCode(), e.getMessage());
+        } catch (Exception e) {
+            logger.error("验证码发送发生未知错误: {}", e.getMessage());
+            return AjaxResult.error(500, "系统错误，请稍后重试");
+        }
     }
 
     @PostMapping("/validateVerificationCode")
     public AjaxResult validateVerificationCode(@RequestParam String key, @RequestParam String codeValue) {
-        logger.info("开始验证验证码");
-        boolean validateResult = validateCodeService.validateEmailCaptcha(key, codeValue);
-        logger.info("验证码验证结果：{}", validateResult);
-        return AjaxResult.success(validateResult);
+        try {
+            logger.info("开始验证验证码");
+            boolean validateResult = validateCodeService.validateEmailCaptcha(key, codeValue);
+            logger.info("验证码验证结果：{}", validateResult);
+            return AjaxResult.success(validateResult);
+        } catch (SystemException e) {
+            logger.error("验证码验证失败: {}", e.getMessage());
+            return AjaxResult.error(e.getCode(), e.getMessage());
+        } catch (Exception e) {
+            logger.error("验证码验证发生未知错误: {}", e.getMessage());
+            return AjaxResult.error(500, "系统错误，请稍后重试");
+        }
     }
 
     @PostMapping("/register")
     public AjaxResult register(@Valid @RequestBody RegisterDTO registerDTO) {
-        logger.info("开始注册用户: {}", registerDTO.getUserName());
-        return registerService.register(registerDTO);
+        try {
+            logger.info("开始注册用户: {}", registerDTO.getUserName());
+            return registerService.register(registerDTO);
+        } catch (Exception e) {
+            logger.error("注册发生未知错误: {}", e.getMessage());
+            return AjaxResult.error(500, "系统错误，请稍后重试");
+        }
     }
 }
