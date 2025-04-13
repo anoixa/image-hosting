@@ -4,13 +4,13 @@
     <div class="w-full h-16 flex items-center justify-between px-8 bg-white/70 shadow-sm backdrop-blur-sm">
       <div class="flex items-center">
         <img src="@/assets/logo.png" alt="Logo" class="h-8 w-auto">
-        <h1 class="ml-4 text-2xl font-bold text-gray-800">图片托管系统</h1>
+        <h1 class="ml-4 text-2xl font-bold text-gray-800">image-hosting</h1>
       </div>
       <div class="flex items-center space-x-6">
         <router-link to="/auth/login" class="text-gray-600 hover:text-indigo-600 transition-colors">
           登录
         </router-link>
-        <router-link to="/auth/register" class="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-all">
+        <router-link to="/register" class="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-all">
           注册
         </router-link>
       </div>

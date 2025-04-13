@@ -7,6 +7,16 @@
     <update id="setPassword">
         UPDATE user_info
         SET password = #{newPassword}
-        WHERE email = #{userEmail}
+        WHERE user_email = #{userEmail}
     </update>
+
+    <select id="isRegistered" resultType="java.lang.Boolean">
+        SELECT EXISTS(
+            SELECT 1
+            FROM user_info
+            WHERE user_email = #{userEmail}
+              AND is_delete = false
+        )
+    </select>
+
 </mapper>

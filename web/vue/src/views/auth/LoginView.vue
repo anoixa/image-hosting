@@ -36,9 +36,9 @@
         </header>
 
         <!-- hero -->
-        <div class="pt-40">
+        <div class="pt-28">
           <div class="relative mx-auto flex max-w-3xl flex-col items-center">
-            <div
+            <!-- <div
               class="border border-gray-600 inline-flex h-full cursor-pointer justify-center rounded-full bg-white px-3 py-1 text-xs font-medium leading-5 text-slate-600 backdrop-blur-xl dark:bg-black dark:text-slate-200">
               <a href="https://github.com/anoixa/image-hosting">
               已发布新的组件 ⚡️<span class="inline-flex items-center pl-2 text-black dark:text-white">查看
@@ -49,7 +49,7 @@
                   <path d="m12 5 7 7-7 7"></path>
                 </svg></span>
               </a>
-            </div>
+            </div> -->
 
             <h2
               class="text-center text-3xl mt-6 font-medium text-gray-900 dark:text-gray-50 sm:text-6xl cursor-default">
@@ -87,6 +87,16 @@
           </div>
         </div>
 
+      </div>
+      <!-- 底部信息 -->
+      <div class="mt-8 text-center text-sm text-gray-500 fixed bottom-0 w-full">
+        <p>© 2024 Image-Hosting. All rights reserved.</p>
+        <div class="mt-2 space-x-6">
+          <a href="#" class="hover:text-indigo-600 transition-colors">关于我们</a>
+          <a href="#" class="hover:text-indigo-600 transition-colors">服务条款</a>
+          <a href="#" class="hover:text-indigo-600 transition-colors">隐私政策</a>
+          <a href="#" class="hover:text-indigo-600 transition-colors">帮助中心</a>
+        </div>
       </div>
     </div>
   </div>

@@ -6,24 +6,33 @@
           <el-input v-model="loginData.userName" placeholder="请输入用户名" class="w-full" size="large"></el-input>
         </el-form-item> -->
 
-      <input type="text" v-model="loginData.userName" class="rounded-xl w-full mb-6 h-10 mr-1 p-4 border border-gray-300 text-gray-500/90 text-sm
-        transition-all ease-in-out outline-none focus: ring-indigo-500/70 focus:ring-2 duration-300"
-        placeholder="请输入用户名或邮箱">
-
-      <input type="password" v-model="loginData.password" class="rounded-xl w-full mb-6 h-10 mr-1 p-4 border border-gray-300 text-gray-500/90 text-sm
-        transition-all ease-in-out outline-none focus: ring-indigo-500/70 focus:ring-2 duration-300"
-        placeholder="请输入密码">
+      <div class="mb-4 w-full">
+        <label for="userName" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
+        <input type="text" v-model="loginData.userName"
+          class="rounded-xl w-full h-10 p-4 border border-gray-300 text-gray-500/90 text-sm
+            transition-all ease-in-out outline-none focus:ring-indigo-500/70 focus:ring-2 duration-300"
+          placeholder="请输入用户名或邮箱" />
+      </div>
+      <div class="mb-4 w-full">
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+        <input type="password" v-model="loginData.password"
+          class="rounded-xl w-full h-10 p-4 border border-gray-300 text-gray-500/90 text-sm
+            transition-all ease-in-out outline-none focus:ring-indigo-500/70 focus:ring-2 duration-300"
+          placeholder="请输入密码" />
+      </div>
 
       <!-- <el-form-item class="mb-6">
           <el-input v-model="loginData.password" placeholder="请输入密码" class="w-full" show-password
             size="large"></el-input>
         </el-form-item> -->
+      <div class="mb-4">
+        <label for="captcha" class="block text-sm font-medium text-gray-700 mb-1 w-full">验证码</label>
+        <input type="text" v-model="loginData.captcha"
+          class="rounded-xl w-full h-10 p-4 border border-gray-300 text-gray-500/90 text-sm
+            transition-all ease-in-out outline-none focus:ring-indigo-500/70 focus:ring-2 duration-300"
+          placeholder="请输入验证码" />
 
-      <input type="text" v-model="loginData.captcha" class="rounded-xl w-full mb-6 h-10 mr-1 p-4 border border-gray-300 text-gray-500/90 text-sm
-        transition-all ease-in-out outline-none focus: ring-indigo-500/70 focus:ring-2 duration-300"
-        placeholder="请输入验证码">
-
-
+      </div>
       <!-- <el-form-item class="mb-6">
           <el-input v-model="loginData.captcha" placeholder="请输入验证码" class="w-full" size="large"></el-input>
         </el-form-item> -->

@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserInfoMapper extends MPJBaseMapper<UserInfo> {
     int setPassword(@Param("userEmail") String userEmail, @Param("newPassword") String newPassword);
+
+    boolean isRegistered(@Param("userEmail") String userEmail);
 }

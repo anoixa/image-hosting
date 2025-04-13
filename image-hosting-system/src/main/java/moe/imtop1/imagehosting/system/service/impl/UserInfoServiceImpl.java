@@ -9,6 +9,10 @@ import moe.imtop1.imagehosting.system.service.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * 修改信息
+ * @author shuomc
+ */
 @Service
 @RequiredArgsConstructor
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements IService<UserInfo>, IUserInfoService {
@@ -19,6 +23,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         // 调用 userInfoMapper 的 setPassword 方法更新密码
         int affectedRows = userInfoMapper.setPassword(userEmail, newPassword);
         return affectedRows > 0;
+    }
+
+    @Override
+    public boolean isRegistered(String userEmail) {
+        // 调用 userInfoMapper 的 isRegistered 方法查询用户是否存在
+        return userInfoMapper.isRegistered(userEmail);
     }
 
 }
