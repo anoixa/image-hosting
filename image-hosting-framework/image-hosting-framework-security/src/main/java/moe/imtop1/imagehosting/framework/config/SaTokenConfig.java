@@ -24,7 +24,13 @@ public class SaTokenConfig implements WebMvcConfigurer {
         // 注册 Sa-Token 的路由拦截器
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/auth/login","/auth/getValidateCode","/register/**");
+                .excludePathPatterns(
+                        "/auth/login",
+                        "/auth/getValidateCode",
+                        "/register/**",
+                        "/modify/**",
+                        "/api/images/**"
+                );
     }
 
     @Override

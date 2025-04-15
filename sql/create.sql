@@ -50,40 +50,36 @@ INSERT INTO "public"."config" VALUES ('2', NULL, 'ORIGINAL_WEBP_CONVERSION', '1'
 DROP TABLE IF EXISTS "public"."image_data";
 CREATE TABLE "public"."image_data" (
                                        "image_id" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-                                       "image_type" varchar(10) COLLATE "pg_catalog"."default" NOT NULL,
-                                       "image_url" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
+                                       "content_type" varchar(10) COLLATE "pg_catalog"."default" NOT NULL,
+                                       "minio_url" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+                                       "minio_key" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
                                        "user_id" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-                                       "strategy_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-                                       "file_path" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
                                        "file_name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-                                       "file_size" int4 NOT NULL,
+                                       "size" int4 NOT NULL,
                                        "create_time" timestamp(6) DEFAULT CURRENT_TIMESTAMP,
+                                       "update_time" timestamp(6) ,
                                        "description" text COLLATE "pg_catalog"."default",
                                        "is_public" bool NOT NULL DEFAULT true,
                                        "is_delete" bool NOT NULL DEFAULT false,
-                                       "file_extension" varchar(255) COLLATE "pg_catalog"."default",
                                        "width" int4,
-                                       "height" int4,
-                                       "key" varchar(255) COLLATE "pg_catalog"."default",
-                                       "file_
-                                     original_name" varchar(255) COLLATE "pg_catalog"."default"
-)
-;
+                                       "height" int4
+);
+
 COMMENT ON COLUMN "public"."image_data"."image_id" IS '主键';
-COMMENT ON COLUMN "public"."image_data"."image_type" IS '图片类型';
-COMMENT ON COLUMN "public"."image_data"."image_url" IS '生成的图片Url';
+COMMENT ON COLUMN "public"."image_data"."content_type" IS '图片类型';
+COMMENT ON COLUMN "public"."image_data"."minio_url" IS 'MinIO生成的Url';
+COMMENT ON COLUMN "public"."image_data"."minio_key" IS 'MinIO存储Key';
 COMMENT ON COLUMN "public"."image_data"."user_id" IS '上传用户ID';
-COMMENT ON COLUMN "public"."image_data"."strategy_id" IS '策略id';
-COMMENT ON COLUMN "public"."image_data"."file_path" IS '文件路径';
 COMMENT ON COLUMN "public"."image_data"."file_name" IS '文件名';
-COMMENT ON COLUMN "public"."image_data"."file_size" IS '文件大小';
+COMMENT ON COLUMN "public"."image_data"."size" IS '文件大小';
 COMMENT ON COLUMN "public"."image_data"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."image_data"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."image_data"."description" IS '介绍';
 COMMENT ON COLUMN "public"."image_data"."is_public" IS '是否公开';
 COMMENT ON COLUMN "public"."image_data"."is_delete" IS '是否删除';
-COMMENT ON COLUMN "public"."image_data"."file_extension" IS '扩展名';
 COMMENT ON COLUMN "public"."image_data"."width" IS '宽';
 COMMENT ON COLUMN "public"."image_data"."height" IS '高';
+
 
 -- ----------------------------
 -- Records of image_data
@@ -162,7 +158,21 @@ ALTER TABLE "public"."config" ADD CONSTRAINT "config_pkey" PRIMARY KEY ("config_
 CREATE INDEX "image_data_user_id_index" ON "public"."image_data" USING btree (
                                                                               "user_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
     );
+-- Index on minio_key (for efficient retrieval by storage key)
+CREATE INDEX "image_data_minio_key_index" ON "public"."image_data" USING btree (
+                                                                                "minio_key" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+    );
 
+-- Index on is_public (for filtering public/private images)
+CREATE INDEX "image_data_is_public_index" ON "public"."image_data" USING btree (
+                                                                                "is_public" ASC NULLS LAST
+    );
+
+-- Composite index on user_id and is_public (for common filtering)
+CREATE INDEX "image_data_user_id_is_public_index" ON "public"."image_data" USING btree (
+                                                                                        "user_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+                                                                                        "is_public" ASC NULLS LAST
+    );
 -- ----------------------------
 -- Primary Key structure for table image_data
 -- ----------------------------

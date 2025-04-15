@@ -1,7 +1,12 @@
 package moe.imtop1.imagehosting.images.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.minio.GetPresignedObjectUrlArgs;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+import io.minio.http.Method;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.common.constant.Constant;
@@ -15,11 +20,14 @@ import moe.imtop1.imagehosting.images.domain.Strategies;
 import moe.imtop1.imagehosting.common.enums.StrategiesEnum;
 import moe.imtop1.imagehosting.common.utils.FileUtil;
 import moe.imtop1.imagehosting.common.utils.StringUtil;
+import moe.imtop1.imagehosting.images.mapper.ImageDataMapper;
 import moe.imtop1.imagehosting.images.mapper.ImageMapper;
 import moe.imtop1.imagehosting.images.mapper.StrategiesMapper;
 import moe.imtop1.imagehosting.images.service.ImageService;
 import moe.imtop1.imagehosting.system.domain.Config;
 import moe.imtop1.imagehosting.system.mapper.GlobalSettingsMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +41,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author anoixa
@@ -45,6 +54,76 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
     private final StrategiesMapper strategiesMapper;
     private final GlobalSettingsMapper globalSettingsMapper;
 
+    @Autowired
+    private ImageDataMapper imageDataMapper; // Replace with your actual data access mechanism (e.g., Repository)
+
+    @Autowired
+    private MinioClient minioClient;
+
+    @Value("${minio.bucketName}")
+    private String bucketName;
+
+    public ImageData uploadImage(MultipartFile file, ImageData imageDataDTO) throws IOException { // TODO 换DTO
+
+        ImageData imageData = new ImageData();
+
+        // 1.  生成 UUID 设置 URL
+        if (imageData.getImageId() == null || imageData.getImageId().isEmpty()) {
+            imageData.setImageId(UUID.randomUUID().toString());
+        }
+        imageData.setMinioUrl("/api/images/" + imageData.getImageId());
+
+        // 2. 设置 MinIO 对象 key
+        String objectKey =  imageData.getImageId() + "/" + file.getOriginalFilename();
+        imageData.setMinioKey(objectKey);
+
+        imageData.setUserId(imageDataDTO.getUserId());
+        imageData.setFileName(file.getOriginalFilename());
+        imageData.setSize((int) file.getSize());
+        imageData.setHeight(imageDataDTO.getHeight());
+        imageData.setWidth(imageDataDTO.getWidth());
+        imageData.setContentType(file.getContentType());
+        imageData.setIsPublic(imageDataDTO.getIsPublic());
+        imageData.setDescription(imageDataDTO.getDescription());
+
+        try {
+            // 4. 上传到 MinIO
+            minioClient.putObject(PutObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(objectKey)
+                    .stream(file.getInputStream(), file.getSize(), -1)
+                    .contentType(file.getContentType())
+                    .build());
+
+        } catch (Exception e) {
+            throw new IOException("Error interacting with MinIO: " + e.getMessage(), e);
+        }
+
+        // 5. 插入数据库
+        imageDataMapper.insert(imageData);
+        return imageData;
+    }
+
+    @Override
+    public ImageData getImageData(String imageId) {
+        return imageDataMapper.selectById(imageId);
+    }
+
+    @Override
+    public List<ImageData> getImagesByUserId(String userId) {
+         QueryWrapper<ImageData> queryWrapper = new QueryWrapper<>();
+         queryWrapper.eq("user_id", userId);
+         return imageDataMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<ImageData> getPublicImages() {
+        QueryWrapper<ImageData> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("is_public", true);
+        return imageDataMapper.selectList(queryWrapper);
+    }
+
+    /*
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateImage(MultipartFile[] multipartFiles, String strategyId) throws IOException {
@@ -132,7 +211,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
             imageMapper.insert(list);
         }
     }
-
+    */
     /**
      * 从 MultipartFile 中读取图像
      * @param file 上传的文件

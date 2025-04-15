@@ -8,7 +8,7 @@ spring:
     name: image-hosting
   profiles:
 #    active: dev
-    active: dev-local
+    active: shuomc
   servlet:
     multipart:
       max-file-size: 10MB
@@ -51,3 +51,9 @@ sa-token:
   is-share: true
   is-log: true
   jwt-secret-key: 3fc0449993ee6dc5e66ccd9658d3c33a
+
+minio:
+  endpoint: http://localhost:9000  # Your MinIO server endpoint
+  accessKey: minioadmin      # Your MinIO access key
+  secretKey: minioadmin      # Your MinIO secret key
+  bucketName: image    # The bucket where you'll store images
