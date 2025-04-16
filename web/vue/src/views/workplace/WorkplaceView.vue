@@ -1,7 +1,9 @@
 <template>
   <div class="min-h-screen w-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex">
-    <div class="w-64 flex-shrink-0">
+    <div class="flex-shrink-0 h-screen w-1/12 min-w-min">
       <WorkplaceLeftbarComponent />
+      <div class="flex-1 overflow-y-auto">
+      </div>
     </div>
 
     <div class="flex-grow p-8">
