@@ -55,11 +55,12 @@
 
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
-import { onMounted, reactive } from 'vue';
-import axios from 'axios';
+import { inject, onMounted, reactive } from 'vue';
+inject('axios',axios);
 import { API_BASE_URL } from '@/config';
 import { ElMessage } from 'element-plus';
 import { login } from '@/api/auth/login';
+import axios from 'axios';
 // import 'element-plus/dist/index.css';
 
 // 路由
