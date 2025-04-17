@@ -60,21 +60,14 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         // 创建要存储到数据库的 ImageData 对象
         ImageData imageData = new ImageData();
 
-        // 1. 生成唯一的图片 ID (如果 DTO 中未提供)
+        // 1. 生成唯一的图片 ID
         if (StringUtil.isNull(imageDataDTO.getImageId())) { // 使用 StringUtil 检查空值
             imageData.setImageId(UUID.randomUUID().toString());
         } else {
             imageData.setImageId(imageDataDTO.getImageId());
         }
 
-        // 2. 设置 MinIO 的对象 Key (存储路径)
-        // 建议：可以根据用户或其他信息进行分组，避免所有文件都在根目录
-        String userIdForPath = (imageDataDTO.getUserId() != null && !imageDataDTO.getUserId().isEmpty()) ? imageDataDTO.getUserId() : "public"; // 简易示例
-        String sanitizedFileName = FileUtil.sanitizeFileName(file.getOriginalFilename()); // 清理文件名，防止路径遍历等问题
-        String objectKey = userIdForPath + "/" + imageData.getImageId() + "-" + sanitizedFileName;
-        imageData.setMinioKey(objectKey);
-
-        // 3. 设置其他元数据
+        // 2. 设置其他元数据
         imageData.setUserId(imageDataDTO.getUserId());
         imageData.setFileName(file.getOriginalFilename()); // 存储原始文件名
         imageData.setSize((int) file.getSize()); // 文件大小
@@ -84,10 +77,24 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         imageData.setIsPublic(imageDataDTO.getIsPublic()); // 是否公开
         imageData.setDescription(imageDataDTO.getDescription()); // 描述
 
-        // minio_url 字段在此设计下指向元数据 API，可能需要重新考虑其用途
-        imageData.setMinioUrl("/api/images/" + imageData.getImageId()); // 设置指向元数据 API 的 URL
+        // 3. 设置 MinIO 的对象 Key (存储路径)
+        // 根据用户或其他信息进行分组，避免所有文件都在根目录
+        String userIdForPath = (imageDataDTO.getUserId() != null && !imageDataDTO.getUserId().isEmpty()) ? imageDataDTO.getUserId() : "public"; // 使用userId进行分组
+        String sanitizedFileName = FileUtil.sanitizeFileName(file.getOriginalFilename()); // 清理文件名，防止路径遍历等问题
+        String objectKey = userIdForPath + "/" + imageData.getImageId() + "-" + sanitizedFileName;
+        imageData.setMinioKey(objectKey);
+        imageData.setMinioUrl("/image/" + objectKey); // 设置指向Minio的URL
 
-        // 4. 上传文件到 MinIO
+        // 4. 将元数据插入数据库
+        // 使用 Mybatis Plus ServiceImpl 提供的 save 方法
+        boolean saved = this.save(imageData);
+        if (!saved) {
+            log.error("无法将图片元数据存储到数据库，imageId: {}", imageData.getImageId());
+            throw new ServiceException(ResultCodeEnum.IMAGE_STORAGE_ERROR);
+        }
+        log.info("成功存储图片元数据，imageId: {}", imageData.getImageId());
+
+        // 5. 上传文件到 MinIO
         try (InputStream inputStream = file.getInputStream()) { // 使用 try-with-resources 确保流被关闭
             minioClient.putObject(PutObjectArgs.builder()
                     .bucket(bucketName)         // 目标 Bucket
@@ -106,17 +113,8 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
             log.error("上传到 MinIO 时发生未预期的错误: {}", e.getMessage(), e);
             throw new IOException("上传图片时发生未预期错误: " + e.getMessage(), e);
         }
+        log.info("成功上传文件 {} 到 MinIO，Key 为 {}", file.getOriginalFilename(), objectKey);
 
-        // 5. 将元数据插入数据库
-        // 使用 Mybatis Plus ServiceImpl 提供的 save 方法
-        boolean saved = this.save(imageData);
-        if (!saved) {
-            log.error("无法将图片元数据存储到数据库，imageId: {}", imageData.getImageId());
-            // TODO 考虑如何处理这种情况 - 是否需要删除 MinIO 中的对象？
-            // 目前先抛出异常
-            throw new ServiceException(ResultCodeEnum.IMAGE_STORAGE_ERROR);
-        }
-        log.info("成功存储图片元数据，imageId: {}", imageData.getImageId());
         return imageData;
     }
 
