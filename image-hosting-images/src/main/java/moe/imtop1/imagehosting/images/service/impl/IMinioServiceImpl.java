@@ -4,14 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import moe.imtop1.imagehosting.images.domain.dto.ImageStreamData;
 import moe.imtop1.imagehosting.images.service.IMinioService;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author shuomc
@@ -54,4 +54,35 @@ public class IMinioServiceImpl implements IMinioService {
         // 包含：资源 (流)、标头、HTTP 状态码 (OK)
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<List<InputStreamResource>> createResponseEntityList(List<ImageStreamData> streamDataList) {
+        if (streamDataList == null || streamDataList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        List<InputStreamResource> inputStreamResourceList = new ArrayList<>();
+        HttpHeaders headers = new HttpHeaders();
+        // 不再尝试设置一个通用的 Content-Type，因为列表中的类型可能不同
+
+        for (ImageStreamData streamData : streamDataList) {
+            InputStream inputStream = streamData.getInputStream();
+            String contentType = streamData.getContentType();
+
+            if (inputStream == null || contentType == null) {
+                log.warn("ImageStreamData contains null inputStream or contentType, skipping.");
+                continue; // 或者你可以选择抛出异常
+            }
+
+            InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
+            inputStreamResourceList.add(inputStreamResource);
+            // 注意：这里没有设置单个资源的 Content-Type，因为 ResponseEntity 的 body 是一个 InputStreamResource 列表
+        }
+
+        // 返回包含 InputStreamResource 列表的 ResponseEntity，没有设置特定的 Content-Type header
+        // 客户端需要根据实际接收到的流数据自行判断 Content-Type
+        return new ResponseEntity<>(inputStreamResourceList, HttpStatus.OK);
+    }
+
+    // ... 其他方法 (例如 createResponseEntity for a single image)
 }

@@ -173,6 +173,22 @@ CREATE INDEX "image_data_user_id_is_public_index" ON "public"."image_data" USING
                                                                                         "user_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
                                                                                         "is_public" ASC NULLS LAST
     );
+-- Index on is_delete (for efficient filtering of deleted/non-deleted images)
+CREATE INDEX "image_data_is_delete_index" ON "public"."image_data" USING btree (
+                                                                                "is_delete" ASC NULLS LAST
+    );
+
+-- Composite index on user_id and is_delete (for common filtering)
+CREATE INDEX "image_data_user_id_is_delete_index" ON "public"."image_data" USING btree (
+                                                                                        "user_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+                                                                                        "is_delete" ASC NULLS LAST
+    );
+
+-- Composite index on is_public and is_delete (for common filtering)
+CREATE INDEX "image_data_public_is_delete_index" ON "public"."image_data" USING btree (
+                                                                                       "is_public" ASC NULLS LAST,
+                                                                                       "is_delete" ASC NULLS LAST
+    );
 -- ----------------------------
 -- Primary Key structure for table image_data
 -- ----------------------------

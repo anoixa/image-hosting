@@ -1,5 +1,6 @@
 package moe.imtop1.imagehosting.images.controller;
 
+import moe.imtop1.imagehosting.images.domain.vo.ImageUrlData;
 import moe.imtop1.imagehosting.images.service.IMinioService;
 import moe.imtop1.imagehosting.images.service.ImageCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import moe.imtop1.imagehosting.images.service.ImageService;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -178,6 +180,45 @@ public class ImageController {
         return AjaxResult.success(userImages);
     }
 
+    // 获取用户上传的所有图片的实际文件内容（流）
+    @GetMapping("/minio/user/{userId}")
+    public ResponseEntity<List<InputStreamResource>> getMinioImagesByUserId(@PathVariable String userId) {
+        try {
+            // 1. 调用 Service 层获取包含流和元数据的 DTO 列表
+            List<ImageStreamData> streamDataList = imageService.getMinioImagesByUserId(userId);
+
+            // 2. 检查 Service 层是否成功返回数据
+            if (streamDataList == null || streamDataList.isEmpty()) {
+                // Service 层返回 null 或空列表表示找不到该用户的图片
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 返回 404 No Content
+            }
+
+            // 3. 使用 MinioService 处理流列表并生成 ResponseEntity
+            return minioService.createResponseEntityList(streamDataList);
+
+        } catch (Exception e) { // 捕获来自 Service 层的其他异常
+            log.error("获取用户图片列表时发生错误，userId={}: {}", userId, e.getMessage(), e);
+            // 向客户端返回通用的 500 内部服务器错误
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "无法获取用户图片列表。", e);
+        }
+    }
+
+    /**
+     * 根据用户 ID 获取该用户上传的所有图片Url列表用于前端展示。
+     *
+     * @param userId 用户的唯一 ID (@PathVariable)
+     * @return AjaxResult 包含该用户的图片Url及必要数据列表
+     */
+    @GetMapping("/minio/url/user/{userId}")
+    public AjaxResult getMinioImageUrlListByUserId(@PathVariable String userId) {
+        try{
+            List<ImageUrlData> imageUrlList = imageService.getMinioImageUrlListByUserId(userId);
+            return AjaxResult.success(imageUrlList);
+        }
+        catch (Exception e) {
+            return AjaxResult.error("获取用户图片列表时发生错误，userId=" + userId + ": " + e.getMessage());
+        }
+    }
 //    @GetMapping("/content/user/{userId}")
 //    public AjaxResult getImageContentByUserId(@PathVariable String userId) {
 //

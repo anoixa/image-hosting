@@ -1,8 +1,6 @@
 package moe.imtop1.imagehosting.images.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.InputStream;
 
@@ -12,6 +10,8 @@ import java.io.InputStream;
  * @Description
  */
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageStreamData {

@@ -1,5 +1,6 @@
 package moe.imtop1.imagehosting.images.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
@@ -14,6 +15,7 @@ import moe.imtop1.imagehosting.framework.exception.ServiceException;
 import moe.imtop1.imagehosting.framework.utils.RedisCache;
 import moe.imtop1.imagehosting.images.domain.ImageData;
 import moe.imtop1.imagehosting.images.domain.dto.ImageStreamData;
+import moe.imtop1.imagehosting.images.domain.vo.ImageUrlData;
 import moe.imtop1.imagehosting.images.mapper.ImageDataMapper;
 //import moe.imtop1.imagehosting.images.mapper.ImageMapper;
 import moe.imtop1.imagehosting.images.mapper.ImageMapper;
@@ -28,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -281,4 +285,91 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         // Spring 会在响应完成后自动关闭它。
     }
 
+    @Override
+    public List<ImageStreamData> getMinioImagesByUserId(String userId) {
+        // 1. 从数据库查询 userId 对应的图片数据列表
+        List<ImageData> imageDataList = this.list(new QueryWrapper<ImageData>()
+                .eq("user_id", userId)
+                .eq("is_delete", false)); // 仅查询未删除的图片
+
+        if (imageDataList == null || imageDataList.isEmpty()) {
+            log.warn("找不到用户 {} 的任何图片数据。", userId);
+            return Collections.emptyList(); // 返回空列表
+        }
+
+        List<ImageStreamData> streamDataList = new ArrayList<>();
+
+        // 2. 遍历图片数据列表，从 MinIO 获取每个图片的流
+        for (ImageData imageData : imageDataList) {
+            if (StringUtil.isNull(imageData.getMinioKey()) || StringUtil.isNull(imageData.getContentType())) {
+                log.error("图片元数据不完整 (缺少 minioKey 或 contentType)，imageId: {}", imageData.getImageId());
+                // 可以选择跳过当前图片或抛出异常，这里选择跳过并记录
+                continue;
+            }
+
+            try {
+                InputStream inputStream = minioClient.getObject(
+                        GetObjectArgs.builder()
+                                .bucket(bucketName)
+                                .object(imageData.getMinioKey())
+                                .build());
+                log.info("成功从 MinIO 取得用户 {} 的对象流，Key: {}", userId, imageData.getMinioKey());
+
+                streamDataList.add(new ImageStreamData(
+                        inputStream,
+                        imageData.getContentType(),
+                        imageData.getSize(),
+                        imageData.getFileName()
+                ));
+
+            } catch (MinioException e) {
+                log.error("从 MinIO 获取用户 {} 的对象流时发生 MinioException，Key {}: {}", userId, imageData.getMinioKey(), e.getMessage(), e);
+                // 可以选择继续处理其他图片或抛出异常，这里选择继续
+            } catch (InvalidKeyException | NoSuchAlgorithmException | IOException e) {
+                log.error("从 MinIO 获取用户 {} 的对象流时发生错误，Key {}: {}", userId, imageData.getMinioKey(), e.getMessage(), e);
+                // 可以选择继续处理其他图片或抛出异常，这里选择继续
+            } catch (Exception e) {
+                log.error("从 MinIO 获取用户 {} 的对象流时发生未预期错误，Key {}: {}", userId, imageData.getMinioKey(), e.getMessage(), e);
+                // 可以选择继续处理其他图片或抛出异常，这里选择继续
+            }
+        }
+        return streamDataList;
+    }
+
+    @Override
+    public List<ImageUrlData> getMinioImageUrlListByUserId(String userId) {
+        List<ImageData> imageDataList = this.list(new QueryWrapper<ImageData>()
+                .eq("user_id", userId)
+                .eq("is_delete", false)); // 仅查询未删除的图片
+
+        if (imageDataList == null || imageDataList.isEmpty()) {
+            log.warn("找不到用户 {} 的任何图片数据。", userId);
+            return Collections.emptyList(); // 返回空列表
+        }
+
+        List<ImageUrlData> urlDataList = new ArrayList<>();
+        for (ImageData imageData : imageDataList) {
+            if (StringUtil.isNull(imageData.getMinioKey()) || StringUtil.isNull(imageData.getContentType())) {
+                log.error("图片元数据不完整 (缺少 minioKey 或 contentType)，imageId: {}", imageData.getImageId());
+                // 跳过当前图片或抛出异常，这里选择跳过并记录
+                continue;
+            }
+            // 设置Minio服务的url
+            // 还没有添加Nginx代理，先使用Minio服务端口
+            String url = "localhost:9000" + imageData.getMinioUrl();
+            imageData.setMinioUrl(url);
+            urlDataList.add(new ImageUrlData(
+                    imageData.getImageId(),
+                    imageData.getMinioUrl(),
+                    imageData.getFileName(),
+                    imageData.getUserId(),
+                    imageData.getContentType(),
+                    imageData.getSize(),
+                    imageData.getIsPublic(),
+                    imageData.getDescription()
+            ));
+            log.info("成功从 MinIO 取得用户 {} 的对象Url_json，Key: {}", userId, imageData.getMinioKey());
+        }
+        return urlDataList;
+    }
 }
