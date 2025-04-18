@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -56,7 +57,7 @@ public class ImageController {
      */
     @PostMapping("/upload")
     public AjaxResult uploadImage(@RequestParam("file") MultipartFile file,
-                                  @ModelAttribute ImageData imageData) { // TODO 考虑使用专用的 Upload DTO
+                                  @ModelAttribute ImageData imageData) {
         // 基础验证
         if (file.isEmpty()) {
             return AjaxResult.error("上传的文件不能为空。");
@@ -88,6 +89,40 @@ public class ImageController {
             return AjaxResult.success(imageData);
         } else {
             return AjaxResult.error(HttpStatus.NOT_FOUND.value(), "找不到指定的图片元数据或图片已被删除。");
+        }
+    }
+
+    /**
+     * 根据 ID 修改图片的元数据。
+     *
+     * @param imageData 图片的元数据 (@ModelAttribute)
+     * @return AjaxResult 包含图片元数据，或错误消息
+     */
+    @PostMapping("/update")
+    public AjaxResult updateImageMetadata(@ModelAttribute @Validated ImageData imageData) {
+        try {
+            ImageData resData = imageService.updateImageMetadata(imageData);
+            return AjaxResult.success(resData);
+        }
+        catch (Exception e){
+            return AjaxResult.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据 ID 修改图片的元数据。
+     *
+     * @param imageId 图片的Id (@PathVariable)
+     * @return AjaxResult 成功或错误消息
+     */
+    @PostMapping("/deleteById")
+    public AjaxResult deleteImageMetadata(@Validated String imageId) {
+        try {
+            imageService.deleteImageMetadata(imageId);
+            return AjaxResult.success("删除成功");
+        }
+        catch (Exception e){
+            return AjaxResult.error(e.getMessage());
         }
     }
 
@@ -219,6 +254,7 @@ public class ImageController {
             return AjaxResult.error("获取用户图片列表时发生错误，userId=" + userId + ": " + e.getMessage());
         }
     }
+
 //    @GetMapping("/content/user/{userId}")
 //    public AjaxResult getImageContentByUserId(@PathVariable String userId) {
 //

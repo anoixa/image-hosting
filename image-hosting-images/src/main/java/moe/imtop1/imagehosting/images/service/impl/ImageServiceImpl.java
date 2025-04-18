@@ -1,6 +1,7 @@
 package moe.imtop1.imagehosting.images.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
@@ -35,6 +36,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import static moe.imtop1.imagehosting.common.enums.ResultCodeEnum.DATABASE_ERROR;
+import static moe.imtop1.imagehosting.common.enums.ResultCodeEnum.MISSING_REQUIRED_PARAMETER;
 
 
 /**
@@ -371,5 +375,41 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
             log.info("成功从 MinIO 取得用户 {} 的对象Url_json，Key: {}", userId, imageData.getMinioKey());
         }
         return urlDataList;
+    }
+
+    @Override
+    public ImageData updateImageMetadata(ImageData imageData) {
+        if (imageData == null || imageData.getImageId() == null) {
+            // 可以抛出异常或者返回 null，取决于你的业务逻辑
+            throw new ServiceException(MISSING_REQUIRED_PARAMETER);
+        }
+
+        UpdateWrapper<ImageData> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("image_id", imageData.getImageId()); // 根据 imageId 更新
+
+        // 只更新 ImageData 对象中不为 null 的字段
+        updateWrapper.set(imageData.getFileName() != null, "file_name", imageData.getFileName());
+        updateWrapper.set(imageData.getIsPublic() != null, "is_public", imageData.getIsPublic());
+        updateWrapper.set(imageData.getDescription() != null, "description", imageData.getDescription());
+
+        int rowsAffected = imageDataMapper.update(null, updateWrapper);
+
+        if (rowsAffected > 0) {
+            // 根据 imageId 查询数据库获取最新的 ImageData
+            return imageDataMapper.selectById(imageData.getImageId());
+        } else {
+            throw new ServiceException(DATABASE_ERROR, "更新失败"); // 或者返回
+        }
+    }
+
+    @Override
+    public void deleteImageMetadata(String imageId) {
+        if (imageId == null) {
+            throw new ServiceException(MISSING_REQUIRED_PARAMETER);
+        }
+        UpdateWrapper<ImageData> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("image_id", imageId);
+        updateWrapper.set("is_delete", true);
+        imageDataMapper.update(null, updateWrapper);
     }
 }

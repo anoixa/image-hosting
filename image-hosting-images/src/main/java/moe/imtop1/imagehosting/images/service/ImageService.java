@@ -26,5 +26,9 @@ public interface ImageService extends IService<ImageData> {
 
     List<ImageUrlData> getMinioImageUrlListByUserId(String userId);
 
+    ImageData updateImageMetadata(ImageData imageData);
+
+    void deleteImageMetadata(String imageId);
+
 //     void updateImage(MultipartFile[] multipartFile, String strategyId) throws IOException;
 }
