@@ -1,8 +1,10 @@
 package moe.imtop1.imagehosting.images.controller;
 
 import moe.imtop1.imagehosting.images.service.IMinioService;
+import moe.imtop1.imagehosting.images.service.ImageCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import moe.imtop1.imagehosting.framework.utils.RedisCache;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,6 +39,10 @@ public class ImageController {
     private ImageService imageService;
     @Autowired
     private IMinioService minioService;
+    @Autowired
+    private ImageCacheService imageCacheService;
+
+    private static final long CACHE_EXPIRATION_SECONDS = 600;
 
     /**
      * 上传单个图片。
@@ -85,7 +91,7 @@ public class ImageController {
 
     /**
      * 根据 ID 获取图片的实际文件内容（流）。
-     * 这个端点用于后端代理下载。
+     * 添加 redis 缓存（测试中）
      *
      * @param imageId 图片的唯一 ID (@PathVariable)
      * @return ResponseEntity 包含图片的 InputStreamResource，或标准的 HTTP 错误状态
@@ -115,9 +121,40 @@ public class ImageController {
         }
     }
 
+    /**
+     * 根据 ID 获取图片的实际文件内容（流）。
+     * 通过 Minio 直接获取（使用这个）
+     *
+     * @param imageId 图片的唯一 ID (@PathVariable)
+     * @return ResponseEntity 包含图片的 InputStreamResource，或标准的 HTTP 错误状态
+     */
+    @GetMapping("/minio/{imageId}")
+    public ResponseEntity<InputStreamResource> getMinioImageById(@PathVariable String imageId) {
+        try {
+            // 1. 调用 Service 层获取包含流和元数据的 DTO
+            ImageStreamData streamData = imageService.getMinioImageById(imageId);
+
+            // 2. 检查 Service 层是否成功返回数据
+            if (streamData == null || streamData.getInputStream() == null) {
+                // Service 层返回 null 表示找不到图片
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "找不到指定的图片文件。");
+            }
+
+            // 3. 使用 MinioService 处理流和生成 ResponseEntity
+            return minioService.createResponseEntity(streamData);
+
+        } catch (ResponseStatusException rse) {
+            // 如果 Service 层抛出了特定 HTTP 状态的异常，直接重新抛出
+            throw rse;
+        } catch (Exception e) { // 捕获来自 Service 层的其他异常 (如 ServiceException)
+            log.error("获取图片内容时发生错误，imageId={}: {}", imageId, e.getMessage(), e); // 记录详细错误
+            // 向客户端返回通用的 500 内部服务器错误
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "无法获取图片内容。", e);
+        }
+    }
 
     /**
-     * 端点：获取所有公开图片的元数据列表。
+     * 获取所有公开图片的元数据列表。
      *
      * @return AjaxResult 包含公开图片元数据列表
      */
@@ -129,7 +166,7 @@ public class ImageController {
     }
 
     /**
-     * 端点：根据用户 ID 获取该用户上传的所有图片元数据列表。
+     * 根据用户 ID 获取该用户上传的所有图片元数据列表。
      *
      * @param userId 用户的唯一 ID (@PathVariable)
      * @return AjaxResult 包含该用户的图片元数据列表
@@ -145,4 +182,11 @@ public class ImageController {
 //    public AjaxResult getImageContentByUserId(@PathVariable String userId) {
 //
 //    }
+
+    //redis测试
+    @GetMapping("/redis/{imageKey}")
+    public AjaxResult storeInRedis(@PathVariable String imageKey) {
+        imageCacheService.getMinioObjectDataFromRedis(imageKey);
+        return AjaxResult.success("成功");
+    }
 }

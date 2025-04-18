@@ -18,6 +18,8 @@ public class ImageStreamData {
 
     private InputStream inputStream;  // MinIO 图片输入流
 
+//    private byte[] imageData;
+
     private String contentType;
 
     private Integer size;

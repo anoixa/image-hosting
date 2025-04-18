@@ -55,6 +55,7 @@ subprojects {
         implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.4'
         implementation group: 'io.minio', name: 'minio', version: '8.5.12'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.3.3'
+//        implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 //        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail' , version: '3.3.3'
         //implementation group: 'org.redisson', name: 'redisson-spring-boot-starter', version: '3.36.0'
 

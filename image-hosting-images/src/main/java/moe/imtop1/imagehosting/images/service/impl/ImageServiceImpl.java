@@ -11,6 +11,7 @@ import moe.imtop1.imagehosting.common.enums.ResultCodeEnum;
 import moe.imtop1.imagehosting.common.utils.FileUtil;
 import moe.imtop1.imagehosting.common.utils.StringUtil;
 import moe.imtop1.imagehosting.framework.exception.ServiceException;
+import moe.imtop1.imagehosting.framework.utils.RedisCache;
 import moe.imtop1.imagehosting.images.domain.ImageData;
 import moe.imtop1.imagehosting.images.domain.dto.ImageStreamData;
 import moe.imtop1.imagehosting.images.mapper.ImageDataMapper;
@@ -21,12 +22,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -45,6 +49,9 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
     private final ImageDataMapper imageDataMapper; // 直接注入 ImageData 的 Mapper
 
     private final MinioClient minioClient; // Minio 客户端
+
+    private final RedisCache redisCache; // 注入 RedisCache
+    private static final Integer CACHE_EXPIRATION_SECONDS = 600; // 10 分钟
 
     // 从 application.properties 或 application.yml 读取配置值
     @Value("${minio.bucketName}")
@@ -71,8 +78,8 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         imageData.setUserId(imageDataDTO.getUserId());
         imageData.setFileName(file.getOriginalFilename()); // 存储原始文件名
         imageData.setSize((int) file.getSize()); // 文件大小
-        imageData.setHeight(imageDataDTO.getHeight()); // 图片高度 (可能需要前端传递或后端解析)
-        imageData.setWidth(imageDataDTO.getWidth());   // 图片宽度 (可能需要前端传递或后端解析)
+        imageData.setHeight(imageDataDTO.getHeight()); // 图片高度
+        imageData.setWidth(imageDataDTO.getWidth());   // 图片宽度
         imageData.setContentType(file.getContentType()); // MIME 类型
         imageData.setIsPublic(imageDataDTO.getIsPublic()); // 是否公开
         imageData.setDescription(imageDataDTO.getDescription()); // 描述
@@ -82,6 +89,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         String userIdForPath = (imageDataDTO.getUserId() != null && !imageDataDTO.getUserId().isEmpty()) ? imageDataDTO.getUserId() : "public"; // 使用userId进行分组
         String sanitizedFileName = FileUtil.sanitizeFileName(file.getOriginalFilename()); // 清理文件名，防止路径遍历等问题
         String objectKey = userIdForPath + "/" + imageData.getImageId() + "-" + sanitizedFileName;
+//        String objectKey = imageData.getImageId();
         imageData.setMinioKey(objectKey);
         imageData.setMinioUrl("/image/" + objectKey); // 设置指向Minio的URL
 
@@ -137,7 +145,94 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
      * @throws ServiceException 如果图片数据不完整或从 MinIO 获取时出错。
      */
     @Override
-    public ImageStreamData getImageStreamData(String imageId) {
+    public ImageStreamData getImageStreamData(String imageId) throws IOException {
+        // 1. 首先尝试从 Redis 缓存中获取完整的图片数据
+        String cacheKey = "img:stream:" + imageId;
+        ImageStreamData cachedStreamData = redisCache.getCacheObject(cacheKey);
+        if (cachedStreamData != null) {
+            log.info("从 Redis 缓存中获取完整的图片流数据，imageId={}", imageId);
+            return cachedStreamData;
+        }
+
+        // 2. 如果缓存中没有完整数据，尝试获取图片元数据
+        String metadataKey = "img:metadata:" + imageId;
+        ImageData imageData = redisCache.getCacheObject(metadataKey);
+
+        if (imageData == null) {
+            // 3. 从数据库获取元数据
+            imageData = this.getById(imageId);
+            if (imageData == null || imageData.getIsDelete()) {
+                log.warn("找不到图片数据或图片已被标记为删除，imageId: {}", imageId);
+                throw new ServiceException(ResultCodeEnum.NOT_FOUND);
+            }
+
+            // 4. 将元数据存入缓存
+            redisCache.setCacheObject(metadataKey, imageData, CACHE_EXPIRATION_SECONDS, TimeUnit.SECONDS);
+        }
+
+        // 5. 检查必要的元数据
+        if (StringUtil.isNull(imageData.getMinioKey()) || StringUtil.isNull(imageData.getContentType())) {
+            log.error("图片元数据不完整 (缺少 minioKey 或 contentType)，imageId: {}", imageId);
+            throw new ServiceException("图片数据不完整，无法提供文件流，imageId: " + imageId);
+        }
+
+        // 6. 从 MinIO 获取对象输入流
+        InputStream minioInputStream;
+        try {
+            minioInputStream = minioClient.getObject(
+                    GetObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(imageData.getMinioKey())
+                            .build());
+            log.info("成功从 MinIO 取得对象流，Key: {}", imageData.getMinioKey());
+        } catch (MinioException e) {
+            log.error("从 MinIO 获取对象流时发生 MinioException，Key {}: {}", imageData.getMinioKey(), e.getMessage(), e);
+            throw new ServiceException("无法从存储体获取图片: " + e.getMessage(), e);
+        } catch (InvalidKeyException | NoSuchAlgorithmException | IOException e) {
+            log.error("从 MinIO 获取对象流时发生错误，Key {}: {}", imageData.getMinioKey(), e.getMessage(), e);
+            throw new ServiceException("获取图片流时发生错误: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("从 MinIO 获取对象流时发生未预期错误，Key {}: {}", imageData.getMinioKey(), e.getMessage(), e);
+            throw new ServiceException("获取图片时发生未预期错误: " + e.getMessage(), e);
+        }
+
+        // 7. 创建 ImageStreamData 对象
+        ImageStreamData streamData = new ImageStreamData();
+        streamData.setInputStream(minioInputStream);
+        streamData.setContentType(imageData.getContentType());
+        streamData.setSize(imageData.getSize());
+        streamData.setFileName(imageData.getFileName());
+
+        // 8. 将流数据存入缓存
+        redisCache.setCacheObject(cacheKey, streamData, CACHE_EXPIRATION_SECONDS, TimeUnit.SECONDS);
+        log.info("成功将图片流数据缓存到Redis，imageId={}", imageId);
+
+        return streamData;
+    }
+
+
+    @Override
+    public List<ImageData> getImagesByUserId(String userId) {
+        // 使用 LambdaQueryWrapper 更安全、易读
+        LambdaQueryWrapper<ImageData> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ImageData::getUserId, userId) // 条件：userId 相符
+                .eq(ImageData::getIsDelete, false) // 条件：未被删除
+                .orderByDesc(ImageData::getCreateTime); // 可选：按创建时间排序
+        return this.list(queryWrapper); // 使用 ServiceImpl 的 list 方法执行查询
+    }
+
+    @Override
+    public List<ImageData> getPublicImages() {
+        LambdaQueryWrapper<ImageData> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ImageData::getIsPublic, true) // 条件：isPublic 为 true
+                .eq(ImageData::getIsDelete, false) // 条件：未被删除
+                .orderByDesc(ImageData::getCreateTime); // 可选：按创建时间排序
+        return this.list(queryWrapper);
+    }
+
+    //使用此方法获取图像
+    @Override
+    public ImageStreamData getMinioImageById(String imageId) {
         // 1. 从数据库获取元数据
         ImageData imageData = this.getById(imageId);
 
@@ -186,23 +281,4 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         // Spring 会在响应完成后自动关闭它。
     }
 
-
-    @Override
-    public List<ImageData> getImagesByUserId(String userId) {
-        // 使用 LambdaQueryWrapper 更安全、易读
-        LambdaQueryWrapper<ImageData> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ImageData::getUserId, userId) // 条件：userId 相符
-                .eq(ImageData::getIsDelete, false) // 条件：未被删除
-                .orderByDesc(ImageData::getCreateTime); // 可选：按创建时间排序
-        return this.list(queryWrapper); // 使用 ServiceImpl 的 list 方法执行查询
-    }
-
-    @Override
-    public List<ImageData> getPublicImages() {
-        LambdaQueryWrapper<ImageData> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ImageData::getIsPublic, true) // 条件：isPublic 为 true
-                .eq(ImageData::getIsDelete, false) // 条件：未被删除
-                .orderByDesc(ImageData::getCreateTime); // 可选：按创建时间排序
-        return this.list(queryWrapper);
-    }
 }

@@ -13,11 +13,13 @@ public interface ImageService extends IService<ImageData> {
 
     ImageData getImageData(String imageId);
 
-    ImageStreamData getImageStreamData(String imageId);
+    ImageStreamData getImageStreamData(String imageId) throws IOException;
 
     List<ImageData> getImagesByUserId(String userId);
 
     List<ImageData> getPublicImages();
+
+    ImageStreamData getMinioImageById(String imageId);
 
 //     void updateImage(MultipartFile[] multipartFile, String strategyId) throws IOException;
 }
