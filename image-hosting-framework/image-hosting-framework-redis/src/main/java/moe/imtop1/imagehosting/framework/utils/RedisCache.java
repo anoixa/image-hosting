@@ -15,6 +15,9 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+import java.nio.charset.StandardCharsets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * spring utils 工具类
@@ -25,6 +28,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisCache
 {
+    private static final Logger log = LoggerFactory.getLogger(RedisCache.class);
+
     @Autowired
     public RedisTemplate redisTemplate;
 
@@ -66,8 +71,20 @@ public class RedisCache
      */
     public <T> T getCacheObject(String key)
     {
-        ValueOperations<String, T> operation = redisTemplate.opsForValue();
-        return operation.get(key);
+        ValueOperations<String, Object> operation = redisTemplate.opsForValue();
+        Object value = operation.get(key);
+        if (value == null) {
+            return null;
+        }
+        try {
+            return (T) value;
+        } catch (ClassCastException e) {
+            log.warn("类型转换失败，key: {}, 期望类型: {}, 实际类型: {}", 
+                key, 
+                value.getClass().getName(),
+                e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -221,5 +238,51 @@ public class RedisCache
             values = redisTemplate.opsForValue().multiGet(keys);
         }
         return values;
+    }
+
+    /**
+     * 缓存 byte 数组
+     *
+     * @param key   缓存的键值
+     * @param value 缓存的 byte 数组
+     */
+    public void setCacheBytes(String key, byte[] value) {
+        ValueOperations<String, Object> operation = redisTemplate.opsForValue();
+        operation.set(key, value);
+    }
+
+    /**
+     * 缓存 byte 数组并设置过期时间
+     *
+     * @param key      缓存的键
+     * @param value    缓存的 byte 数组
+     * @param timeout  过期时间
+     * @param timeUnit 时间单位
+     */
+    public void setCacheBytes(String key, byte[] value, long timeout, TimeUnit timeUnit) {
+        ValueOperations<String, Object> operation = redisTemplate.opsForValue();
+        operation.set(key, value, timeout, timeUnit);
+    }
+
+    /**
+     * 获取 byte 数组缓存
+     *
+     * @param key 缓存的键值
+     * @return 缓存的 byte 数组
+     */
+    public byte[] getCacheBytes(String key) {
+        ValueOperations<String, Object> operation = redisTemplate.opsForValue();
+        Object value = operation.get(key);
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof byte[]) {
+            return (byte[]) value;
+        }
+        if (value instanceof String) {
+            return ((String) value).getBytes(StandardCharsets.UTF_8);
+        }
+        log.warn("无法将类型 {} 转换为 byte[]", value.getClass().getName());
+        return null;
     }
 }

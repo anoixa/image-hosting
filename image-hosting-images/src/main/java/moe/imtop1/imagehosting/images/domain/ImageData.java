@@ -3,8 +3,7 @@ package moe.imtop1.imagehosting.images.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import moe.imtop1.imagehosting.framework.base.BaseEntity;
 
 
@@ -12,6 +11,10 @@ import moe.imtop1.imagehosting.framework.base.BaseEntity;
  * @author anoixa
  */
 @Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("image_data")
 public class ImageData extends BaseEntity {
