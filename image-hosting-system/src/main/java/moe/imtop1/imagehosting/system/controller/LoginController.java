@@ -2,6 +2,8 @@ package moe.imtop1.imagehosting.system.controller;
 
 import jakarta.annotation.Resource;
 import moe.imtop1.imagehosting.common.dto.AjaxResult;
+import moe.imtop1.imagehosting.framework.domain.LoginUser;
+import moe.imtop1.imagehosting.framework.utils.SecurityUtil;
 import moe.imtop1.imagehosting.system.domain.dto.LoginDTO;
 import moe.imtop1.imagehosting.system.domain.vo.LoginVO;
 import moe.imtop1.imagehosting.system.domain.vo.ValidateCodeVo;
@@ -38,5 +40,12 @@ public class LoginController {
         ValidateCodeVo validateCodeVo = validateCodeService.getValidateCode();
 
         return AjaxResult.success(validateCodeVo);
+    }
+
+    @GetMapping("/currentUser")
+    public AjaxResult getCurrentUser() {
+        LoginUser loginUser = SecurityUtil.getLoginUser();
+
+        return AjaxResult.success(loginUser); // 返回成功响应和用户信息
     }
 }

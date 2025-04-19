@@ -68,6 +68,7 @@ public class RegisterServiceImpl extends ValidateCodeServiceImpl implements IReg
 
     // 验证表单数据
     @Override
+    @Transactional
     public boolean validateTable(@Validated RegisterDTO registerDTO) {
         try {
             // 检查用户名是否重复
@@ -98,26 +99,28 @@ public class RegisterServiceImpl extends ValidateCodeServiceImpl implements IReg
 
     // 查询重复用户名
     @Override
+    @Transactional
     public UserInfo findByUserName(RegisterDTO registerDTO) {
         try {
             QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_info.user_name", registerDTO.getUserName());
             return userInfoMapper.selectOne(queryWrapper);
         } catch (Exception e) {
-            log.error("查询用户名发生错误: {}", e.getMessage());
+            log.error("查询用户名发生错误", e);
             throw new SystemException(ResultCodeEnum.LOGIN_ERROR);
         }
     }
 
     // 查询重复邮箱地址
     @Override
+    @Transactional
     public UserInfo findByUserEmail(RegisterDTO registerDTO) {
         try {
             QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("user_info.user_email", registerDTO.getUserEmail());
             return userInfoMapper.selectOne(queryWrapper);
         } catch (Exception e) {
-            log.error("查询邮箱地址发生错误: {}", e.getMessage());
+            log.error("查询邮箱地址发生错误", e);
             throw new SystemException(ResultCodeEnum.LOGIN_ERROR);
         }
     }
