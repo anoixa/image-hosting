@@ -38,6 +38,19 @@
         </svg>
         <span class="truncate">图片上传</span>
       </router-link>
+      <router-link to="/workplace/my-files"
+        class="flex py-2 mt-2 text-gray-700 hover:bg-indigo-50 rounded-md transition-colors items-center" :class="[
+          { 'bg-indigo-50 text-indigo-600 border-l-4 border-indigo-600 font-semibold': $route.path === '/workplace/my-files' },
+          'hover:text-gray-900 p-3 pr-10'
+        ]">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13">
+          </path>
+        </svg>
+        <span class="truncate">我的文件</span>
+      </router-link>
       <router-link to="/workplace/upload-file"
         class="flex py-2 mt-2 text-gray-700 hover:bg-indigo-50 rounded-md transition-colors items-center" :class="[
           { 'bg-indigo-50 text-indigo-600 border-l-4 border-indigo-600 font-semibold': $route.path === '/workplace/upload-file' },
@@ -46,8 +59,7 @@
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13">
-          </path>
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
         </svg>
         <span class="truncate">文件上传</span>
       </router-link>
