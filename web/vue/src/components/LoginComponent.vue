@@ -55,8 +55,8 @@
 
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
-import { inject, onMounted, reactive } from 'vue';
-inject('axios',axios);
+import { onMounted, reactive } from 'vue';
+import { useUserStore } from '@/stores/user' // 引入用户状态 store
 import { API_BASE_URL } from '@/config';
 import { ElMessage } from 'element-plus';
 import { login } from '@/api/auth/login';
@@ -74,6 +74,9 @@ const loginData = reactive({
   codeKey: "",
   captchaImage: ""
 });
+
+// 获取用户 store 实例
+const userStore = useUserStore();
 
 // 获取验证码
 async function getGraghCaptcha() {
@@ -93,15 +96,42 @@ async function getGraghCaptcha() {
 
 // 处理登录
 async function handleLogin() {
-  // 执行登录
-  const isSuccess = await login(loginData);
-  if (isSuccess) {
-    router.push('/');
+  if (!loginData.userName || !loginData.password || !loginData.captcha) {
+    ElMessage.warning('请填写完整的登录信息');
+    return;
+  }
+
+  try {
+    // 调用登录API
+    const loginResponse = await login(loginData);
+    
+    // 保存登录信息到store
+    userStore.setLoginInfo({
+      token: loginResponse.token
+    });
+    
+    // 加载用户信息
+    await userStore.loadUserInfo();
+    
+    // 跳转到工作区
+    router.push('/workplace');
+  } catch (error: any) {
+    // 错误已在API中处理
+    console.error('登录失败:', error);
+    
+    // 刷新验证码
+    getGraghCaptcha();
   }
 }
 
 onMounted(() => {
+  // 获取验证码
   getGraghCaptcha();
+  
+  // 如果已登录，直接跳转到工作区
+  if (userStore.isLoggedIn) {
+    router.push('/workplace');
+  }
 });
 </script>
 
