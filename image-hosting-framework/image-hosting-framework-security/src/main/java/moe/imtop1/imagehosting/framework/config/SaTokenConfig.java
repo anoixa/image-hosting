@@ -28,8 +28,8 @@ public class SaTokenConfig implements WebMvcConfigurer {
                         "/auth/login",
                         "/auth/getValidateCode",
                         "/register/**",
-                        "/modify/**",
-                        "/api/images/**"
+                        "/modify/**"
+//                        "/api/images/**"
                 );
     }
 
@@ -39,7 +39,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns("*")
                 .allowCredentials(true)
                 .allowedMethods("GET", "POST", "DELETE", "PUT")
-                .maxAge(3600)
+                .maxAge(3600 * 60)
                 .exposedHeaders();
     }
 
