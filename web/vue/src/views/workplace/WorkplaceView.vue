@@ -1,19 +1,18 @@
 <template>
-  <div class="min-h-screen w-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex pt-16">
+  <div class="min-h-screen w-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10">
 
-    <div class="w-full fixed top-0 left-0 right-0 z-10">
-      <WorkplaceTopbarComponent />
+    <div class="w-full fixed top-0 left-0 right-0 h-16 bg-opacity-50 shadow-md z-10">
+       <WorkplaceTopbarComponent />
     </div>
 
-    <div class="flex-shrink-0 h-auto w-1/12 min-w-min flex-wrap">
-      <WorkplaceLeftbarComponent />
-      <div class="flex-1 overflow-y-auto">
-      </div>
+    <div class="fixed left-0 bottom-0 w-1/12 min-w-min z-20 bg-white shadow-lg overflow-y-auto top-16 mt-1 rounded-md">
+       <WorkplaceLeftbarComponent />
     </div>
 
-    <div class="flex-grow p-8">
-      <router-view></router-view>
+    <div class="absolute top-2 left-50 right-0 bottom-0 overflow-y-auto p-auto w-11/12">
+       <router-view></router-view>
     </div>
+
   </div>
 </template>
 

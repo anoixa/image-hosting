@@ -13,26 +13,26 @@ interface UserState {
 export const useUserStore = defineStore('user', () => {
   // 用户令牌
   const token = ref<string | null>(localStorage.getItem('token'))
-  
+
   // 用户信息
   const userInfo = ref<UserInfo | null>(null)
-  
+
   // 是否已加载用户信息
   const userInfoLoaded = ref(false)
-  
+
   // 计算属性：是否已登录
   const isLoggedIn = computed(() => !!token.value)
-  
+
   // 设置登录信息
   function setLoginInfo({ token: newToken }: { token: string }) {
     token.value = newToken
     localStorage.setItem('token', newToken)
   }
-  
+
   // 加载用户信息
   async function loadUserInfo() {
     if (!token.value) return false
-    
+
     try {
       const info = await getCurrentUser()
       userInfo.value = info
@@ -43,7 +43,7 @@ export const useUserStore = defineStore('user', () => {
       return false
     }
   }
-  
+
   // 清除登录状态
   function clearLoginState() {
     token.value = null
@@ -51,7 +51,7 @@ export const useUserStore = defineStore('user', () => {
     userInfoLoaded.value = false
     localStorage.removeItem('token')
   }
-  
+
   return {
     token,
     userInfo,
@@ -61,4 +61,8 @@ export const useUserStore = defineStore('user', () => {
     loadUserInfo,
     clearLoginState
   }
-})
+},
+{
+  persist: true
+}
+)

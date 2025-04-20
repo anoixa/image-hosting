@@ -38,7 +38,7 @@ export async function login(loginData: {
   password: string;
   captcha: string;
   codeKey: string;
-}): Promise<LoginSuccessResponse> { // <-- 修改这里的返回类型
+}): Promise<LoginSuccessResponse> {
   const loginUrl = `${API_BASE_URL}/auth/login`;
 
   // 客户端基本校验：直接抛出错误，让Promise进入reject状态

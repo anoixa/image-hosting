@@ -2,7 +2,7 @@
   <div class="w-full bg-white bg-opacity-70 backdrop-blur-sm shadow-md py-3 px-6 flex justify-between items-center">
     <!-- 左侧应用标题 -->
     <div class="flex items-center">
-      <div class="text-xl font-semibold text-indigo-700">图床管理系统</div>
+      <div class="text-xl font-bold text-indigo-700">image-hosting</div>
     </div>
 
     <!-- 右侧用户信息和下拉菜单 -->
