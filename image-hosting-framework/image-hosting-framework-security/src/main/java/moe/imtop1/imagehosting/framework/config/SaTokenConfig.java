@@ -39,7 +39,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns("*")
                 .allowCredentials(true)
                 .allowedMethods("GET", "POST", "DELETE", "PUT")
-                .maxAge(3600 * 60)
+                .maxAge(3600)
                 .exposedHeaders();
     }
 
