@@ -30,5 +30,7 @@ public interface ImageService extends IService<ImageData> {
 
     void deleteImageMetadata(String imageId);
 
+    void switchPublicStatus(String imageId);
+
 //     void updateImage(MultipartFile[] multipartFile, String strategyId) throws IOException;
 }

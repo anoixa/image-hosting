@@ -5,12 +5,8 @@ import moe.imtop1.imagehosting.images.service.IMinioService;
 import moe.imtop1.imagehosting.images.service.ImageCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import moe.imtop1.imagehosting.framework.utils.RedisCache;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,10 +16,10 @@ import moe.imtop1.imagehosting.images.domain.ImageData;
 import moe.imtop1.imagehosting.images.domain.dto.ImageStreamData;
 import moe.imtop1.imagehosting.images.service.ImageService;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,6 +116,23 @@ public class ImageController {
         try {
             imageService.deleteImageMetadata(imageId);
             return AjaxResult.success("删除成功");
+        }
+        catch (Exception e){
+            return AjaxResult.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据 ID 切换图片的公开状态。
+     *
+     * @param imageId 图片的Id (@PathVariable)
+     * @return AjaxResult 成功或错误消息
+     */
+    @PostMapping("/switchPublicStatus")
+    public AjaxResult switchPublicStatus(@Validated String imageId) {
+        try {
+            imageService.switchPublicStatus(imageId);
+            return AjaxResult.success("操作成功");
         }
         catch (Exception e){
             return AjaxResult.error(e.getMessage());

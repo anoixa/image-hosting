@@ -412,4 +412,21 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         updateWrapper.set("is_delete", true);
         imageDataMapper.update(null, updateWrapper);
     }
+
+    @Override
+    public void switchPublicStatus(String imageId) {
+        if (imageId == null) {
+            throw new ServiceException(MISSING_REQUIRED_PARAMETER);
+        }
+        try {
+            UpdateWrapper<ImageData> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("image_id", imageId);
+            updateWrapper.set("is_public", !imageDataMapper.selectById(imageId).getIsPublic());
+            imageDataMapper.update(null, updateWrapper);
+        }
+        catch (Exception e) {
+            log.error("切换图片公开状态时发生错误，imageId: {}", imageId, e);
+            throw new ServiceException(DATABASE_ERROR, "切换图片公开状态时发生错误");
+        }
+    }
 }

@@ -7,12 +7,12 @@
       <div class="flex justify-end mb-4">
         <button @click="setLayout('grid')"
           :class="{ 'bg-indigo-500 text-white': currentLayout === 'grid', 'bg-gray-200 text-gray-700': currentLayout !== 'grid' }"
-          class="px-4 py-2 rounded-l-md transition-colors duration-200">
+          class="px-4 py-2 rounded-l-md transition-colors duration-200 focus:outline-none">
           网格布局
         </button>
         <button @click="setLayout('list')"
           :class="{ 'bg-indigo-500 text-white': currentLayout === 'list', 'bg-gray-200 text-gray-700': currentLayout !== 'list' }"
-          class="px-4 py-2 rounded-r-md transition-colors duration-200">
+          class="px-4 py-2 rounded-r-md transition-colors duration-200 focus:outline-none">
           列表布局
         </button>
       </div>
@@ -26,8 +26,21 @@
             <div class="p-4 flex-grow flex flex-col">
               <div class="font-semibold text-gray-800 mb-2">{{ image.fileName }}</div>
               <p class="text-sm text-gray-600 truncate mb-2">{{ image.description || '无描述' }}</p>
-              <div class="mt-auto text-xs text-gray-500"> <span>大小: {{ formatBytes(image.size) }}</span>
-                <span class="ml-4">公开: {{ image.isPublic ? '是' : '否' }}</span>
+              <div class="mt-auto text-xs text-gray-500">
+                <span>大小: {{ formatBytes(image.size) }}</span>
+                <span class="ml-4">
+                  <span class="mr-1">公开:</span>
+                  <el-switch
+                    v-model="image.isPublic"
+                    :loading="image.isToggling"
+                    @change="handleTogglePublicStatus(image, $event)"
+                    active-text="是"
+                    inactive-text="否"
+                    :active-value="true"
+                    :inactive-value="false"
+                  />
+                </span>
+                <span v-if="image.uploadTime" class="ml-4">上传时间: {{ formatTimestamp(image.uploadTime) }}</span>
               </div>
             </div>
           </div>
@@ -41,26 +54,40 @@
                 <img :src="'http://' + row.minioUrl" :alt="row.fileName" class="h-16 w-16 object-cover rounded-md" />
               </template>
             </el-table-column>
-            <el-table-column label="文件名" prop="fileName" width="180"></el-table-column>
+            <el-table-column label="文件名" prop="fileName" width="200" show-overflow-tooltip></el-table-column>
+            <el-table-column label="类型" prop="contentType" show-overflow-tooltip></el-table-column>
             <el-table-column label="描述" prop="description" show-overflow-tooltip></el-table-column>
             <el-table-column label="大小" width="120">
               <template #default="{ row }">
                 {{ formatBytes(row.size) }}
               </template>
             </el-table-column>
-            <el-table-column label="公开" width="80">
+            <el-table-column label="公开" width="120">
               <template #default="{ row }">
-                {{ row.isPublic ? '是' : '否' }}
+                 <el-switch
+                    v-model="row.isPublic"
+                    :loading="row.isToggling"
+                    @change="handleTogglePublicStatus(row, $event)"
+                    active-text="是"
+                    inactive-text="否"
+                    :active-value="true"
+                    :inactive-value="false"
+                  />
               </template>
+            </el-table-column>
+            <el-table-column v-if="imageList.length > 0 && imageList[0].uploadTime !== undefined" label="上传时间" width="180">
+                <template #default="{ row }">
+                    {{ formatTimestamp(row.uploadTime) }}
+                </template>
             </el-table-column>
           </el-table>
         </template>
 
       </div>
 
-      <div v-if="currentLayout === 'grid' && imageList.length === 0 && !loading" class="text-center text-gray-500 mt-8">
-        暂无图片数据。
-      </div>
+       <div v-if="currentLayout === 'grid' && imageList.length === 0 && !loading" class="text-center text-gray-500 mt-8">
+         暂无图片数据。
+       </div>
 
     </div>
   </div>
@@ -68,74 +95,96 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
-import axios from 'axios';
+// === 修改这里的导入，导入你的自定义 service 实例 ===
+import service from '@/utils/request';
+// ================================================
 import { useUserStore } from '@/stores/user';
 import { API_BASE_URL } from '@/config';
+import { ElMessage } from 'element-plus';
 
-// Import Element Plus components
-import { ElTable, ElTableColumn, ElLoading } from 'element-plus';
-import 'element-plus/dist/index.css'; // Import Element Plus styles
+// Import Element Plus components and styles
+import { ElTable, ElTableColumn, ElLoading, ElSwitch } from 'element-plus'; // 确保导入 ElSwitch
+import 'element-plus/dist/index.css';
 
-// Optional: Register Element Plus loading directive globally if desired
-// You might need to do this in main.ts or locally here if preferred
-// app.use(ElLoading); // If you uncomment this, do it in your main.ts
+// 定义图片接口 (根据你的后端返回结构)
+interface Image {
+  imageId: string;
+  minioUrl: string;
+  fileName: string;
+  userId: string;
+  contentType: string;
+  size: number;
+  isPublic: boolean;
+  description: string | null;
+  uploadTime?: string; // 假设这个字段可能存在
+  isToggling?: boolean; // 滑块加载状态
+}
 
 // State
-const imageList = ref<any[]>([]); // Use a more specific type if possible (interface for image object)
-const currentLayout = ref('grid'); // Default layout
-const loading = ref(false); // Loading state
+const imageList = ref<Image[]>([]);
+const currentLayout = ref('grid');
+const loading = ref(false); // Loading state for the whole table
 
 // Get user store instance
 const userStore = useUserStore();
 
 // Fetch data on component mount
 onMounted(async () => {
-  loading.value = true; // Set loading to true
+  loading.value = true;
 
-  // *** Read user data from Pinia store first ***
-  const userId = userStore.userInfo?.userId;
+  // 确保用户信息已加载且 userId 可用
+  if (userStore.hasUserInfo && userStore.userInfo?.userId) {
+    const userId = userStore.userInfo.userId;
+    const apiUrl = `${API_BASE_URL}/api/images/minio/url/user/${userId}`;
 
-  if (userStore.isLoggedIn && userId) {
-    const userInfoLoadSuccess = await userStore.loadUserInfo();
+    try {
+      // === 使用 service 实例发送 GET 请求 ===
+        // === 现在 await service.get(apiUrl) 将返回完整的 response.data 对象 { code, msg, data } ===
+      const responseData = await service.get(apiUrl); // <-- 直接接收 response.data 对象
+      // ==================================
 
-    if (userInfoLoadSuccess && userStore.isLoggedIn && userStore.userInfo?.userId) {
-      const userId = userStore.userInfo.userId;
-      // 构建 API URL
-      // 假设你的 API_BASE_URL 是 "http://localhost:8080"
-      const apiUrl = `${API_BASE_URL}/api/images/minio/url/user/${userId}`;
-
-      try {
-        // 发送 GET 请求获取图片列表数据 (假设你已经配置了 Axios 拦截器来自动添加 Token)
-        const response = await axios.get(apiUrl);
-
-        // 检查响应状态码和业务码
-        if (response.data.code === 200 && response.data.data) {
-          imageList.value = response.data.data;
-        } else {
-          // 处理业务错误
-          console.error('获取图片列表失败:', response.data.msg);
-          // 可以在这里显示一个用户友好的错误提示
-          // ElMessage.error(response.data.msg || '获取图片列表失败');
-        }
-      } catch (error) {
-        // 处理网络或请求错误
-        console.error('获取图片列表请求失败:', error);
-        // 可以在这里显示一个用户友好的错误提示
-        // ElMessage.error('获取图片列表请求失败，请稍后再试。');
-
-        // 如果是 401 错误，并且 loadUserInfo 或全局路由守卫没有处理未登录跳转，你可以在这里处理
-        // if (axios.isAxiosError(error) && error.response?.status === 401) {
-        //     router.push('/auth/login'); // 需要导入 router
-        // }
-      } finally {
-        loading.value = false; // Set loading to false regardless of success or failure
+      // === 检查响应数据结构和业务码 ===
+      // 拦截器确保 responseData 存在且 code 属性存在，并在业务码非 200 时抛错
+      // 这里只需要检查业务码是否是 200 以及 data 字段是否符合预期
+      if (responseData.code === 200) { // 检查业务码是否是 200
+          // 业务码 200 成功，现在检查 data 字段是否存在且是数组
+          if (Array.isArray(responseData.data)) {
+             // 成功：业务码 200 且 data 是数组
+            imageList.value = responseData.data.map((item: any) => ({
+              imageId: item.imageId,
+              minioUrl: item.minioUrl,
+              fileName: item.fileName,
+              userId: item.userId,
+              contentType: item.contentType,
+              description:item.description,
+              size: item.size,
+              isPublic: item.isPublic,
+              uploadTime: responseData.data.uploadTime, // 确保后端返回这个字段
+              isToggling: false,
+            }));
+            console.log('图片列表加载成功', imageList.value); // 添加成功日志
+          } else {
+             // 后端业务码 200，但 data 字段缺失或不是数组 (格式不正确)
+             console.error('获取图片列表失败: 后端数据格式不正确 (data 不是数组)', responseData);
+             ElMessage.error(responseData.msg || '获取图片列表失败: 数据格式不正确'); // 使用后端 msg 如果存在
+          }
+      } else {
+          // 这个 else 块理论上不应该被命中，因为拦截器在业务码非 200 时会抛错
+          // 但作为安全网，如果命中了，说明可能拦截器处理异常
+          console.error('获取图片列表失败: 拦截器返回数据或业务码异常', responseData);
+          ElMessage.error(responseData?.msg || '获取图片列表失败: 拦截器返回异常');
       }
-    } else {
-      // 如果 userInfoLoadSuccess 为 false (loadUserInfo 失败) 或最终判断用户未登录
-      console.warn('用户信息加载失败或未登录，无法加载图片列表。');
-      // 如果 loadUserInfo 或全局路由守卫没有处理未登录跳转，你可以在这里跳转
-      // router.push('/auth/login'); // 需要导入 router
+    } catch (error: any) { // 捕获 service 拦截器抛出的所有错误 (HTTP 错误, 业务错误, 数据空等)
+      console.error('获取图片列表请求失败:', error);
+      // 错误消息通常已经在拦截器中弹窗了，这里避免重复
+      // ElMessage.error(error.message || '获取图片列表请求失败，请稍后再试。');
+    } finally {
+      loading.value = false;
     }
+  } else {
+      // 用户 ID 不可用，无法加载图片列表。路由守卫应该处理了未登录的重定向
+      console.warn('用户 ID 不可用，无法加载图片列表。');
+      loading.value = false;
   }
 });
 
@@ -143,6 +192,15 @@ onMounted(async () => {
 const setLayout = (layout: 'grid' | 'list') => {
   currentLayout.value = layout;
 };
+
+// Compute classes for the list container (flex or grid)
+const layoutClasses = computed(() => {
+  if (currentLayout.value === 'grid') {
+    return 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+  } else {
+    return 'flex flex-col';
+  }
+});
 
 // Format file size
 const formatBytes = (bytes: number | undefined, decimals = 2): string => {
@@ -153,6 +211,72 @@ const formatBytes = (bytes: number | undefined, decimals = 2): string => {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
+
+// Helper function to format timestamp
+const formatTimestamp = (timestamp: string | undefined): string => {
+    if (!timestamp) return '未知时间';
+    try {
+        const date = new Date(timestamp);
+        if (isNaN(date.getTime())) {
+            return '无效时间';
+        }
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2);
+        const hours = ('0' + date.getHours()).slice(-2);
+        const minutes = ('0' + date.getMinutes()).slice(-2);
+
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+
+    } catch (error) {
+        console.error('Error formatting timestamp:', timestamp, error);
+        return '格式错误';
+    }
+};
+
+// === Function to handle toggling public status ===
+const handleTogglePublicStatus = async (image: Image, newStatus: boolean) => {
+    const originalStatus = !newStatus;
+    image.isPublic = newStatus; // 乐观更新 UI
+    image.isToggling = true;
+
+    const apiUrl = `${API_BASE_URL}/api/images/switchPublicStatus`;
+
+    try {
+        // === 使用 service 实例发送 POST 请求 ===
+        // === 拦截器在业务码非 200 时会抛错，成功时返回完整的 response.data ===
+        // === 对于 switchPublicStatus，后端可能返回 { code: 200, msg: "操作成功" } ===
+        // === 如果是这样，这里的 await service.post 将返回 { code: 200, msg: "操作成功" } ===
+        const responseData = await service.post(apiUrl, null, { // 期望返回 { code, msg? } 结构
+            params: {
+                imageId: image.imageId
+            }
+        });
+        // ======================================
+
+        // === 拦截器没有抛错，并且返回了数据，检查业务码 ===
+        // 理论上拦截器已经检查了业务码非 200 并抛错
+        // 但这里可以再加一个最终检查，并确认 msg
+        if (responseData.code === 200) {
+            ElMessage.success(responseData.msg || '状态切换成功'); // 使用后端 msg 如果存在
+        } else {
+            // 极端情况，拦截器通过但业务码非 200
+            console.error('切换状态失败: 拦截器返回业务码异常', responseData);
+            ElMessage.error(responseData.msg || '状态切换失败'); // 使用后端 msg 如果存在
+            // 回滚 UI 状态
+            image.isPublic = originalStatus;
+        }
+
+    } catch (error: any) { // 捕获拦截器抛出的错误
+        console.error('切换状态请求失败:', error);
+        // 错误消息通常已经在拦截器中弹窗了，这里避免重复
+        // ElMessage.error(error.message || '切换状态请求失败，请稍后再试。');
+        // 回滚 UI 状态
+        image.isPublic = originalStatus;
+    } finally {
+        image.isToggling = false;
+    }
+};
 </script>
 
 <style scoped>
@@ -160,15 +284,19 @@ const formatBytes = (bytes: number | undefined, decimals = 2): string => {
 
 /* Adjust table cell padding if necessary to match design */
 :deep(.el-table .el-table__cell) {
-  padding: 12px 0;
-  /* Adjust padding as needed */
+  padding: 12px 0 !important;
 }
 
 /* Style for the image in the list view */
 .el-table img {
   display: block;
-  /* Helps with alignment in table cell */
   margin: 0 auto;
-  /* Center the image */
 }
+
+/* Style for the column headers if needed */
+/* :deep(.el-table th.el-table__cell) { ... } */
+
+/* Grid layout styles for list view if used */
+/* .list-grid-columns { ... } */
+
 </style>
