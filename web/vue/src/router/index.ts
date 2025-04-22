@@ -14,6 +14,7 @@ import UploadFileView from '@/views/workplace/UploadFileView.vue';
 import UploadImageView from '@/views/workplace/UploadImageView.vue';
 import MyImagesView from '@/views/workplace/MyImagesView.vue';
 import MyFilesView from '@/views/workplace/MyFilesView.vue';
+import ImagesDetailView from '@/views/workplace/ImagesDetailView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,31 +56,43 @@ const router = createRouter({
           path: 'recommended',
           name: 'Recommended',
           component: RecommendedView,
+          meta: { requiresAuth: true }
         },
         {
           path: 'my-images',
           name: 'MyImages',
           component: MyImagesView,
+          meta: { requiresAuth: true, activeMenu: 'MyImages'}
+        },
+        {
+          path: 'my-images/:imageId', // Child path
+          name: 'ImageDetail', // Route name (can keep same if unique within children)
+          component: ImagesDetailView, // Image detail component
+          meta: { requiresAuth: true, activeMenu: 'MyImages'} // Ensure requires auth if needed
         },
         {
           path: 'upload-image',
           name: 'UploadImage',
           component: UploadImageView,
+          meta: { requiresAuth: true }
         },
         {
           path: 'upload-file',
           name: 'UploadFile',
           component: UploadFileView,
+          meta: { requiresAuth: true }
         },
         {
           path: 'account',
           name: 'AccountSettings',
           component: AccountSettingsView,
+          meta: { requiresAuth: true }
         },
         {
           path: 'settings',
           name: 'Settings',
           component: SettingsView,
+          meta: { requiresAuth: true }
         },
         {
           path: 'about',
@@ -90,6 +103,7 @@ const router = createRouter({
           path: 'my-files',
           name: 'MyFiles',
           component: MyFilesView,
+          meta: { requiresAuth: true }
         }
       ],
     },

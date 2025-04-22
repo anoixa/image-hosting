@@ -9,7 +9,7 @@
       <WorkplaceLeftbarComponent />
     </div>
 
-    <div class="absolute top-2 left-50 right-0 bottom-0 overflow-y-auto p-auto w-11/12">
+    <div class="absolute top-2 left-50 pl-10 right-0 bottom-0 overflow-y-auto p-auto w-11/12">
       <router-view v-slot="{ Component }">
             <component :is="Component" />
       </router-view>

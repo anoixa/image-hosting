@@ -142,6 +142,8 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         if (imageData != null && imageData.getIsDelete()) {
             return null; // 如果已删除，视为找不到
         }
+        assert imageData != null;
+        imageData.setMinioUrl("localhost:9000" + imageData.getMinioUrl());
         return imageData;
     }
 
