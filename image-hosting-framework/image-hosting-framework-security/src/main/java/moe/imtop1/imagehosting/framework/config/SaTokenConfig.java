@@ -28,7 +28,8 @@ public class SaTokenConfig implements WebMvcConfigurer {
                         "/auth/login",
                         "/auth/getValidateCode",
                         "/register/**",
-                        "/modify/**"
+                        "/modify/**",
+                        "/api/images/minio/**"
 //                        "/api/images/**"
                 );
     }

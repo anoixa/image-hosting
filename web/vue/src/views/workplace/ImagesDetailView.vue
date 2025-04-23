@@ -21,9 +21,15 @@
             <p><strong>是否公开:</strong> {{ imageDetail.isPublic ? '是' : '否' }}</p>
             <p v-if="imageDetail.uploadTime"><strong>上传时间:</strong> {{ formatTimestamp(imageDetail.uploadTime) }}</p>
           </div>
-          {/* 可选：添加下载、删除等操作按钮 */}
+          <div class="mt-6">
+            <button @click="downloadImage(imageDetail)"
+              class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-200 text-sm">
+              下载图片
+            </button>
+          </div>
         </div>
       </div>
+
 
       <div class="mt-8 bg-white rounded-lg shadow-md p-6">
         <h3 class="text-xl font-semibold text-gray-800 mb-4">使用链接</h3>
@@ -93,7 +99,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <div v-else class="text-center text-gray-500">未找到图片详情。</div>
@@ -129,6 +134,33 @@ const userStore = useUserStore(); // 获取 Store 实例
 const imageDetail = ref<Image | null>(null);
 const loading = ref(true);
 const error = ref<Error | null>(null);
+
+const downloadImage = (image: Image) => {
+  if (!image || !image.imageId || !image.fileName) {
+    ElMessage.warning('图片信息不完整，无法下载。');
+    return;
+  }
+
+  // 构建直接下载的 URL，使用 imageId 作为路径变量
+  // 根据后端 @GetMapping("/minio/{imageId}") 的定义
+  const downloadUrl = `${API_BASE_URL}/api/images/minio/${image.imageId}`;
+
+  // 创建一个临时的 <a> 元素
+  const link = document.createElement('a');
+  link.href = downloadUrl;
+  // 设置 download 属性，建议浏览器下载文件，并提供一个默认文件名。
+  // 最终文件名通常由后端返回的 Content-Disposition Header 决定。
+  link.setAttribute('download', image.fileName);
+
+  // 触发下载
+  // 将 link 元素添加到文档体中，并模拟点击。
+  // 在某些浏览器（如 Firefox）中，添加到 body 是必需的。
+  document.body.appendChild(link);
+  link.click();
+
+  // 清理：移除临时创建的 <a> 元素
+  document.body.removeChild(link);
+};
 
 // Helper functions (formatBytes, formatTimestamp) - define locally or import
 const formatBytes = (bytes: number | undefined, decimals = 2): string => {
