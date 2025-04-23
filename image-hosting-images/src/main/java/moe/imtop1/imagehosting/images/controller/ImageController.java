@@ -111,8 +111,8 @@ public class ImageController {
      * @param imageId 图片的Id (@PathVariable)
      * @return AjaxResult 成功或错误消息
      */
-    @PostMapping("/deleteById")
-    public AjaxResult deleteImageMetadata(@Validated String imageId) {
+    @PostMapping("/deleteById/{imageId}")
+    public AjaxResult deleteImageMetadata(@PathVariable @Validated String imageId) {
         try {
             imageService.deleteImageMetadata(imageId);
             return AjaxResult.success("删除成功");

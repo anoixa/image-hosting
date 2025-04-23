@@ -42,6 +42,10 @@
                     class="ml-4 px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-200 text-xs">
                     下载
                   </button>
+                  <button @click.stop="deleteImage(image)" :disabled="image.isDeleting"
+                    class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 text-xs disabled:opacity-50 disabled:cursor-not-allowed">
+                    {{ image.isDeleting ? '删除中...' : '删除' }}
+                  </button>
                 </div>
                 <span v-if="image.uploadTime" class="ml-4">上传时间: {{ formatTimestamp(image.uploadTime) }}</span>
               </div>
@@ -79,12 +83,16 @@
               </template>
             </el-table-column>
             <el-table-column label="操作" width="100">
-               <template #default="{ row }">
-                  <button @click.stop="downloadImage(row)"
-                          class="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-200 text-xs">
-                     下载
-                  </button>
-               </template>
+              <template #default="{ row }">
+                <button @click.stop="downloadImage(row)"
+                  class="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-200 text-xs">
+                  下载
+                </button>
+                <button @click.stop="deleteImage(row)" :disabled="row.isDeleting"
+                  class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 text-xs disabled:opacity-50 disabled:cursor-not-allowed">
+                  {{ row.isDeleting ? '删除中...' : '删除' }}
+                </button>
+              </template>
             </el-table-column>
           </el-table>
         </template>
@@ -106,6 +114,7 @@ import service from '@/utils/request';
 import { useUserStore } from '@/stores/user';
 import { API_BASE_URL } from '@/config';
 import { ElMessage } from 'element-plus';
+import { ElMessageBox } from 'element-plus';
 // === 导入 useRouter ===
 import { useRouter } from 'vue-router';
 // ====================
@@ -126,6 +135,7 @@ interface Image {
   description: string | null;
   uploadTime?: string;
   isToggling?: boolean;
+  isDeleting?: boolean;
 }
 
 // State
@@ -167,6 +177,7 @@ onMounted(async () => {
             isPublic: item.isPublic,
             uploadTime: item.uploadTime, // 确保这里正确映射了 uploadTime
             isToggling: false,
+            isDeleting: false,
           }));
           console.log('图片列表加载成功', imageList.value);
         } else {
@@ -300,6 +311,69 @@ const downloadImage = (image: Image) => {
 
   // 清理：移除临时创建的 <a> 元素
   document.body.removeChild(link);
+};
+
+// === 添加 deleteImage 方法 ===
+const deleteImage = async (image: Image) => {
+  if (!image || !image.imageId) {
+    ElMessage.warning('图片信息不完整，无法删除。');
+    return;
+  }
+
+  try {
+    // 1. 显示确认对话框
+    await ElMessageBox.confirm(`确定要删除图片 "${image.fileName}" 吗？`, '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    });
+
+    // 用户确认删除，开始发起请求
+    // 找到列表中对应的图片对象，激活其删除加载状态
+    const imageToDelete = imageList.value.find(img => img.imageId === image.imageId);
+    if (imageToDelete) {
+        imageToDelete.isDeleting = true;
+    }
+
+
+    const deleteUrl = `${API_BASE_URL}/api/images/deleteById/${image.imageId}`;
+
+    // 2. 发送 POST 请求到后端删除接口
+    // 后端是 @PostMapping("/deleteById/{imageId}")
+    const responseData = await service.post(deleteUrl); // 假设 service 拦截器处理了非 200 的错误提示
+
+    // 3. 处理成功响应 (业务码 200)
+    if (responseData.code === 200) {
+      ElMessage.success(responseData.msg || '删除成功'); // 显示成功消息
+
+      // 4. 删除成功后，从 imageList 中移除该图片，更新 UI
+      const index = imageList.value.findIndex(img => img.imageId === image.imageId);
+      if (index !== -1) {
+        imageList.value.splice(index, 1);
+      }
+
+    } else {
+       // 如果 service 拦截器没有处理业务码非 200 的情况，可以在这里添加弹窗
+       console.error('图片删除业务失败:', responseData.msg);
+       // ElMessage.error(responseData.msg || '删除失败');
+    }
+
+  } catch (error: any) {
+    // 捕获用户点击取消或 API 请求失败的错误
+    if (error !== 'cancel') { // 如果错误不是用户取消 (ElMessageBox.confirm 会抛出 'cancel')
+       console.error('图片删除请求或确认框错误:', error);
+       // API 请求失败的错误通常由 service 拦截器处理并弹窗
+       // ElMessage.error(error.message || '删除操作失败');
+    } else {
+       console.log('删除操作已取消');
+    }
+  } finally {
+    // 无论成功或失败，停止加载状态
+    const imageToDelete = imageList.value.find(img => img.imageId === image.imageId);
+    if (imageToDelete) {
+        imageToDelete.isDeleting = false;
+    }
+  }
 };
 </script>
 

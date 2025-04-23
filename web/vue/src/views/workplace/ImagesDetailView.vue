@@ -21,10 +21,14 @@
             <p><strong>是否公开:</strong> {{ imageDetail.isPublic ? '是' : '否' }}</p>
             <p v-if="imageDetail.uploadTime"><strong>上传时间:</strong> {{ formatTimestamp(imageDetail.uploadTime) }}</p>
           </div>
-          <div class="mt-6">
+          <div class="mt-6 space-x-5">
             <button @click="downloadImage(imageDetail)"
               class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-200 text-sm">
               下载图片
+            </button>
+            <button @click="deleteImage(imageDetail)" :disabled="isDeleting"
+              class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+              {{ isDeleting ? '删除中...' : '删除图片' }}
             </button>
           </div>
         </div>
@@ -109,9 +113,11 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import service from '@/utils/request'; // 确保导入你的 service 实例
 import { API_BASE_URL } from '@/config';
 import { ElMessage } from 'element-plus';
+import { ElMessageBox } from 'element-plus';
 // === 导入你的 Store ===
 import { useUserStore } from '@/stores/user'; // Adjust store path as needed
 // =====================
@@ -130,10 +136,12 @@ interface Image {
 }
 
 const route = useRoute();
+const router = useRouter();
 const userStore = useUserStore(); // 获取 Store 实例
 const imageDetail = ref<Image | null>(null);
 const loading = ref(true);
 const error = ref<Error | null>(null);
+const isDeleting = ref(false); // 删除操作的全局加载状态
 
 const downloadImage = (image: Image) => {
   if (!image || !image.imageId || !image.fileName) {
@@ -160,6 +168,57 @@ const downloadImage = (image: Image) => {
 
   // 清理：移除临时创建的 <a> 元素
   document.body.removeChild(link);
+};
+
+// === 添加 deleteImage 方法 ===
+const deleteImage = async (image: Image) => {
+  if (!image || !image.imageId) {
+    ElMessage.warning('图片信息不完整，无法删除。');
+    return;
+  }
+
+  try {
+    // 1. 显示确认对话框
+    await ElMessageBox.confirm(`确定要删除图片 "${image.fileName}" 吗？`, '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning', // 显示为警告类型
+    });
+
+    // 用户确认删除，开始发起请求
+    isDeleting.value = true; // 激活加载状态
+
+    const deleteUrl = `${API_BASE_URL}/api/images/deleteById/${image.imageId}`;
+
+    // 2. 发送 POST 请求到后端删除接口
+    // 后端是 @PostMapping("/deleteById/{imageId}")
+    const responseData = await service.post(deleteUrl); // 假设 service 拦截器处理了非 200 的错误提示
+
+    // 3. 处理成功响应 (业务码 200)
+    if (responseData.code === 200) {
+      ElMessage.success(responseData.msg || '删除成功'); // 显示成功消息
+
+      // 4. 删除成功后，导航回图片列表页
+      router.push({ name: 'MyImages' });
+
+    } else {
+       // 如果 service 拦截器没有处理业务码非 200 的情况，可以在这里添加弹窗
+       console.error('图片删除业务失败:', responseData.msg);
+       ElMessage.error(responseData.msg || '删除失败');
+    }
+
+  } catch (error: any) {
+    // 捕获用户点击取消或 API 请求失败的错误
+    if (error !== 'cancel') { // 如果错误不是用户取消 (ElMessageBox.confirm 会抛出 'cancel')
+       console.error('图片删除请求或确认框错误:', error);
+       // API 请求失败的错误通常由 service 拦截器处理并弹窗
+       // ElMessage.error(error.message || '删除操作失败');
+    } else {
+       console.log('删除操作已取消');
+    }
+  } finally {
+    isDeleting.value = false; // 无论成功或失败，停止加载状态
+  }
 };
 
 // Helper functions (formatBytes, formatTimestamp) - define locally or import
@@ -262,21 +321,8 @@ watch(() => route.params.imageId, (newImageId) => {
     ElMessage.error(error.value.message);
   }
 }, { immediate: true }); // immediate: true 确保在组件初次挂载时也执行一次
-
-
-// 可选：在组件卸载前清除 Store 中的选中图片状态 (如果你希望离开详情页就清除)
-// import { onUnmounted } from 'vue';
-// onUnmounted(() => {
-//   userStore.setSelectedImage(null); // 调用 Store 的方法清除状态
-// });
-
 </script>
 
 <style scoped>
-/* 你可以在这里添加组件的 scoped 样式 */
 
-/* Element Plus 组件的深度选择器样式如果需要 */
-/* :deep(.some-el-plus-class) {
-    /* style *\/
-  } */
 </style>
