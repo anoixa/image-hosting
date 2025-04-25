@@ -44,7 +44,7 @@ public class IMinioServiceImpl implements IMinioService {
         // 3.3 设置 Content-Disposition (建议的文件名和显示方式)
         // 'inline' 尝试在浏览器中直接显示图片
         // 'attachment' 会强制浏览器下载文件
-        String dispositionType = "inline";
+        String dispositionType = "attachment";
         // 对文件名进行 URL 编码，以处理特殊字符和空格
         String encodedFileName = URLEncoder.encode(streamData.getFileName(), StandardCharsets.UTF_8)
                 .replace("+", "%20"); // 将 "+" 替换为 "%20" 以符合 RFC 3986

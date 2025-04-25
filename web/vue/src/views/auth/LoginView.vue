@@ -3,10 +3,10 @@
     <div>
       <!-- Bg -->
       <div
-        class="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
+        class="absolute h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
       </div>
 
-      <div class="relative mx-auto h-screen w-full max-w-7xl px-6 md:px-8 lg:px-12">
+      <div>
 
         <!-- Header -->
         <header class="flex items-center justify-between py-8">
@@ -36,7 +36,7 @@
         </header>
 
         <!-- hero -->
-        <div class="pt-28">
+        <div class="pt-10">
           <div class="relative mx-auto flex max-w-3xl flex-col items-center">
             <!-- <div
               class="border border-gray-600 inline-flex h-full cursor-pointer justify-center rounded-full bg-white px-3 py-1 text-xs font-medium leading-5 text-slate-600 backdrop-blur-xl dark:bg-black dark:text-slate-200">
@@ -52,16 +52,16 @@
             </div> -->
 
             <h2
-              class="text-center text-3xl mt-6 font-medium text-gray-900 dark:text-gray-50 sm:text-6xl cursor-default">
+              class="text-center text-xl mt-6 font-medium text-gray-900 dark:text-gray-50 sm:text-6xl cursor-default">
               image-hosting 在线图床
             </h2>
 
             <p
-              class="mt-12 text-center text-lg leading-6 animate-pulse text-gray-600 dark:text-gray-200 cursor-default">
+              class="mt-6 text-center text-lg leading-6 animate-pulse text-gray-600 dark:text-gray-200 cursor-default">
               快捷部署，一次上传，永久保存
             </p>
 
-            <div class="mt-12 flex flex-col gap-4">
+            <div class="mt-6 flex flex-col gap-4">
               <LoginComponent />
             </div>
 

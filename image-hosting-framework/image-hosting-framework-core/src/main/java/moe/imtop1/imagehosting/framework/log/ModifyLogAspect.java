@@ -98,7 +98,7 @@ public class ModifyLogAspect {
         List<Object> httpReqArgs = new ArrayList<>();
         for (Object object : joinPoint.getArgs()) {
             if (!(object instanceof HttpServletRequest) && !(object instanceof HttpServletResponse)
-                    && !(object instanceof ModelMap) && !(object instanceof MultipartFile)) {
+                    && !(object instanceof ModelMap) && !(object instanceof MultipartFile) && !(object instanceof MultipartFile[])) {
                 httpReqArgs.add(object);
             }
         }

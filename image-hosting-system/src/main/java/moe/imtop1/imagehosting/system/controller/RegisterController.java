@@ -77,7 +77,11 @@ public class RegisterController {
             logger.info("开始验证验证码");
             boolean validateResult = validateCodeService.validateEmailCaptcha(key, codeValue);
             logger.info("验证码验证结果：{}", validateResult);
-            return AjaxResult.success(validateResult);
+            if (validateResult) {
+                return AjaxResult.success("验证成功");
+            } else {
+                return AjaxResult.error("验证码错误");
+            }
         } catch (SystemException e) {
             logger.error("验证码验证失败: {}", e.getMessage());
             return AjaxResult.error(e.getCode(), e.getMessage());
