@@ -1,4 +1,5 @@
 package moe.imtop1.imagehosting.images.service.impl;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -142,6 +143,21 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         // 如果使用详细失败信息
         // List<Map<String, String>> failedFilesDetails = new ArrayList<>();
 
+        // --- 获取当前登录用户的 ID 并设置到实体中 ---
+        String currentUserId;
+        try {
+            // 使用 Sa-Token 获取当前登录用户的 ID
+            // 假设你在登录成功时将用户 ID 作为 loginId 存入了 Sa-Token
+            currentUserId = (String) StpUtil.getLoginIdAsString(); // 获取当前登录用户的 ID (字符串类型)
+
+            imageData.setUserId(currentUserId);
+        } catch (Exception e) {
+            // 如果用户未登录或获取 ID 失败，根据你的业务需求处理
+            // 如果 user_id 在数据库中是 NOT NULL，这里必须抛出异常，阻止插入空值
+            log.error("获取当前用户 ID 失败，无法保存图片元数据。", e);
+            throw new RuntimeException("无法确定上传用户，操作失败"); // 或者抛出自定义异常
+        }
+
 
         if (files != null) {
             // 遍历文件数组
@@ -150,7 +166,6 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
                 if (file.isEmpty()) {
                     log.warn("Skipping empty file in batch upload (Service level): {}", file.getOriginalFilename());
                     failedFiles.add(file.getOriginalFilename() + " (文件为空)");
-                    // 如果使用详细失败信息: Map<String, String> failure = new HashMap<>(); failure.put("fileName", file.getOriginalFilename()); failure.put("reason", "文件为空"); failedFilesDetails.add(failure);
                     continue; // 跳过当前文件
                 }
 
