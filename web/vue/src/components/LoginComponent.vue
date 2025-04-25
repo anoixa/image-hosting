@@ -104,21 +104,21 @@ async function handleLogin() {
   try {
     // 调用登录API
     const loginResponse = await login(loginData);
-    
+
     // 保存登录信息到store
     userStore.setLoginInfo({
       token: loginResponse.token
     });
-    
+
     // 加载用户信息
     await userStore.loadUserInfo();
-    
+
     // 跳转到工作区
     router.push('/workplace');
   } catch (error: any) {
     // 错误已在API中处理
     console.error('登录失败:', error);
-    
+
     // 刷新验证码
     getGraghCaptcha();
   }
@@ -127,7 +127,7 @@ async function handleLogin() {
 onMounted(() => {
   // 获取验证码
   getGraghCaptcha();
-  
+
   // 如果已登录，直接跳转到工作区
   if (userStore.isLoggedIn) {
     router.push('/workplace');

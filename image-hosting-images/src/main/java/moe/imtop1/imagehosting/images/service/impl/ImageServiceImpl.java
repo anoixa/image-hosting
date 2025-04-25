@@ -15,6 +15,7 @@ import moe.imtop1.imagehosting.common.utils.StringUtil;
 import moe.imtop1.imagehosting.framework.exception.ServiceException;
 import moe.imtop1.imagehosting.framework.utils.RedisCache;
 import moe.imtop1.imagehosting.images.domain.ImageData;
+import moe.imtop1.imagehosting.images.domain.dto.BatchUploadResult;
 import moe.imtop1.imagehosting.images.domain.dto.ImageStreamData;
 import moe.imtop1.imagehosting.images.domain.vo.ImageUrlData;
 import moe.imtop1.imagehosting.images.mapper.ImageDataMapper;
@@ -132,6 +133,50 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, ImageData> implem
         log.info("成功上传文件 {} 到 MinIO，Key 为 {}", file.getOriginalFilename(), objectKey);
 
         return imageData;
+    }
+
+    @Override
+    public BatchUploadResult batchUploadImages(MultipartFile[] files, ImageData imageData) {
+        List<ImageData> successfulUploads = new ArrayList<>();
+        List<String> failedFiles = new ArrayList<>();
+        // 如果使用详细失败信息
+        // List<Map<String, String>> failedFilesDetails = new ArrayList<>();
+
+
+        if (files != null) {
+            // 遍历文件数组
+            for (MultipartFile file : files) {
+                // 在 Service 层继续文件基础验证，例如空文件、大小、类型等
+                if (file.isEmpty()) {
+                    log.warn("Skipping empty file in batch upload (Service level): {}", file.getOriginalFilename());
+                    failedFiles.add(file.getOriginalFilename() + " (文件为空)");
+                    // 如果使用详细失败信息: Map<String, String> failure = new HashMap<>(); failure.put("fileName", file.getOriginalFilename()); failure.put("reason", "文件为空"); failedFilesDetails.add(failure);
+                    continue; // 跳过当前文件
+                }
+
+                // TODO: 添加文件类型、大小等 Service 级验证
+
+                try {
+                    // === 调用 Service 内部的单个文件上传逻辑 ===
+                    // 复用 uploadImage 方法，它处理了 Minio 上传和数据库保存
+                    ImageData uploadedImage = uploadImage(file, imageData); // 调用当前类的另一个方法
+                    successfulUploads.add(uploadedImage); // 将成功上传的结果添加到列表
+
+                } catch (IOException e) {
+                    // 捕获来自 uploadImage 的 IO 异常
+                    log.error("IO error during batch upload in Service for file {}: {}", file.getOriginalFilename(), e.getMessage());
+                    failedFiles.add(file.getOriginalFilename() + " (IO异常: " + e.getMessage() + ")");
+                    // 如果使用详细失败信息: Map<String, String> failure = new HashMap<>(); failure.put("fileName", file.getOriginalFilename()); failure.put("reason", "IO异常: " + e.getMessage()); failedFilesDetails.add(failure);
+                } catch (Exception e) { // 捕获来自 uploadImage 的其他异常
+                    log.error("Unexpected error during batch upload in Service for file {}: {}", file.getOriginalFilename(), e.getMessage(), e);
+                    failedFiles.add(file.getOriginalFilename() + " (上传失败: " + e.getMessage() + ")");
+                    // 如果使用详细失败信息: Map<String, String> failure = new HashMap<>(); failure.put("fileName", file.getOriginalFilename()); failure.put("reason", "上传失败: " + e.getMessage()); failedFilesDetails.add(failure);
+                }
+            }
+        }
+
+        // 返回包含成功和失败信息的批量上传结果 DTO
+        return new BatchUploadResult(successfulUploads, failedFiles);
     }
 
     @Override

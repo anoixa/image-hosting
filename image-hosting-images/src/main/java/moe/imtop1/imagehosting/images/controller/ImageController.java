@@ -1,5 +1,6 @@
 package moe.imtop1.imagehosting.images.controller;
 
+import moe.imtop1.imagehosting.images.domain.dto.BatchUploadResult;
 import moe.imtop1.imagehosting.images.domain.vo.ImageUrlData;
 import moe.imtop1.imagehosting.images.service.IMinioService;
 import moe.imtop1.imagehosting.images.service.ImageCacheService;
@@ -16,6 +17,7 @@ import moe.imtop1.imagehosting.images.domain.ImageData;
 import moe.imtop1.imagehosting.images.domain.dto.ImageStreamData;
 import moe.imtop1.imagehosting.images.service.ImageService;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +71,53 @@ public class ImageController {
         } catch (Exception e) {
             log.error("上传图片时发生未预期错误: {}", e.getMessage());
             return AjaxResult.error("上传过程中发生未预期错误: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 批量上传图片。
+     * 接收多个图片文件和一个 ImageData 对象（共享元数据）。
+     *
+     * @param files     上传的图片文件数组 (@RequestParam，名称改为 files)
+     * @param imageData 图片的共享元数据 (@ModelAttribute)
+     * @return AjaxResult 包含批量操作的结果，可能包含成功上传的图片列表和失败的文件信息
+     */
+
+    @PostMapping("/batch-upload") // 与前端约定的路径一致
+    public AjaxResult batchUploadImages(
+            @RequestParam("files") MultipartFile[] files, // 接收文件数组
+            @ModelAttribute ImageData imageData) // 接收共享元数据
+    {
+        // Controller 层做基本的请求参数校验
+        if (files == null || files.length == 0) {
+            return AjaxResult.error("请选择至少一个文件上传。");
+        }
+
+        try {
+            BatchUploadResult result = imageService.batchUploadImages(files, imageData);
+
+            if (result.getSuccessfulUploads().isEmpty()) {
+                // 如果没有文件成功上传
+                if (!result.getFailedFiles().isEmpty()) {
+                    // 所有文件都失败了，返回错误信息，包含失败文件列表
+                    return AjaxResult.error("所有文件上传失败: " + String.join(", ", result.getFailedFiles()));
+                } else {
+                    return AjaxResult.error("未上传任何文件。");
+                }
+            } else if (!result.getFailedFiles().isEmpty()) {
+                // 部分文件成功，部分失败
+                // 返回成功状态，但在消息中说明有失败，并将成功列表和失败列表都放在数据中
+                return AjaxResult.success("部分图片上传成功，有文件失败。", result.getSuccessfulUploads());
+            } else {
+                // 所有文件都成功上传
+                // 返回成功状态，数据中包含所有成功上传的图片元数据列表
+                return AjaxResult.success("所有图片上传成功", result.getSuccessfulUploads());
+            }
+
+        } catch (Exception e) { // 捕获 Service 层抛出的其他未预期异常
+            log.error("处理批量图片上传请求时发生未预期错误: {}", e.getMessage(), e);
+            // 返回通用的内部服务器错误信息
+            return AjaxResult.error("批量上传过程中发生未预期错误: " + e.getMessage());
         }
     }
 

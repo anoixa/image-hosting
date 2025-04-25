@@ -88,6 +88,10 @@
                   class="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-200 text-xs">
                   下载
                 </button>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="100">
+              <template #default="{ row }">
                 <button @click.stop="deleteImage(row)" :disabled="row.isDeleting"
                   class="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-300 text-xs disabled:opacity-50 disabled:cursor-not-allowed">
                   {{ row.isDeleting ? '删除中...' : '删除' }}
