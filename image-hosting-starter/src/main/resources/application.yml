@@ -7,8 +7,9 @@ spring:
   application:
     name: image-hosting
   profiles:
-#    active: dev
-    active: shuomc
+    # active: dev
+    # active: shuomc
+    active: prod
   servlet:
     multipart:
       max-file-size: 10MB

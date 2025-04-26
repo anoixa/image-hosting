@@ -1,0 +1,115 @@
+# version: '3.8'
+
+services:
+  # 后端服务
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: image-hosting-backend
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=shuomc
+      - SPRING_DATASOURCE_PASSWORD=shuomc
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_ACCESSKEY=minioadmin
+      - MINIO_SECRETKEY=minioadmin
+      - MINIO_BUCKETNAME=images
+      - MINIO_PUBLICURL=http://localhost/minio
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    networks:
+      - app-network
+
+  # 前端服务
+  frontend:
+    build:
+      context: ./web/vue
+      dockerfile: Dockerfile
+    container_name: image-hosting-frontend
+    restart: always
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # PostgreSQL数据库
+  postgres:
+    image: postgres:16.4
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=shuomc
+      - POSTGRES_DB=image_hosting
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "15432:5432"
+    networks:
+      - app-network
+
+  # Redis缓存
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+
+  # MinIO对象存储
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    restart: always
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    volumes:
+      - minio-data:/data
+    ports:
+      - "19000:9000"
+      - "19090:9090"
+    command: server /data --console-address ":9090"
+    networks:
+      - app-network
+
+  # Nginx反向代理
+  nginx:
+    image: nginx:stable-alpine
+    container_name: image-hosting-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - frontend
+      - backend
+      - minio
+    networks:
+      - app-network
+
+  # healthcheck:
+  #        test: ["CMD", "curl", "-f", "http://localhost:8080/api/actuator/health"]
+  #        interval: 30s
+  #        timeout: 10s
+  #        retries: 3
+  #        start_period: 40s
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+  minio-data:
